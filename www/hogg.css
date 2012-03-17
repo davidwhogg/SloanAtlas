@@ -56,17 +56,17 @@ a{
 	text-decoration: none;
 }
 a:link {
-  color: #0000ff;
+  color: #00009f;
 }
 a:visited {
   color: #00009f;
 }
 a:active {
-  color: #ff00ff;
+  color: #00ffff;
 }
 a:hover {
 	text-decoration: underline;
-  	color: #3f3fff;
+  	color: #0000ff;
 }
 
 /* Lists */
