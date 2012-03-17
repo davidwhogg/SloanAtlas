@@ -1,14 +1,22 @@
+/* This file is part of the Sloan Atlas project. */
+/* Copyright 2012 David W. Hogg (NYU) */
+
 /* basic text */
 body{
-	font-family: Times, serif;
+	font-family: serif;
+	font-size: 12pt;
 }
 p{
 	margin: 0ex 0em 0ex 0em;
-	padding: 0.5ex 0em;
-	text-indent: 1.0em;
+	padding: 0.75ex 0em;
+	text-indent: 0.0em;
 }
 .noindent {
 	text-indent: 0.0em;
+}
+.author {
+	padding: 0.75ex 1.0em;
+	text-indent: -1.0em;
 }
 .footnote {
 	padding: 2.0ex 0em;
@@ -64,25 +72,25 @@ a:hover {
 /* Lists */
 ul{
 	margin: 0ex 0em 0ex 0em;
-	padding: 0.0ex 0em; /* add to "li" padding to get 0.5ex */
+	padding: 0.0ex 0em;
 	list-style: disc outside;
 }
 dl{
 	margin: 0ex 0em 0ex 0em;
-	padding: 0.5ex 0em; /* add to "dd" and "dt" padding to get 1.0ex */
+	padding: 0.0ex 0em;
 	list-style: none;
 }
 dd{
 	margin: 0ex 0em 0ex 1em;
-	padding: 0.5ex 0.0em;
+	padding: 0.75ex 0.0em;
 }
 dt{
 	margin: 0ex 0em 0ex 0em;
-	padding: 0.5ex 0.0em;
+	padding: 0.75ex 0.0em;
 }
 li{
 	margin: 0ex 0em 0ex 1em;
-	padding: 0.5ex 0.0em;
+	padding: 0.75ex 0.0em;
 }
 
 /* tables */
