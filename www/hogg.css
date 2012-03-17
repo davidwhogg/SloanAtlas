@@ -1,0 +1,108 @@
+/* basic text */
+body{
+	font-family: Times, serif;
+}
+p{
+	margin: 0ex 0em 0ex 0em;
+	padding: 0.5ex 0em;
+	text-indent: 1.0em;
+}
+.noindent {
+	text-indent: 0.0em;
+}
+.footnote {
+	padding: 2.0ex 0em;
+	text-indent: 0.0em;
+	font-size: 75%;
+	color: #7f7f7f;
+}
+
+/* headers */
+h1, h2, h3, h4, h5, h6{
+	font-weight: normal;
+	margin: 0ex 0em 0ex 0em;
+	padding: 1.0ex 0em;
+}
+h1{
+	font-size: 218%
+}
+h2{
+	font-size: 150%
+}
+h3{
+	font-size: 125%;
+}
+h4{
+	font-size: 112%;
+}
+
+/* general containers formatting */
+#container{
+	width: 40em;
+	background: #fff;
+	padding: 3em;
+}
+
+/* Links */
+a{
+	text-decoration: none;
+}
+a:link {
+  color: #0000ff;
+}
+a:visited {
+  color: #00009f;
+}
+a:active {
+  color: #ff00ff;
+}
+a:hover {
+	text-decoration: underline;
+  	color: #3f3fff;
+}
+
+/* Lists */
+ul{
+	margin: 0ex 0em 0ex 0em;
+	padding: 0.0ex 0em; /* add to "li" padding to get 0.5ex */
+	list-style: disc outside;
+}
+dl{
+	margin: 0ex 0em 0ex 0em;
+	padding: 0.5ex 0em; /* add to "dd" and "dt" padding to get 1.0ex */
+	list-style: none;
+}
+dd{
+	margin: 0ex 0em 0ex 1em;
+	padding: 0.5ex 0.0em;
+}
+dt{
+	margin: 0ex 0em 0ex 0em;
+	padding: 0.5ex 0.0em;
+}
+li{
+	margin: 0ex 0em 0ex 1em;
+	padding: 0.5ex 0.0em;
+}
+
+/* tables */
+table{
+	margin: 0 0 0 0;
+	border-spacing: 0 0;
+	border-collapse: collapse;
+}
+th{
+	font-weight: normal;
+	text-align: left;
+	padding: 0.25em;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #ccf;
+	background: #eef;
+}
+td{
+	padding: 0.25em;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #ccf;
+}
