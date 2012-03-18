@@ -1,2 +1,2 @@
 #!/bin/bash
-rsync -avrz ~/SloanAtlas/www/ howdy:public_html/SloanAtlas/
+rsync -avrz --delete --exclude "*~" --delete-excluded ~/SloanAtlas/www/ howdy:public_html/SloanAtlas/
