@@ -3,8 +3,9 @@
 
 /* basic text */
 body{
-	font-family: serif;
-	font-size: 12pt;
+	font-family: Georgia, Utopia, Palatino, serif;
+	font-size: 16px;
+	color: #222222;
 }
 p{
 	margin: 0ex 0em 0ex 0em;
@@ -15,11 +16,10 @@ p{
 	text-indent: 0.0em;
 }
 .author {
-	padding: 0.75ex 1.0em;
-	text-indent: -1.0em;
+	padding: 0.75ex 0.0em 1.5ex 1.5em;
 }
 .footnote {
-	padding: 2.0ex 0em;
+	padding: 3.0ex 0em;
 	text-indent: 0.0em;
 	font-size: 75%;
 	color: #7f7f7f;
@@ -48,7 +48,7 @@ h4{
 #container{
 	width: 40em;
 	background: #fff;
-	padding: 3em;
+	padding: 2ex 3em;
 }
 
 /* Links */
@@ -89,7 +89,7 @@ dt{
 	padding: 0.75ex 0.0em;
 }
 li{
-	margin: 0ex 0em 0ex 1em;
+	margin: 0ex 0em 0ex 1.5em;
 	padding: 0.75ex 0.0em;
 }
 
