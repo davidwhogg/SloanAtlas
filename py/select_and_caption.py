@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 '''
 This file is part of the Sloan Atlas project.
 Copyright 2012 David W. Hogg (NYU).
@@ -21,5 +22,21 @@ to-do:
   captions for plates.
 '''
 
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib import rc
+rc('font',**{'family':'serif','serif':'Computer Modern Roman','size':12})
+rc('text', usetex=True)
+import numpy as np
+import pylab as plt
+import pyfits as pyf
+
 if __name__ == '__main__':
-    print "Hello World"
+    data = pyf.open("../data/nsa-short.fits.gz")[1].data
+    for t in data.field('SERSIC_TH50'):
+        if t > 159: print t
+    plt.clf
+    plt.hist(data.field('SERSIC_TH50'))
+    plt.xlabel('half-light radius (arcsec)')
+    plt.savefig('radius_distribution.png')
+
