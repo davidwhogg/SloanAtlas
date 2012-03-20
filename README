@@ -15,8 +15,9 @@ Copyright 2012 David W. Hogg (NYU).  All rights reserved.
 
 ## Dependencies:
 
-- The NASA-Sloan Atlas
-- pyfits
-- Python Imaging Library
-- matplotlib
+- The NASA-Sloan Atlas <http://nsatlas.org/>
 - numpy
+- matplotlib
+- Python Imaging Library
+- pyfits
+- pappy <http://github.com/drphilmarshall/pappy>
