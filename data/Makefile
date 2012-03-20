@@ -1,4 +1,9 @@
-all: nsa_v0_1_2.fits
+FILEPREFIX = nsa_v0_1_2
 
-nsa_v0_1_2.fits:
-	curl -O http://sdss.physics.nyu.edu/mblanton/v0/nsa_v0_1_2.fits
+all: ${FILEPREFIX}.fits.gz
+
+${FILEPREFIX}.fits.gz: $${FILEPREFIX}.fits
+	gzip --best ${FILEPREFIX}.fits
+
+${FILEPREFIX}.fits:
+	curl -O http://sdss.physics.nyu.edu/mblanton/v0/${FILEPREFIX}.fits
