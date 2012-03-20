@@ -5,15 +5,14 @@
 
 FILEPREFIX = nsa_v0_1_2
 SHORTENER = ./shorten_nsatlas.py
+GZIP = gzip -fv --best
 
 all: nsa-short.fits.gz
 
-%.fits.gz: %.fits
-	gzip --best $<
+nsa-short.fits.gz: ${FILEPREFIX}.fits.gz ${SHORTENER}
+	${SHORTENER} ${FILEPREFIX}.fits.gz nsa-short.fits
+	${GZIP} nsa-short.fits
 
-nsa-short.fits: ${FILEPREFIX}.fits.gz ${SHORTENER}
-	${SHORTENER} ${FILEPREFIX}.fits.gz $@
-
-#${FILEPREFIX}.fits:
-#	curl -O http://sdss.physics.nyu.edu/mblanton/v0/$@
-
+${FILEPREFIX}.fits.gz:
+	curl -O http://sdss.physics.nyu.edu/mblanton/v0/${FILEPREFIX}.fits
+	${GZIP} ${FILEPREFIX}.fits
