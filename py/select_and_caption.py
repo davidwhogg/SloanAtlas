@@ -5,6 +5,8 @@ Copyright 2012 David W. Hogg (NYU).
 
 to-do:
 
+- Plot NASA-Sloan Atlas vs RC3 on the sky and in, say, angular size.
+
 - Make plots of the input catalog (currently the NASA-Sloan Atlas) to
   guide selection.
 
