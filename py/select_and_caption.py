@@ -48,8 +48,10 @@ if __name__ == '__main__':
     y=data.field('DEC')
     plt.xlabel('Right Ascension')
     plt.ylabel('Declination')
+    plt.plot(x,y,'.m')
     plt.savefig('RA_DEC.png')
-    plt.plot(x,y,'.m')  
+    plt.xlim(-50,400)
+      
 plt.show()  
 
 
@@ -57,12 +59,31 @@ if __name__ == '__main__':
     data = pyf.open("../data/nsa-short.fits.gz")[1].data
     x=data.field('SERSIC_TH50')
     y=data.field('SERSICFLUX')
-    for t in y:
-        i=t[5]
+    def iFlux(y):
+        for t in y:
+            i=t[5]
+        return y    
     plt.ylabel('half-light radius (arcsec)')
     plt.xlabel('Flux- i band')
-    plt.savefig('radius_iband.png')
     plt.plot(y,x,'.c')
+    plt.savefig('radius_iband.png')
     plt.ylim(30, 165)     
-plt.show()    
+plt.show()   
+
+if __name__ == '__main__':
+    data = pyf.open("../data/nsa-short.fits.gz")[1].data
+    x=data.field('SERSIC_TH50')
+    y=data.field('SERSICFLUX')
+    def iMag(y):
+        for t in y:
+            g=t[5]
+        return 22.5-2.5*np.log10(np.abs(y))   
+    f=iMag(y)
+    plt.ylabel('half-light radius (arcsec)')
+    plt.xlabel('Magnitude- i band')
+    plt.plot(f,x,'.b')
+    plt.savefig('radius_magiband.png')    
+    plt.xlim(-20,140)
+    plt.ylim(20,165) 
+plt.show()  
 
