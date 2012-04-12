@@ -31,19 +31,9 @@ import numpy as np
 import pylab as plt
 import pyfits as pyf
 
-#histogram of the 'half-light radius' distribution
-fig1 = plt.figure(1)
-if __name__ == '__main__':
-    data = pyf.open("../data/nsa-short.fits.gz")[1].data
-    for t in data.field('SERSIC_TH50'):
-        if t > 159: print t
-    plt.clf
-    plt.hist(data.field('SERSIC_TH50'))
-    plt.xlabel('half-light radius (arcsec)')
-    plt.savefig('radius_distribution.png')  
-    
+     
 #scatter plot of RA vs. DEC 
-fig2 = plt.figure(2)
+fig1 = plt.figure(1)
 if __name__ == '__main__':
     data = pyf.open("../data/nsa-short.fits.gz")[1].data
     x=data.field('RA')
@@ -55,24 +45,11 @@ if __name__ == '__main__':
     plt.title('RA vs. Dec')
     plt.savefig('RA_DEC.png')
   
-#scatter plot of the radii vs. flux in the i-band
-fig3 = plt.figure(3)
-if __name__ == '__main__':
-    data = pyf.open("../data/nsa-short.fits.gz")[1].data
-    y=data.field('SERSIC_TH50')
-    x=data.field('SERSICFLUX')
-    a=x[:,4]
-    plt.ylabel('Half-light Radius (arcsec)')
-    plt.xlabel('i-Flux')
-    plt.title('Radius vs. i-Flux')
-    plt.plot(a,y,'.c')
-    plt.ylim(25, 165)  
-    plt.savefig('radius_iband.png')
 
 # Radius vs. i-Flux for positive i-Flux values only
 #there are 40 negative values that are not shown here  
 #3651 galaxies are plotted
-fig4 = plt.figure(4)
+fig2 = plt.figure(2)
 if __name__ == '__main__':
     data = pyf.open("../data/nsa-short.fits.gz")[1].data
     z=data.field('SERSIC_TH50')
@@ -90,11 +67,11 @@ if __name__ == '__main__':
     plt.title('Radius vs. Good Values for i-Flux')
     plt.savefig('radius_goodiflux')    
     
-#distribution of G-I magnitude
-#something about this data won't allow for histogram...
-fig5 = plt.figure(5)
+#G-I magnitude vs. radius
+fig3 = plt.figure(3)
 if __name__ == '__main__':
     data = pyf.open("../data/nsa-short.fits.gz")[1].data
+    z = data.field('SERSIC_TH50')
     y = data.field('SERSICFLUX')
     good=np.array([True for x in data.field('RA')])
     indx1=np.where(y[:,4] < 0)
@@ -105,15 +82,20 @@ if __name__ == '__main__':
         return 22.5-(2.5*np.log10(y)) 
     i=Mag(y[:,4][good])
     g=Mag(y[:,2][good])
+    z=z[good]
     h=g-i
-    plt.plot(h,'.r')  
-    plt.xlabel('G-I Magnitude Distribution')
-    plt.savefig('g_minus_i.png')
+    plt.plot(h,z,'.g')  
+    plt.xlim(0,3)
+    plt.ylim(0,165)
+    plt.xlabel('G-I Magnitude')
+    plt.ylabel('Half-Light Radius (arcsec)')
+    plt.title('G-I Magnitude vs. Radius')
+    plt.savefig('g_minus_i_vs_radius.png')
 
 #scatter plot of radii vs. magnitude calculated using i-band flux
 #magnitude originating from negative flux values are show in red
 #magnitude originiated from positive values are shown in red
-fig6 = plt.figure(6)
+fig4 = plt.figure(4)
 if __name__ == '__main__':
     data = pyf.open("../data/nsa-short.fits.gz")[1].data
     x=data.field('SERSIC_TH50')
@@ -140,7 +122,7 @@ if __name__ == '__main__':
  
 #scatter plot of radii vs. magnitude calculated using i-band flux where only 'good' values of flux are used
 #3651 galaxies
-fig7 = plt.figure(7)
+fig5 = plt.figure(5)
 if __name__ == '__main__':
     data = pyf.open("../data/nsa-short.fits.gz")[1].data
     z=data.field('SERSIC_TH50')
