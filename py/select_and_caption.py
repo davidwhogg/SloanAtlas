@@ -41,14 +41,13 @@ if __name__ == '__main__':
     plt.xlabel('Right Ascension')
     plt.ylabel('Declination')
     plt.plot(x,y,'.m')
-    plt.xlim(-50,400)
-    plt.title('RA vs. Dec')
+    plt.xlim(-5,360)
+    plt.ylim(-30,90)
     plt.savefig('RA_DEC.png')
   
-
-# Radius vs. i-Flux for positive i-Flux values only
-#there are 40 negative values that are not shown here  
-#3651 galaxies are plotted
+#scatter plot of radii vs. magnitude calculated using i-band flux
+#magnitude originating from negative flux values are show in red
+#magnitude originiated from positive values are shown in black
 fig2 = plt.figure(2)
 if __name__ == '__main__':
     data = pyf.open("../data/nsa-short.fits.gz")[1].data
@@ -58,14 +57,23 @@ if __name__ == '__main__':
     indx=np.where(y[:,4] < 0)
     good[indx]=False
     m=z[good]
-    n=y[:,4][good]
+    def iMag1(y):
+        return 22.5-2.5*np.log10(np.abs(y))  
+    def iMag2(y):
+        return 22.5-2.5*np.log10(y)
+    g=iMag2(y[:,4][good])
+    f=iMag1(y[:,4][indx])
+    a=z[good]
+    b=z[indx]
+    plt.plot(g,a,'ko', alpha=0.5, label='mag from positive flux')
+    plt.plot(f,b,'ro', alpha=0.3, label='mag from negative flux')
     plt.ylabel('Half-Light Radius (arcsec)')
-    plt.xlabel('Flux- i band')
-    plt.plot(n, m,'.c')
-    plt.ylim(20,165)
-    plt.xlim(-100000, 1000000)
-    plt.title('Radius vs. Good Values for i-Flux')
-    plt.savefig('radius_goodiflux')    
+    plt.xlabel('I Magnitude')  
+    plt.xlim(7,23)
+    plt.ylim(27,157)
+    plt.legend()
+    plt.savefig('radius_imag.png')
+  
     
 #G-I magnitude vs. radius
 fig3 = plt.figure(3)
@@ -78,69 +86,42 @@ if __name__ == '__main__':
     good[indx1]=False
     indx2=np.where(y[:,2] < 0)
     good[indx2]=False
+    #indx3=np.where(z > 159)
+    #good[indx3]=False
+    #s=y[:,2]
+    #t=y[:,4]
     def Mag(y): 
-        return 22.5-(2.5*np.log10(y)) 
-    i=Mag(y[:,4][good])
-    g=Mag(y[:,2][good])
-    z=z[good]
+        return 22.5-2.5*np.log10(abs(y)) 
+    i=Mag(y[:,4][good]) #mag of positive I values
+    
+    g=Mag(y[:,2][good]) #mag of positive G values
+    
+    j=Mag(y[:,4][indx1]) #mag of negative I values
+    
+    k=Mag(y[:,2][indx2]) #mag of negative G values 
+    
+    l=Mag(y[:,4][indx2]) #mag of I values corresponding to neg G values
+    
+    m=Mag(y[:,2][indx1]) #mag of G values corresponding to neg I values
+    a=z[good]
+    b=z[indx1]
+    c=z[indx2]
     h=g-i
-    plt.plot(h,z,'.g')  
+    n=m-j
+    o=k-l
+    plt.plot(h,a,'ko', alpha=0.5, label='Mag from +g-(+i)')  
+    plt.plot(n,b, 'ro', alpha=0.4, label='Mag from +g-(-i)')
+    plt.plot(o,c, 'ro', alpha=0.4, label='Mag from -g-(+i)')
     plt.xlim(0,3)
-    plt.ylim(0,165)
+    plt.ylim(25,159)
     plt.xlabel('G-I Magnitude')
     plt.ylabel('Half-Light Radius (arcsec)')
-    plt.title('G-I Magnitude vs. Radius')
+    plt.savefig('g_minus_i_vs_radius.png')
     plt.savefig('g_minus_i_vs_radius.png')
 
-#scatter plot of radii vs. magnitude calculated using i-band flux
-#magnitude originating from negative flux values are show in red
-#magnitude originiated from positive values are shown in red
-fig4 = plt.figure(4)
-if __name__ == '__main__':
-    data = pyf.open("../data/nsa-short.fits.gz")[1].data
-    x=data.field('SERSIC_TH50')
-    y=data.field('SERSICFLUX')
-    z=y[:,4]
-    def iMag1(y):
-        for t in y:
-            t < 0 
-        return 22.5-2.5*np.log10(np.abs(y))  
-    def iMag2(y):
-        for t in y:
-            t > 0
-        return 22.5-2.5*np.log10(y)
-    f=iMag1(z)   
-    g=iMag2(z)
-    plt.plot(f,x,'.r')
-    plt.plot(g,x,'.b')
-    plt.ylabel('Half-Light Radius (arcsec)')
-    plt.xlabel('Magnitude from i-Flux')  
-    plt.title('Radius vs. I-Magnitude')
-    plt.xlim(0,35)
-    plt.ylim(25,165)
-    plt.savefig('radius_imag.png')
+
  
-#scatter plot of radii vs. magnitude calculated using i-band flux where only 'good' values of flux are used
-#3651 galaxies
-fig5 = plt.figure(5)
-if __name__ == '__main__':
-    data = pyf.open("../data/nsa-short.fits.gz")[1].data
-    z=data.field('SERSIC_TH50')
-    y=data.field('SERSICFLUX')
-    good=np.array([True for x in data.field('RA')])
-    indx=np.where(y[:,4] < 0)
-    good[indx]=False
-    def iMag(y):
-        return 22.5-2.5*np.log10(y)
-    g=iMag(y[:,4][good]) 
-    m=z[good]
-    plt.plot(g, m ,'.b')
-    plt.ylabel('Half-Light Radius (arcsec)')
-    plt.xlabel('Magnitude from i-Flux') 
-    plt.title('Radius vs. Good I-Magnitude')
-    plt.xlim(0,35)
-    plt.ylim(25,165)
-    plt.savefig('radius_imag_good.png')   
+ 
     
     
 plt.show()  
