@@ -65,12 +65,12 @@ if __name__ == '__main__':
     f=iMag1(y[:,4][indx])
     a=z[good]
     b=z[indx]
-    plt.plot(g,a,'ko', alpha=0.5, label='mag from positive flux')
-    plt.plot(f,b,'ro', alpha=0.3, label='mag from negative flux')
+    plt.plot(g,a,'bo', alpha=0.5, label='mag from positive flux')
+    plt.plot(f,b,'go', alpha=0.5, label='mag from negative flux')
     plt.ylabel('Half-Light Radius (arcsec)')
     plt.xlabel('I Magnitude')  
     plt.xlim(7,23)
-    plt.ylim(27,157)
+    plt.ylim(0,160)
     plt.legend()
     plt.savefig('radius_imag.png')
   
@@ -86,10 +86,6 @@ if __name__ == '__main__':
     good[indx1]=False
     indx2=np.where(y[:,2] < 0)
     good[indx2]=False
-    #indx3=np.where(z > 159)
-    #good[indx3]=False
-    #s=y[:,2]
-    #t=y[:,4]
     def Mag(y): 
         return 22.5-2.5*np.log10(abs(y)) 
     i=Mag(y[:,4][good]) #mag of positive I values
@@ -112,14 +108,52 @@ if __name__ == '__main__':
     plt.plot(h,a,'ko', alpha=0.5, label='Mag from +g-(+i)')  
     plt.plot(n,b, 'ro', alpha=0.4, label='Mag from +g-(-i)')
     plt.plot(o,c, 'ro', alpha=0.4, label='Mag from -g-(+i)')
-    plt.xlim(0,3)
-    plt.ylim(25,159)
+    plt.xlim(0,4)
+    plt.ylim(0,160)
     plt.xlabel('G-I Magnitude')
     plt.ylabel('Half-Light Radius (arcsec)')
     plt.savefig('g_minus_i_vs_radius.png')
     plt.savefig('g_minus_i_vs_radius.png')
 
-
+#i-magnitude vs. g-i color
+fig4= plt.figure(4)
+if __name__ == '__main__':
+    data = pyf.open("../data/nsa-short.fits.gz")[1].data
+    y=data.field('SERSICFLUX')
+    good=np.array([True for x in data.field('RA')])
+    indx1=np.where(y[:,4] < 0)
+    good[indx1]=False
+    indx2=np.where(y[:,2] < 0)
+    good[indx2]=False
+    indx3=np.where(y[:,4] > 0)
+    def Mag(y): 
+        return 22.5-2.5*np.log10(abs(y)) 
+    i=Mag(y[:,4][good]) #mag of positive I values
+    
+    g=Mag(y[:,2][good]) #mag of positive G values
+    
+    j=Mag(y[:,4][indx1]) #mag of negative I values
+    
+    k=Mag(y[:,2][indx2]) #mag of negative G values 
+    
+    l=Mag(y[:,4][indx2]) #mag of I values corresponding to neg G values
+    
+    m=Mag(y[:,2][indx1]) #mag of G values corresponding to neg I values
+    a=y[good]
+    b=y[indx1]
+    c=y[indx2]
+    h=g-i
+    n=m-j
+    o=k-l
+    plt.plot(i,h,'ko', alpha=0.6, label='Mag from +g-(+i)')  
+    plt.plot(j,n, 'mo', alpha=0.5, label='Mag from +g-(-i)')
+    plt.plot(l,o, 'mo', alpha=0.5, label='Mag from -g-(+i)')
+    plt.xlabel('i-magnitude')
+    plt.ylabel('g-i color')
+    plt.xlim(6,21)
+    plt.ylim(0,4)
+    plt.savefig('imag_vs_g_minus_i_color.png')
+    plt.legend()
  
  
     
