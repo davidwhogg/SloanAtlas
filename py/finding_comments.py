@@ -23,12 +23,5 @@ if __name__ == '__main__':
     c=bad(x[:,4]) #selecting the comments for negative i-flux. there are 40
     e=bad(x[:,2]) #selecting the comments for negative g-flux. there are 21
     
-        
-
-   
-    
-    
- 
-
 #u g r i z
     
