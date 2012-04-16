@@ -40,14 +40,13 @@ if __name__ == '__main__':
     y=data.field('DEC')
     plt.xlabel('Right Ascension')
     plt.ylabel('Declination')
-    plt.plot(x,y,'.m')
+    plt.plot(x,y,'ko', alpha=0.5)
     plt.xlim(-5,360)
     plt.ylim(-30,90)
     plt.savefig('RA_DEC.png')
   
 #scatter plot of radii vs. magnitude calculated using i-band flux
-#magnitude originating from negative flux values are show in red
-#magnitude originiated from positive values are shown in black
+
 fig2 = plt.figure(2)
 if __name__ == '__main__':
     data = pyf.open("../data/nsa-short.fits.gz")[1].data
@@ -56,6 +55,9 @@ if __name__ == '__main__':
     good=np.array([True for x in data.field('RA')])
     indx=np.where(y[:,4] < 0)
     good[indx]=False
+    indx1=np.where(z > 158)
+    good[indx1]=False
+    c=z[indx1]
     m=z[good]
     def iMag1(y):
         return 22.5-2.5*np.log10(np.abs(y))  
@@ -63,15 +65,16 @@ if __name__ == '__main__':
         return 22.5-2.5*np.log10(y)
     g=iMag2(y[:,4][good])
     f=iMag1(y[:,4][indx])
+    h=iMag1(y[:,4][indx1])
     a=z[good]
     b=z[indx]
-    plt.plot(g,a,'bo', alpha=0.5, label='mag from positive flux')
-    plt.plot(f,b,'go', alpha=0.5, label='mag from negative flux')
+    plt.plot(g,a,'ko', alpha=0.5, label='mag from positive flux')
+    plt.plot(f,b,'mo', alpha=0.5, label='mag from negative flux')
+    plt.plot(h,c,'mo', alpha=0.5, label='mag from radius > 158')
     plt.ylabel('Half-Light Radius (arcsec)')
     plt.xlabel('I Magnitude')  
     plt.xlim(7,23)
-    plt.ylim(0,160)
-    plt.legend()
+    plt.ylim(0,161)
     plt.savefig('radius_imag.png')
   
     
@@ -86,6 +89,8 @@ if __name__ == '__main__':
     good[indx1]=False
     indx2=np.where(y[:,2] < 0)
     good[indx2]=False
+    indx3=np.where(z > 158)
+    good[indx3]=False
     def Mag(y): 
         return 22.5-2.5*np.log10(abs(y)) 
     i=Mag(y[:,4][good]) #mag of positive I values
@@ -99,21 +104,30 @@ if __name__ == '__main__':
     l=Mag(y[:,4][indx2]) #mag of I values corresponding to neg G values
     
     m=Mag(y[:,2][indx1]) #mag of G values corresponding to neg I values
+    
+    p=Mag(y[:,4][indx3]) # mag of I values that correspond to r > 158 
+    
+    q=Mag(y[:,2][indx3]) # mag of G values that correspond to r > 158
+
     a=z[good]
     b=z[indx1]
     c=z[indx2]
+    d=z[indx3]
+
     h=g-i
     n=m-j
     o=k-l
+    r=q-p
     plt.plot(h,a,'ko', alpha=0.5, label='Mag from +g-(+i)')  
-    plt.plot(n,b, 'ro', alpha=0.4, label='Mag from +g-(-i)')
-    plt.plot(o,c, 'ro', alpha=0.4, label='Mag from -g-(+i)')
+    plt.plot(n,b, 'mo', alpha=0.5, label='Mag from +g-(-i)')
+    plt.plot(o,c, 'mo', alpha=0.5, label='Mag from -g-(+i)')
+    plt.plot(r, d, 'mo', alpha=0.5, label='Mag from r > 158')
     plt.xlim(0,4)
-    plt.ylim(0,160)
+    plt.ylim(0,161)
     plt.xlabel('G-I Magnitude')
     plt.ylabel('Half-Light Radius (arcsec)')
     plt.savefig('g_minus_i_vs_radius.png')
-    plt.savefig('g_minus_i_vs_radius.png')
+    
 
 #i-magnitude vs. g-i color
 fig4= plt.figure(4)
@@ -145,7 +159,7 @@ if __name__ == '__main__':
     h=g-i
     n=m-j
     o=k-l
-    plt.plot(i,h,'ko', alpha=0.6, label='Mag from +g-(+i)')  
+    plt.plot(i,h,'ko', alpha=0.5, label='Mag from +g-(+i)')  
     plt.plot(j,n, 'mo', alpha=0.5, label='Mag from +g-(-i)')
     plt.plot(l,o, 'mo', alpha=0.5, label='Mag from -g-(+i)')
     plt.xlabel('i-magnitude')
