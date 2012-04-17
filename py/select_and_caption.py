@@ -61,10 +61,10 @@ if __name__ == '__main__':
 
     plt.xlabel('Right Ascension')
     plt.ylabel('Declination')
-    plt.plot(x,y,'ko', alpha=0.5)
-    plt.plot(x2, y2, 'mo', alpha=0.5)
-    plt.plot(x3,y3,'mo',alpha=0.5)
-    plt.plot(x4,y4,'mo',alpha=0.5)
+    plt.plot(x2, y2, 'm.', alpha=0.5)
+    plt.plot(x3,y3,'m.',alpha=0.5)
+    plt.plot(x4,y4,'m.',alpha=0.5)
+    plt.plot(x,y,'k.', alpha=0.5)
     plt.xlim(-5,360)
     plt.ylim(-30,90)
     plt.savefig('RA_DEC.png')
@@ -91,11 +91,11 @@ if __name__ == '__main__':
     h=iMag1(y[:,4][indx1])
     a=z[good]
     b=z[indx]
-    plt.plot(g,a,'ko', alpha=0.5, label='mag from positive flux')
-    plt.plot(f,b,'mo', alpha=0.5, label='mag from negative flux')
-    plt.plot(h,c,'mo', alpha=0.5, label='mag from radius > 158')
+    plt.plot(f,b,'m.', alpha=0.5, label='mag from negative flux')
+    plt.plot(h,c,'m.', alpha=0.5, label='mag from radius > 158')
+    plt.plot(g,a,'k.', alpha=0.5, label='mag from positive flux')
     plt.ylabel('Half-Light Radius (arcsec)')
-    plt.xlabel('I Magnitude')  
+    plt.xlabel(r"$i$ (mag)")  
     plt.xlim(7,23)
     plt.ylim(0,180)
     plt.savefig('radius_imag.png')
@@ -140,14 +140,15 @@ if __name__ == '__main__':
     h=g-i
     n=m-j
     o=k-l
-    r=q-p
-    plt.plot(h,a,'ko', alpha=0.5, label='Mag from +g-(+i)')  
-    plt.plot(n,b, 'mo', alpha=0.5, label='Mag from +g-(-i)')
-    plt.plot(o,c, 'mo', alpha=0.5, label='Mag from -g-(+i)')
-    plt.plot(r, d, 'mo', alpha=0.5, label='Mag from r > 158')
+    r=q-p  
+    
+    plt.plot(n,b, 'm.', alpha=0.5, label='Mag from +g-(-i)')
+    plt.plot(o,c, 'm.', alpha=0.5, label='Mag from -g-(+i)')
+    plt.plot(r, d, 'm.', alpha=0.5, label='Mag from r > 158')
+    plt.plot(h,a,'k.', alpha=0.5, label='Mag from +g-(+i)')
     plt.xlim(0,4)
     plt.ylim(0,180)
-    plt.xlabel('G-I Magnitude')
+    plt.xlabel(r"$g-i$ color (mag)")
     plt.ylabel('Half-Light Radius (arcsec)')
     plt.savefig('g_minus_i_vs_radius.png')
     
@@ -188,18 +189,75 @@ if __name__ == '__main__':
     o=k-l
     r=q-p
     
-    plt.plot(i,h,'ko', alpha=0.5, label='Mag from +g-(+i)')  
-    plt.plot(j,n, 'mo', alpha=0.5, label='Mag from +g-(-i)')
-    plt.plot(l,o, 'mo', alpha=0.5, label='Mag from -g-(+i)')
-    plt.plot(p,r, 'mo', alpha=0.5, label='Mag from r >158')
-    plt.xlabel('i-magnitude')
-    plt.ylabel('g-i color')
+    plt.plot(p,r, 'm.', alpha=0.5, label='Mag from r >158')
+    plt.plot(j,n, 'm.', alpha=0.5, label='Mag from +g-(-i)')
+    plt.plot(l,o, 'm.', alpha=0.5, label='Mag from -g-(+i)')
+    plt.plot(i,h,'k.', alpha=0.5, label='Mag from +g-(+i)')  
+    plt.xlabel(r"$i$ (mag)")
+    plt.ylabel(r"$g-i$ color (mag)")
     plt.xlim(6,21)
     plt.ylim(0,4)
     plt.savefig('imag_vs_g_minus_i_color.png')
     plt.legend()
  
      
+#i-band surface brightness vs. g-i color
+fig5=plt.figure(5)
+if __name__ == '__main__':
+    data = pyf.open("../data/nsa-short.fits.gz")[1].data
+    y=data.field('SERSICFLUX')
+    z = data.field('SERSIC_TH50')
+    good=np.array([True for x in data.field('RA')])
+    indx1=np.where(y[:,4] < 0)
+    good[indx1]=False
+    indx2=np.where(y[:,2] < 0)
+    good[indx2]=False
+    indx3=np.where(z > 158)
+    good[indx3]=False
+    def Mag(y): 
+        return 22.5-2.5*np.log10(abs(y)) 
+        
+    def SB(y):
+        return 2.5*np.log10(2*np.pi*y)
+           
+    i=Mag(y[:,4][good]) #mag of positive I values
     
+    g=Mag(y[:,2][good]) #mag of positive G values
+    
+    j=Mag(y[:,4][indx1]) #mag of negative I values
+    
+    k=Mag(y[:,2][indx2]) #mag of negative G values 
+    
+    l=Mag(y[:,4][indx2]) #mag of I values corresponding to neg G values
+    
+    m=Mag(y[:,2][indx1]) #mag of G values corresponding to neg I values
+    
+    p=Mag(y[:,4][indx3]) # mag of I values that correspond to r > 158 
+    
+    q=Mag(y[:,2][indx3]) # mag of G values that correspond to r > 158
+    
+    h=g-i
+    n=m-j
+    o=k-l
+    r=q-p
+   
+    sb=i+SB(z[good]) #i-sb from good values
+    
+    sb1=p+SB(z[indx3]) #i-sb from bad r values
+    
+    sb2=j+SB(z[indx1])#i-sb from negative i values 
+   
+    sb3=l+SB(z[indx2])#i-sb from negative g values
+    
+    plt.plot(sb1, r, 'm.', alpha=0.5, label='sb of r > 158')
+    plt.plot(sb2,n,'m.',alpha=0.5, label='sb of neg i-flux')
+    plt.plot(sb3, o, 'm.', alpha=0.5, label='sb of neg g-flux')
+    plt.plot(sb, h, 'k.', alpha=0.5, label='sb of good values')
+    plt.ylim(0,4)
+    plt.xlim(14,27)
+    plt.xlabel(r"$i$ Surface Brightness(mag/arcsec$^2$)")
+    plt.ylabel(r"$g-i$ color (mag)")
+    #plt.legend()
+    plt.savefig('i_surfacebrightness_vs_color.png')  
 plt.show()  
 
