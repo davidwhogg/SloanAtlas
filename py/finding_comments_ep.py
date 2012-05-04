@@ -53,13 +53,11 @@ for theid in y[good==False]:
 
 nocom = [t for t in xrange(len(y[good==False])) if y[good==False][t] not in nsaid]
 for t in nocom:    
-    print 'NSAID',y[t]
-    print 'IAU:',w[t]
-    print 'flux:',x[t]
-    print 'radius:',z[t]
+    print 'NSAID',y[good==False][t]
+    print 'IAU:',w[good==False][t]
+    print 'flux:',x[good==False][t]
+    print 'radius:',z[good==False][t]
     print 'comment: NONE '
-    #declination=[t for t in xrange(len(b)) if y[t] not in nsaid]
-    #for t in declination:
     if b[t] > 0: print 'http://sdss.physics.nyu.edu/mblanton/v0/detect/v0_1/%sh/p%s/%s/%s.jpg' % (w[t][1:3],w[t][11:13],w[t],w[t])
     else: print 'http://sdss.physics.nyu.edu/mblanton/v0/detect/v0_1/%sh/m%s/%s/%s.jpg' % (w[t][1:3],w[t][11:13],w[t],w[t])
     print #space#
