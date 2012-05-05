@@ -21,9 +21,6 @@ if __name__ == '__main__':
     good[indx2]=False
     good[indx3]=False
 
-
-
-                
 nsa = read_yanny('comments.par')
 comments = nsa['COMMENT']      
 comment = comments['comment']
@@ -31,9 +28,9 @@ nsauser = comments['nsauser']
 nsaid   = comments['nsaid']
 time    = comments['time']  
 
-for theid in y[good==False]:
+for theid in y[good]:
     inds = [i for i in xrange(len(nsaid)) if nsaid[i] == theid]
-
+       
     for i in inds:
         print 'row', i
         print 'NSAID', nsaid[i]
@@ -51,28 +48,13 @@ for theid in y[good==False]:
             else: print 'http://sdss.physics.nyu.edu/mblanton/v0/detect/v0_1/%sh/m%s/%s/%s.jpg' % (w[s][1:3],w[s][11:13],w[s],w[s])
             print #space#
 
-nocom = [t for t in xrange(len(y[good==False])) if y[good==False][t] not in nsaid]
+nocom = [t for t in xrange(len(y[good])) if y[good][t] not in nsaid]
 for t in nocom:    
-    print 'NSAID',y[good==False][t]
-    print 'IAU:',w[good==False][t]
-    print 'flux:',x[good==False][t]
-    print 'radius:',z[good==False][t]
+    print 'NSAID',y[good][t]
+    print 'IAU:',w[good][t]
+    print 'flux:',x[good][t]
+    print 'radius:',z[good][t]
     print 'comment: NONE '
-    if b[t] > 0: print 'http://sdss.physics.nyu.edu/mblanton/v0/detect/v0_1/%sh/p%s/%s/%s.jpg' % (w[good==False][t][1:3],w[good==False][t][11:13],w[good==False][t],w[good==False][t])
-    else: print 'http://sdss.physics.nyu.edu/mblanton/v0/detect/v0_1/%sh/m%s/%s/%s.jpg' % (w[good==False][t][1:3],w[good==False][t][11:13],w[good==False][t],w[good==False][t])
+    if b[t] > 0: print 'http://sdss.physics.nyu.edu/mblanton/v0/detect/v0_1/%sh/p%s/%s/%s.jpg' % (w[t][1:3],w[t][11:13],w[t],w[t])
+    else: print 'http://sdss.physics.nyu.edu/mblanton/v0/detect/v0_1/%sh/m%s/%s/%s.jpg' % (w[t][1:3],w[t][11:13],w[t],w[t])
     print #space#
-
-#25268,29809-nsaid--uses the integer before the dec value given in IAU name, its when the following two numbers are 00
-#nsaid 32995- J123454.85+512330.8 uses 50 instead of 51
-
-    
-
-    
-        
-
-    
-    
- 
-
-#u g r i z
-    
