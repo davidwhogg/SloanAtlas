@@ -14,8 +14,8 @@ if __name__ == '__main__':
     a=data.field('RA')
     b=data.field('DEC')
     good=np.array([True for a in data.field('RA')])
-    indx1=np.where(x[:,2] < 0)
-    indx2=np.where(x[:,4] < 0)
+    indx1=np.where(x[:,1] <= 0)
+    indx2=np.where(x[:,3] <= 0)
     indx3=np.where(z > 158)
     good[indx1]=False
     good[indx2]=False
@@ -55,6 +55,6 @@ for t in nocom:
     print 'flux:',x[good][t]
     print 'radius:',z[good][t]
     print 'comment: NONE '
-    if b[t] > 0: print 'http://sdss.physics.nyu.edu/mblanton/v0/detect/v0_1/%sh/p%s/%s/%s.jpg' % (w[t][1:3],w[t][11:13],w[t],w[t])
-    else: print 'http://sdss.physics.nyu.edu/mblanton/v0/detect/v0_1/%sh/m%s/%s/%s.jpg' % (w[t][1:3],w[t][11:13],w[t],w[t])
+    if b[good][t] > 0: print 'http://sdss.physics.nyu.edu/mblanton/v0/detect/v0_1/%sh/p%s/%s/%s.jpg' % (w[good][t][1:3],w[good][t][11:13],w[good][t],w[good][t])
+    else: print 'http://sdss.physics.nyu.edu/mblanton/v0/detect/v0_1/%sh/m%s/%s/%s.jpg' % (w[good][t][1:3],w[good][t][11:13],w[good][t],w[good][t])
     print #space#
