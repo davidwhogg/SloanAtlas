@@ -14,8 +14,8 @@ if __name__ == '__main__':
     a=data.field('RA')
     b=data.field('DEC')
     good=np.array([True for a in data.field('RA')])
-    indx1=np.where(x[:,2] < 0)
-    indx2=np.where(x[:,4] < 0)
+    indx1=np.where(x[:,3] <= 0)
+    indx2=np.where(x[:,1] <= 0)
     indx3=np.where(z > 158)
     good[indx1]=False
     good[indx2]=False
@@ -58,12 +58,11 @@ for t in nocom:
     print 'flux:',x[good==False][t]
     print 'radius:',z[good==False][t]
     print 'comment: NONE '
-    if b[t] > 0: print 'http://sdss.physics.nyu.edu/mblanton/v0/detect/v0_1/%sh/p%s/%s/%s.jpg' % (w[good==False][t][1:3],w[good==False][t][11:13],w[good==False][t],w[good==False][t])
+    if b[good==False][t] > 0: print 'http://sdss.physics.nyu.edu/mblanton/v0/detect/v0_1/%sh/p%s/%s/%s.jpg' % (w[good==False][t][1:3],w[good==False][t][11:13],w[good==False][t],w[good==False][t])
     else: print 'http://sdss.physics.nyu.edu/mblanton/v0/detect/v0_1/%sh/m%s/%s/%s.jpg' % (w[good==False][t][1:3],w[good==False][t][11:13],w[good==False][t],w[good==False][t])
     print #space#
 
-#25268,29809-nsaid--uses the integer before the dec value given in IAU name, its when the following two numbers are 00
-#nsaid 32995- J123454.85+512330.8 uses 50 instead of 51
+
 
     
 
