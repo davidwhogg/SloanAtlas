@@ -39,6 +39,8 @@ if __name__ == '__main__':
     b=data.field('DEC')
     y = data.field('SERSICFLUX')
     z = data.field('SERSIC_TH50')
+    p50=data.field('PETROTH50')
+    p90=data.field('PETROTH90')
     good=np.array([True for x in data.field('RA')])
     indx1=np.where(y[:,3] <= 0)
     good[indx1]=False
@@ -53,6 +55,9 @@ if __name__ == '__main__':
         return 22.5-2.5*np.log10(y)    
     def SB(y):
         return 2.5*np.log10(2*np.pi*y)
+    def concentration(x,y):
+    	return x/y
+    	
     #RAs    
     x1=a[good]
     x2=a[indx1]
@@ -76,6 +81,12 @@ if __name__ == '__main__':
     c=z[indx2]
     d=z[indx3]
     
+    #concentrations
+    c1=concentration(p90[good],p50[good])
+    c2=concentration(p90[indx1],p50[indx1])
+    c3=concentration(p90[indx2],p50[indx2])
+    c4=concentration(p90[indx3],p50[indx3])
+    
     #g & i magnitudes
     i=Mag1(y[:,4][good]) #mag of positive I values
     g=Mag1(y[:,2][good]) #mag of positive G values
@@ -97,7 +108,8 @@ if __name__ == '__main__':
     sb1=p+SB(z[indx3]) #i-sb from bad r values
     sb2=j+SB(z[indx1])#i-sb from negative i values 
     sb3=l+SB(z[indx2])#i-sb from negative g values
-    
+
+
 #scatter plot of RA vs. DEC 
 fig1 = plt.figure(1)
 plt.xlabel('Right Ascension')
@@ -172,6 +184,17 @@ plt.axvline(x=17.5609, ymin=.626765, ymax=4, color='r')
 plt.axvline(x=18.5066, ymin=.626765, ymax=4, color='r')
 plt.axvline(x=19.2279, ymin=.626765,ymax=4, color='r')
 plt.savefig('i_surfacebrightness_vs_color.png')
-    
+
+#radius vs. radius concentration
+fig6=plt.figure(6)
+plt.plot(a,c1,'k.',alpha=0.5, label='concentration from good values')
+plt.plot(b,c2,'m.',alpha=0.5,label='concentration from neg i-flux')
+plt.plot(c,c3,'m.', alpha=0.5, label='concentration from neg g-flux')
+plt.plot(d,c4, 'm.', alpha=0.5, label='concentration from r > 158')
+plt.xlabel('Half-Light Radius (arcsec)')
+plt.ylabel('Concentration (p90/p50)')
+plt.xlim(29,161)
+plt.ylim(0,4)   
+plt.savefig('radius_vs_concentration.png') 
 plt.show()   
 
