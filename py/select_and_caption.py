@@ -51,9 +51,7 @@ if __name__ == '__main__':
     print z[good].shape
     
     def Mag1(y):
-        return 22.5-2.5*np.log10(np.abs(y))  
-    def Mag2(y):
-        return 22.5-2.5*np.log10(y)    
+        return 22.5-2.5*np.log10(np.abs(y))     
     def SB(y):
         return 2.5*np.log10(2*np.pi*y)
     def concentration(x,y):
@@ -68,7 +66,7 @@ y1=b[good]
 badDec=b[good==False]
     
 #i-magnitudes    
-i1=Mag2(y[:,3][good])
+i1=Mag1(y[:,3][good])
 i2=Mag1(y[:,3][indx1])
 i3=Mag1(y[:,3][indx3])
     
