@@ -49,6 +49,7 @@ if __name__ == '__main__':
     indx3=np.where(z > 158)
     good[indx3]=False
     print z[good].shape
+    
     def Mag1(y):
         return 22.5-2.5*np.log10(np.abs(y))  
     def Mag2(y):
@@ -58,65 +59,46 @@ if __name__ == '__main__':
     def concentration(x,y):
     	return x/y
     	
-    #RAs    
-    x1=a[good]
-    x2=a[indx1]
-    x3=a[indx2]
-    x4=a[indx3]
+#RAs    
+x1=a[good]
+badRA=a[good==False]
     
-    #DECs
-    y1=b[good]
-    y2=b[indx1]
-    y3=b[indx2]
-    y4=b[indx3]
+#DECs
+y1=b[good]
+badDec=b[good==False]
     
-    #i-magnitudes    
-    i1=Mag2(y[:,3][good])
-    i2=Mag1(y[:,3][indx1])
-    i3=Mag1(y[:,3][indx3])
+#i-magnitudes    
+i1=Mag2(y[:,3][good])
+i2=Mag1(y[:,3][indx1])
+i3=Mag1(y[:,3][indx3])
     
-    #radii
-    a=z[good]
-    b=z[indx1]
-    c=z[indx2]
-    d=z[indx3]
+#radii
+a=z[good]
+badradii=z[good==False]
     
-    #concentrations
-    c1=concentration(p90[good],p50[good])
-    c2=concentration(p90[indx1],p50[indx1])
-    c3=concentration(p90[indx2],p50[indx2])
-    c4=concentration(p90[indx3],p50[indx3])
+#concentrations
+c1=concentration(p90[good],p50[good])
+badc=concentration(p90[good==False],p50[good==False])
     
-    #g & i magnitudes
-    i=Mag1(y[:,3][good]) #mag of positive I values
-    g=Mag1(y[:,1][good]) #mag of positive G values
-    j=Mag1(y[:,3][indx1]) #mag of negative I values
-    k=Mag1(y[:,1][indx2]) #mag of negative G values 
-    l=Mag1(y[:,3][indx2]) #mag of I values corresponding to neg G values
-    m=Mag1(y[:,1][indx1]) #mag of G values corresponding to neg I values
-    p=Mag1(y[:,3][indx3]) # mag of I values that correspond to r > 158 
-    q=Mag1(y[:,1][indx3]) # mag of G values that correspond to r > 158
+#g & i magnitudes
+i=Mag1(y[:,3][good]) #mag of positive I values
+g=Mag1(y[:,1][good]) #mag of positive G values
+badi=Mag1(y[:,3][good==False])
+badg=Mag1(y[:,1][good==False])
     
-	#colors
-	h=g-i #all positive colors
-	n1=m-j #+G-(-I)
-	o=k-l #-G-(+I)
-	r=q-p # bad colors from r > 158 
+#colors
+h=g-i #all positive colors
+badgi=badg-badi
 	
-	#i-surface brightnesses       
-	sb=i+SB(z[good]) #i-sb from good values
-	sb1=p+SB(z[indx3]) #i-sb from bad r values
-	sb2=j+SB(z[indx1])#i-sb from negative i values 
-	sb3=l+SB(z[indx2])#i-sb from negative g values
-
+#i-surface brightnesses       
+sb=i+SB(z[good]) #i-sb from good values
+badsb=badi+SB(badradii)
 
 #scatter plot of RA vs. DEC 
 fig1 = plt.figure(1)
 plt.xlabel('Right Ascension')
 plt.ylabel('Declination')
-plt.plot(x2, y2, 'm.', alpha=0.5)
-plt.plot(x3,y3,'m.',alpha=0.5)
-plt.plot(x4,y4,'m.',alpha=0.5)
+plt.plot(badRA,badDec,'m.',alpha=0.5)
 plt.plot(x1,y1,'k.', alpha=0.5)
 plt.xlim(-5,360)
 plt.ylim(-30,90)
@@ -124,8 +106,8 @@ plt.savefig('RA_DEC.png')
     
 #scatter plot of radii vs. magnitude calculated using i-band flux
 fig2 = plt.figure(2)
-plt.plot(i2,b,'m.', alpha=0.5, label='mag from negative flux')
-plt.plot(i3,d,'m.', alpha=0.5, label='mag from radius > 158')
+plt.plot(i2,z[indx1],'m.', alpha=0.5, label='mag from negative flux')
+plt.plot(i3,z[indx3],'m.', alpha=0.5, label='mag from radius > 158')
 plt.plot(i1,a,'k.', alpha=0.5, label='mag from positive flux')
 plt.ylabel('Half-Light Radius (arcsec)')
 plt.xlabel(r"$i$ (mag)")  
@@ -135,10 +117,8 @@ plt.savefig('radius_imag.png')
 
 #G-I color vs. radius
 fig3 = plt.figure(3)
-plt.plot(n1,b, 'm.', alpha=0.5, label='Mag from +g-(-i)')
-plt.plot(o,c, 'm.', alpha=0.5, label='Mag from -g-(+i)')
-plt.plot(r, d, 'm.', alpha=0.5, label='Mag from r > 158')
-plt.plot(h,a,'k.', alpha=0.5, label='Mag from +g-(+i)')
+plt.plot(badgi,badradii, 'm.', alpha=0.5, label='Color from bad fluxes')
+plt.plot(h,a,'k.', alpha=0.5, label='Color from +g-(+i)')
 plt.xlim(0,6)
 plt.ylim(0,180)
 plt.xlabel(r"$g-i$ color (mag)")
@@ -147,22 +127,17 @@ plt.savefig('g_minus_i_vs_radius.png')
     
 #i-magnitude vs. g-i color
 fig4= plt.figure(4)
-plt.plot(p,r, 'm.', alpha=0.5, label='Mag from r >158')
-plt.plot(j,n1, 'm.', alpha=0.5, label='Mag from +g-(-i)')
-plt.plot(l,o, 'm.', alpha=0.5, label='Mag from -g-(+i)')
-plt.plot(i,h,'k.', alpha=0.5, label='Mag from +g-(+i)')  
+plt.plot(badi,badgi, 'm.', alpha=0.5, label='bad')
+plt.plot(i,h,'k.', alpha=0.5, label='good')  
 plt.xlabel(r"$i$ (mag)")
 plt.ylabel(r"$g-i$ color (mag)")
 plt.xlim(8,21)
 plt.ylim(0,6)
-plt.legend()
 plt.savefig('imag_vs_g_minus_i_color.png')
  
 #i-band surface brightness vs. g-i color
 fig5=plt.figure(5)
-plt.plot(sb1, r, 'm.', alpha=0.5, label='sb of r > 158')
-plt.plot(sb2,n1,'m.',alpha=0.5, label='sb of neg i-flux')
-plt.plot(sb3, o, 'm.', alpha=0.5, label='sb of neg g-flux')
+plt.plot(badsb, badgi, 'm.', alpha=0.5, label='bad sb')
 plt.plot(sb, h, 'k.', alpha=0.5, label='sb of good values')
 plt.ylim(0,6)
 plt.xlim(16,28)
@@ -191,14 +166,12 @@ plt.savefig('i_surfacebrightness_vs_color.png')
 
 #radius vs. radius concentration
 fig6=plt.figure(6)
-plt.plot(a,c1,'k.',alpha=0.5, label='concentration from good values')
-plt.plot(b,c2,'m.',alpha=0.5,label='concentration from neg i-flux')
-plt.plot(c,c3,'m.', alpha=0.5, label='concentration from neg g-flux')
-plt.plot(d,c4, 'm.', alpha=0.5, label='concentration from r > 158')
+plt.plot(badradii,badc, 'm.',alpha=0.5, label='bad')
+plt.plot(a,c1,'k.',alpha=0.5,label='good')
 plt.xlabel('Half-Light Radius (arcsec)')
 plt.ylabel('Concentration (p90/p50)')
 plt.xlim(29,161)
-plt.ylim(0,4)   
+plt.ylim(0,4) 
 plt.savefig('radius_vs_concentration.png') 
 plt.show()   
 
