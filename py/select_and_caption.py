@@ -39,6 +39,7 @@ if __name__ == '__main__':
     b=data.field('DEC')
     y = data.field('SERSICFLUX')
     z = data.field('SERSIC_TH50')
+    n=data.field('SERSIC_N')
     p50=data.field('PETROTH50')
     p90=data.field('PETROTH90')
     good=np.array([True for x in data.field('RA')])
@@ -71,26 +72,43 @@ i2=Mag1(y[:,3][indx1])
 i3=Mag1(y[:,3][indx3])
     
 #radii
-a=z[good]
+radii=z[good]
 badradii=z[good==False]
     
 #concentrations
-c1=concentration(p90[good],p50[good])
+c=concentration(p90[good],p50[good])
 badc=concentration(p90[good==False],p50[good==False])
     
-#g & i magnitudes
-i=Mag1(y[:,3][good]) #mag of positive I values
-g=Mag1(y[:,1][good]) #mag of positive G values
-badi=Mag1(y[:,3][good==False])
+#magnitudes
+u=Mag1(y[:,0][good])
+g=Mag1(y[:,1][good]) 
+r=Mag1(y[:,2][good])
+i=Mag1(y[:,3][good])
+badu=Mag1(y[:,0][good==False])
 badg=Mag1(y[:,1][good==False])
-    
+badr=Mag1(y[:,2][good==False])
+badi=Mag1(y[:,3][good==False])
+badz=Mag1(y[:,4][good==False]) 
+   
 #colors
-h=g-i #all positive colors
+gi=g-i #all positive colors
+ug=u-g
+gr=g-r
+ri=r-i 
+iz=i-Mag1(y[:,4][good]) 
 badgi=badg-badi
+badug=badu-badg
+badgr=badg-badr
+badri=badr-badi
+badiz=badi-badz 
 	
 #i-surface brightnesses       
-sb=i+SB(z[good]) #i-sb from good values
+sb=i+SB(z[good])
 badsb=badi+SB(badradii)
+
+#sersic index
+sersic=n[good]
+badsersic=n[good==False]
 
 #scatter plot of RA vs. DEC 
 fig1 = plt.figure(1)
@@ -106,7 +124,7 @@ plt.savefig('RA_DEC.png')
 fig2 = plt.figure(2)
 plt.plot(i2,z[indx1],'m.', alpha=0.5, label='mag from negative flux')
 plt.plot(i3,z[indx3],'m.', alpha=0.5, label='mag from radius > 158')
-plt.plot(i1,a,'k.', alpha=0.5, label='mag from positive flux')
+plt.plot(i1,radii,'k.', alpha=0.5, label='mag from positive flux')
 plt.ylabel('Half-Light Radius (arcsec)')
 plt.xlabel(r"$i$ (mag)")  
 plt.xlim(7,23)
@@ -116,7 +134,7 @@ plt.savefig('radius_imag.png')
 #G-I color vs. radius
 fig3 = plt.figure(3)
 plt.plot(badgi,badradii, 'm.', alpha=0.5, label='Color from bad fluxes')
-plt.plot(h,a,'k.', alpha=0.5, label='Color from +g-(+i)')
+plt.plot(gi,radii,'k.', alpha=0.5, label='Color from +g-(+i)')
 plt.xlim(0,6)
 plt.ylim(0,180)
 plt.xlabel(r"$g-i$ color (mag)")
@@ -126,7 +144,7 @@ plt.savefig('g_minus_i_vs_radius.png')
 #i-magnitude vs. g-i color
 fig4= plt.figure(4)
 plt.plot(badi,badgi, 'm.', alpha=0.5, label='bad')
-plt.plot(i,h,'k.', alpha=0.5, label='good')  
+plt.plot(i,gi,'k.', alpha=0.5, label='good')  
 plt.xlabel(r"$i$ (mag)")
 plt.ylabel(r"$g-i$ color (mag)")
 plt.xlim(8,21)
@@ -136,7 +154,7 @@ plt.savefig('imag_vs_g_minus_i_color.png')
 #i-band surface brightness vs. g-i color
 fig5=plt.figure(5)
 plt.plot(badsb, badgi, 'm.', alpha=0.5, label='bad sb')
-plt.plot(sb, h, 'k.', alpha=0.5, label='sb of good values')
+plt.plot(sb, gi, 'k.', alpha=0.5, label='sb of good values')
 plt.ylim(0,6)
 plt.xlim(16,28)
 plt.xlabel(r"$i$ Surface Brightness(mag/arcsec$^2$)")
@@ -165,11 +183,146 @@ plt.savefig('i_surfacebrightness_vs_color.png')
 #radius vs. radius concentration
 fig6=plt.figure(6)
 plt.plot(badradii,badc, 'm.',alpha=0.5, label='bad')
-plt.plot(a,c1,'k.',alpha=0.5,label='good')
+plt.plot(radii,c,'k.',alpha=0.5,label='good')
 plt.xlabel('Half-Light Radius (arcsec)')
 plt.ylabel('Concentration (p90/p50)')
 plt.xlim(29,161)
 plt.ylim(0,4) 
 plt.savefig('radius_vs_concentration.png') 
-plt.show()   
+ 
+#comparing data to blanton galaxy properties paper 2003 
+fig7=plt.figure(7,figsize=(8,8))
+plt.subplots_adjust(wspace=0,hspace=0)
+matplotlib.rcParams['font.size'] = 10
 
+plt.subplot(551)
+plt.plot(badug,badsersic,'m.',alpha=0.5,ms=1.5)
+plt.plot(ug,sersic,'k.',alpha=0.5,ms=1.5)
+plt.xlim(0,3)
+plt.ylim(0.5,5.5)
+plt.yticks([1,2,3,4,5],[1,2,3,4,5])
+plt.xlabel(r"$u-g$")
+plt.ylabel('n')
+
+plt.subplot(552)
+plt.tick_params(axis='both',labelbottom='off',labelleft='off')
+plt.plot(badgr,badsersic,'m.',alpha=0.5,ms=1.5)
+plt.plot(gr,sersic,'k.',alpha=0.5,ms=1.5)
+plt.xlim(0,1.2)
+plt.ylim(0.5,5.5)
+plt.xlabel(r"$g-r$")
+
+plt.subplot(553)
+plt.tick_params(axis='both',labelbottom='off',labelleft='off')
+plt.plot(badri,badsersic,'m.',alpha=0.5,ms=1.5)
+plt.plot(ri,sersic,'k.',alpha=0.5,ms=1.5)
+plt.xlim(0,0.6)
+plt.ylim(0.5,5.5)
+plt.xlabel(r"$r-i$")
+
+plt.subplot(554)
+plt.tick_params(axis='both',labelbottom='off',labelleft='off')
+plt.plot(badiz,badsersic,'k.',alpha=0.5,ms=1.5)
+plt.plot(iz,sersic,'k.',alpha=0.5,ms=1.5)
+plt.xlim(-0.4,0.6)
+plt.ylim(0.5,5.5)
+plt.xlabel(r"$i-z$")
+
+plt.subplot(555)
+plt.tick_params(axis='both',labelleft='off')
+plt.plot(badsb,badsersic,'m.',alpha=0.5,ms=1.5)
+plt.plot(sb,sersic,'k.',alpha=0.5,ms=1.5)
+plt.xlim(17,24)
+plt.xticks([18,20,22,24],[18,20,22,24])
+plt.ylim(0.5,5.5)
+plt.xlabel(r"$\mu_i$")
+
+plt.subplot(556)
+plt.plot(badug,badsb,'m.',alpha=0.5,ms=1.5)
+plt.plot(ug,sb,'k.',alpha=0.5,ms=1.5)
+plt.xlim(0,3)
+plt.ylim(17,24)
+plt.yticks([18,20,22,24],[18,20,22,24])
+plt.xlabel(r"$u-g$")
+plt.ylabel(r"$\mu_i$")
+
+plt.subplot(557)
+plt.tick_params(axis='both',labelbottom='off',labelleft='off')
+plt.plot(badgr,badsb,'m.',alpha=0.5,ms=1.5)
+plt.plot(gr,sb,'k.',alpha=0.5,ms=1.5)
+plt.xlim(0,1.2)
+plt.ylim(17,24)
+plt.xlabel(r"$g-r$")
+
+plt.subplot(558)
+plt.tick_params(axis='both',labelbottom='off',labelleft='off')
+plt.plot(badri,badsb,'m.',alpha=0.5,ms=1.5)
+plt.plot(ri,sersic,'k.',alpha=0.5,ms=1.5)
+plt.xlim(0,0.6)
+plt.ylim(17,24)
+plt.xlabel(r"$r-i$")
+
+plt.subplot(559)
+plt.tick_params(axis='both',labelleft='off')
+plt.plot(badiz,badsb,'k.',alpha=0.5,ms=1.5)
+plt.plot(iz,sb,'k.',alpha=0.5,ms=1.5)
+plt.xlim(-0.4,0.6)
+plt.xticks([-0.2,0.0,0.2,0.4],[-0.2,0.0,0.2,0.4])
+plt.ylim(17,24)
+plt.xlabel(r"$i-z$")
+
+plt.subplot(5,5,11)
+plt.plot(badug,badiz,'m.',alpha=0.5,ms=1.5)
+plt.plot(ug,iz,'k.',alpha=0.5,ms=1.5)
+plt.xlim(0,3)
+plt.ylim(-0.4,0.6)
+plt.yticks([-0.2,0.0,0.2,0.4],[-0.2,0.0,0.2,0.4])
+plt.xlabel(r"$u-g$")
+plt.ylabel(r"$i-z$")
+
+plt.subplot(5,5,12)
+plt.tick_params(axis='both',labelbottom='off',labelleft='off')
+plt.plot(badgr,badiz,'m.',alpha=0.5,ms=1.5)
+plt.plot(gr,iz,'k.',alpha=0.5,ms=1.5)
+plt.xlim(0,1.2)
+plt.ylim(-0.4,0.6)
+plt.xlabel(r"$g-r$")
+
+plt.subplot(5,5,13)
+plt.tick_params(axis='both',labelleft='off')
+plt.plot(badri,badiz,'m.',alpha=0.5,ms=1.5)
+plt.plot(ri,iz,'k.',alpha=0.5,ms=1.5)
+plt.xlim(0,0.6)
+plt.xticks([0.1,0.2,0.3,0.4,0.5],[0.1,0.2,0.3,0.4,0.5])
+plt.ylim(-0.4,0.6)
+plt.xlabel(r"$r-i$")
+
+plt.subplot(5,5,16)
+plt.plot(badug,badri,'m.',alpha=0.5,ms=1.5)
+plt.plot(ug,ri,'k.',alpha=0.5,ms=1.5)
+plt.xlim(0,3)
+plt.ylim(0,0.6)
+plt.yticks([0.1,0.2,0.3,0.4,0.5],[0.1,0.2,0.3,0.4,0.5])
+plt.xlabel(r"$u-g$")
+plt.ylabel(r"$r-i$")
+
+plt.subplot(5,5,17)
+plt.tick_params(axis='both',labelleft='off')
+plt.plot(badgr,badri,'m.',alpha=0.5,ms=1.5)
+plt.plot(gr,ri,'k.',alpha=0.5,ms=1.5)
+plt.xlim(0,1.2)
+plt.xticks([0.2,0.4,0.6,0.8,1.0],[0.2,0.4,0.6,0.8,1.0])
+plt.ylim(0,0.6)
+plt.xlabel(r"$g-r$")
+
+plt.subplot(5,5,21)
+plt.plot(badug,badgr,'m.',alpha=0.5,ms=1.5)
+plt.plot(ug,gr,'k.',alpha=0.5,ms=1.5)
+plt.xlim(0,3)
+plt.xticks([0.5,1.0,1.5,2.0,2.5],[0.5,1.0,1.5,2.0,2.5])
+plt.xlabel(r"$u-g$")
+plt.yticks([0.2,0.4,0.6,0.8,1.0],[0.2,0.4,0.6,0.8,1.0])
+plt.ylim(0,1.2)
+plt.ylabel(r"$g-r$")
+plt.savefig('comparison_to_Figure_7.png')
+plt.show() 
