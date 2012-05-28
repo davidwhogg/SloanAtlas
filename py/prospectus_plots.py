@@ -1,7 +1,7 @@
 #prospectus for any general galaxy
 #finds the good index of specified nsaid (given by t below..replaced 141119 and 1416)
-#edits the i-sb vs. color plot to place a yellow star where the galaxy is located (need the coordinates first)
-#edits the radius vs. concentration plot to place a cyan star where the galaxy is located (need coords)
+#edits the i-sb vs. color plot to place a yellow star where the galaxy is located 
+#edits the radius vs. concentration plot to place a cyan star where the galaxy is located 
 #finds text of important properties
 #compiles all into one plot (2 plots, galaxy pic, info)
 
