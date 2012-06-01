@@ -324,7 +324,7 @@ im=Image.open('random32_plot.png')
 plt.imshow(im,origin='lower')
 
 #text, get from randoms.log
-plt.figtext(0.15 ,.05, u'NSAID: 140377\nIAU Name: J115240.90+200856.9\nRA: 178.172597135\nDec: 20.1476017314\nRadius: 36.2855\nDflags: [64  0  0  0  0  0  0]\ncolors: 1.22829 3.36968 1.83345 0.901284\r magnitude: 15.8347\nComment:NONE')
+plt.figtext(0.15 ,.05, u'NSAID: 140377\nIAU Name: J115240.90+200856.9\nRA: 178.172597135\nDec: 20.1476017314\nRadius: 36.2855\nDflags: [64  0  0  0  0  0  0]\ncolors: 1.22829 3.36968 1.83345 0.901284\nr magnitude: 15.8347\nComment:NONE')
 plt.figtext(0.9,0.9,'random',color='gray')
 plt.suptitle('color sample 3, i-sb sample 2',size=18)
 plt.savefig('random32.pdf')
