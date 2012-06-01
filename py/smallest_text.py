@@ -1,4 +1,4 @@
-#prints prospectus information for 16 exemplars
+#prints prospectus information for 16 smallest
 import matplotlib
 import numpy as np
 import pylab as plt
