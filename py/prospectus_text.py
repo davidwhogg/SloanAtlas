@@ -41,6 +41,7 @@ u=Mag1(y[:,0][good])
 g=Mag1(y[:,1][good]) 
 r=Mag1(y[:,2][good])
 i=Mag1(y[:,3][good])
+zmag=Mag1(y[:,4][good])
 badu=Mag1(y[:,0][good==False])
 badg=Mag1(y[:,1][good==False])
 badr=Mag1(y[:,2][good==False])
@@ -76,8 +77,8 @@ for i in inds:
 		print 'IAU Name:', w[good][t]
 		print 'RA:', a[good][t]
 		print 'Dec:', b[good][t]
-		print 'Radius:',z[good][t], 'arcsec'
-		print 'Petrosian (90%):',(p90[good][t])/60, 'arcmin'
+		print 'Radius:',z[good][t],'arcsec'
+		print 'Petrosian (90%):',(p90[good][t])/60,'arcmin'
 		print 'Dflags:',f[good][t]
 		print 'colors:', ug[t], gr[t], ri[t], iz[t]
 		print 'r magnitude:',r[t]	
@@ -97,8 +98,8 @@ def nocomments(x):
 	print 'IAU Name:', w[good][t]
 	print 'RA:', a[good][t]
 	print 'Dec:', b[good][t]
-	print 'Radius:',z[good][t], 'arcsec'
-	print 'Petrosian (90%):',(p90[good][t])/60, 'arcmin'
+	print 'Radius:',z[good][t],'arcsec'
+	print 'Petrosian (90%):',(p90[good][t])/60,'arcmin'
 	print 'Dflags:',f[good][t]
 	print 'colors:', ug[t], gr[t], ri[t], iz[t]
 	print 'r magnitude:',r[t]
@@ -129,8 +130,8 @@ for i in inds:
 		print 'IAU Name:', w[good][t]
 		print 'RA:', a[good][t]
 		print 'Dec:', b[good][t]
-		print 'Radius:',z[good][t], 'arcsec'
-		print 'Petrosian (90%):',(p90[good][t])/60, 'arcmin'
+		print 'Radius:',z[good][t],'arcsec'
+		print 'Petrosian (90%):',(p90[good][t])/60,'arcmin'
 		print 'Dflags:',f[good][t]
 		print 'colors:', ug[t], gr[t], ri[t], iz[t]
 		print 'r magnitude:',r[t]	
@@ -200,3 +201,5 @@ for t in x3:
 	print e[good][t]
 	print 'Petrosian (90%):',(p90[good][t])/60, 'arcmin'
 	print''
+	
+print e[good][807],u[807],g[807],r[807],Mag1(y[:,3][good])[807],zmag[807]
