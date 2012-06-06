@@ -224,5 +224,5 @@ for t in x:
 	plt.ylabel(r"$g-r$")
 	plt.plot(ug[t],gr[t],'*',ms=9,markeredgecolor='red',markeredgewidth=0.9,markerfacecolor='none')
 	plt.suptitle('%s' % e[good][t]) 
-	plt.savefig('exemplar%2d_plot3.pdf' % k) 
+	plt.savefig('exemplar%02d_plot3.pdf' % k) 
 	#plt.show()
