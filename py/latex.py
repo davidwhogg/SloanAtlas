@@ -81,15 +81,14 @@ tex=r'''
 \begin{document}
 '''
 
-def allImages(title,nsaid2,samplename,t):
-	resize(nsaid2)
+def allImages(title,hubble,nsaid2,samplename,t):
 	page = r'''
 	\frame{
-	\textbf{%s}
-    \includegraphics[scale=0.20]{%s_.jpeg}
+	\textbf{%s}\hspace{100pt} \textit{title:%s} \\
+    \includegraphics[scale=0.19]{%s_.jpeg}
     \includegraphics[scale=0.25]{%s_plot3.pdf}\\
-    {\footnotesize %s image}
-    \newline NSAID: %s						
+    {\tiny %s image}
+    \newline NSAID: %s					
     \newline RA: %s
     \newline Dec: %s
 	\newline Radius (arcsec): %s
@@ -101,65 +100,65 @@ def allImages(title,nsaid2,samplename,t):
 	\newline nsauser: %s
 	\newline time: %s}'''
 	temp=''
-	
+	resize(nsaid2)
 	im1=Image.open("%s.jpg" %(nsaid2))
 	if int(nsaid2) in nsaid:
 		for i in range(len(nsaid)):
 			if nsaid[i]==int(nsaid2):
-				temp+= page % (title,nsaid2,samplename,im1.size,e[good][t],a[good][t], b[good][t],z[good][t],(p90[good][t])/60,f[good][t],ug[t], gr[t], ri[t], iz[t],r[t], comment[i],nsauser[i],time[i])
+				temp+= page % (title,hubble,nsaid2,samplename,im1.size, e[good][t],a[good][t], b[good][t],z[good][t],(p90[good][t])/60,f[good][t],ug[t], gr[t], ri[t], iz[t],r[t], comment[i],nsauser[i],time[i])
 	else:
-		temp=page % (title,nsaid2,samplename,im1.size,e[good][t],a[good][t], b[good][t],z[good][t],(p90[good][t])/60,f[good][t],ug[t], gr[t], ri[t], iz[t],r[t],'none','none','none')			
+		temp=page % (title,hubble,nsaid2,samplename,im1.size,e[good][t],a[good][t], b[good][t],z[good][t],(p90[good][t])/60,f[good][t],ug[t], gr[t], ri[t], iz[t],r[t],'none','none','none')			
 	return temp
     	
     	
-tex+=allImages('exemplar: color sample 0, i-sb sample 0', '88297','exemplar01',757)
-tex+=allImages('exemplar: color sample 0, i-sb sample 1', '158651','exemplar02',1882)
-tex+=allImages('exemplar: color sample 0, i-sb sample 2', '74038','exemplar03', 643)
-tex+=allImages('exemplar: color sample 0, i-sb sample 3', '143102', 'exemplar04',1568)
-tex+=allImages('exemplar: color sample 1, i-sb sample 0', '88298', 'exemplar05',758)
-tex+=allImages('exemplar: color sample 1, i-sb sample 1', '158585', 'exemplar06',1879)
-tex+=allImages('exemplar: color sample 1, i-sb sample 2', '31572' , 'exemplar07',256)
-tex+=allImages('exemplar: color sample 1, i-sb sample 3', '44000', 'exemplar08',352)
-tex+=allImages('exemplar: color sample 2, i-sb sample 0', '166141', 'exemplar09',2035)
-tex+=allImages('exemplar: color sample 2, i-sb sample 1', '126043', 'exemplar10',1018)
-tex+=allImages('exemplar: color sample 2, i-sb sample 2', '54244', 'exemplar11',445)
-tex+=allImages('exemplar: color sample 2, i-sb sample 3', '5029', 'exemplar12',40)
-tex+=allImages('exemplar: color smaple 3, i-sb sample 0', '83634', 'exemplar13',722)
-tex+=allImages('exemplar: color sample 3, i-sb sample 1', '162413', 'exemplar14',1982)
-tex+=allImages('exemplar: color sample 3, i-sb sample 2', '155176', 'exemplar15',1832)
-tex+=allImages('exemplar: color sample 3, i-sb sample 3', '139151', 'exemplar16',1335)
-tex+=allImages('smallest: color sample 0, i-sb sample 0', '141654', 'smallest01',1475)
-tex+=allImages('smallest: color sample 0, i-sb sample 1', '162575', 'smallest02',1986)
-tex+=allImages('smallest: color sample 0, i-sb sample 2', '165451', 'smallest03',2023)
-tex+=allImages('smallest: color sample 0, i-sb sample 3', '44545', 'smallest04',366)
-tex+=allImages('smallest: color sample 1, i-sb sample 0', '137237', 'smallest05',1297)
-tex+=allImages('smallest: color sample 1, i-sb sample 1', '129827', 'smallest06',1114)
-tex+=allImages('smallest: color sample 1, i-sb sample 2', '8756', 'smallest07',76)
-tex+=allImages('smallest: color sample 1, i-sb sample 3', '115565', 'smallest08',957)
-tex+=allImages('smallest: color sample 2, i-sb sample 0', '93093','smallest09',807)
-tex+=allImages('smallest: color sample 2, i-sb sample 1', '76778', 'smallest10',662)
-tex+=allImages('smallest: color sample 2, i-sb sample 2', '133790','smallest11',1221)
-tex+=allImages('smallest: color sample 2, i-sb sample 3', '66672', 'smallest12',554)
-tex+=allImages('smallest: color sample 3, i-sb sample 0', '141473', 'smallest13',1451)
-tex+=allImages('smallest: color sample 3, i-sb sample 1', '91658', 'smallest14',791)
-tex+=allImages('smallest: color sample 3, i-sb sample 2', '136051', 'smallest15',1273)
-tex+=allImages('smallest: color sample 3, i-sb sample  3', '98900', 'smallest16',844)
-tex+=allImages('random: color sample 0, i-sb sample 0', '142962', 'random01',1555)
-tex+=allImages('random: color sample 0, i-sb sample 1', '138272', 'random02',1317)
-tex+=allImages('random: color sample 0, i-sb sample 2', '69210', 'random03',604)
-tex+=allImages('random: color sample 0, i-sb sample 3', '28067', 'random04',227)
-tex+=allImages('random: color sample 1, i-sb sample 0', '154089', 'random05',1816)
-tex+=allImages('random: color sample 1, i-sb sample 1', '142446', 'random06',1525)
-tex+=allImages('random: color sample 1, i-sb sample 2', '146349', 'random07',1681)
-tex+=allImages('random: color sample 1, i-sb sample 3', '140045', 'random08',1358)
-tex+=allImages('random: color sample 2, i-sb sample 0', '149192','random09',1735)
-tex+=allImages('random: color sample 2, i-sb sample 1', '145871', 'random10',1666)
-tex+=allImages('random: color sample 2, i-sb sample 2', '157310','random11',1862)
-tex+=allImages('random: color sample 2, i-sb sample 3', '96631', 'random12',828)
-tex+=allImages('random: color sample 3, i-sb sample 0', '162027', 'random13',1963)
-tex+=allImages('random: color sample 3, i-sb sample 1', '140952', 'random14',1400)
-tex+=allImages('random: color sample 3, i-sb sample 2', '140377', 'random15',1374)
-tex+=allImages('random: color sample 3, i-sb sample  3', '155051', 'random16',1827)
+tex+=allImages('exemplar: color sample 0, i-sb sample 0','', '88297','exemplar01',757)
+tex+=allImages('exemplar: color sample 0, i-sb sample 1','', '158651','exemplar02',1882)
+tex+=allImages('exemplar: color sample 0, i-sb sample 2','', '74038','exemplar03', 643)
+tex+=allImages('exemplar: color sample 0, i-sb sample 3','', '143102', 'exemplar04',1568)
+tex+=allImages('exemplar: color sample 1, i-sb sample 0','', '88298', 'exemplar05',758)
+tex+=allImages('exemplar: color sample 1, i-sb sample 1','', '158585', 'exemplar06',1879)
+tex+=allImages('exemplar: color sample 1, i-sb sample 2','', '31572' , 'exemplar07',256)
+tex+=allImages('exemplar: color sample 1, i-sb sample 3','', '44000', 'exemplar08',352)
+tex+=allImages('exemplar: color sample 2, i-sb sample 0','', '166141', 'exemplar09',2035)
+tex+=allImages('exemplar: color sample 2, i-sb sample 1','', '126043', 'exemplar10',1018)
+tex+=allImages('exemplar: color sample 2, i-sb sample 2','', '54244', 'exemplar11',445)
+tex+=allImages('exemplar: color sample 2, i-sb sample 3','', '5029', 'exemplar12',40)
+tex+=allImages('exemplar: color smaple 3, i-sb sample 0','', '83634', 'exemplar13',722)
+tex+=allImages('exemplar: color sample 3, i-sb sample 1','', '162413', 'exemplar14',1982)
+tex+=allImages('exemplar: color sample 3, i-sb sample 2','', '155176', 'exemplar15',1832)
+tex+=allImages('exemplar: color sample 3, i-sb sample 3','', '139151', 'exemplar16',1335)
+tex+=allImages('smallest: color sample 0, i-sb sample 0','', '141654', 'smallest01',1475)
+tex+=allImages('smallest: color sample 0, i-sb sample 1','', '162575', 'smallest02',1986)
+tex+=allImages('smallest: color sample 0, i-sb sample 2','', '165451', 'smallest03',2023)
+tex+=allImages('smallest: color sample 0, i-sb sample 3','', '44545', 'smallest04',366)
+tex+=allImages('smallest: color sample 1, i-sb sample 0','', '137237', 'smallest05',1297)
+tex+=allImages('smallest: color sample 1, i-sb sample 1','', '129827', 'smallest06',1114)
+tex+=allImages('smallest: color sample 1, i-sb sample 2','', '8756', 'smallest07',76)
+tex+=allImages('smallest: color sample 1, i-sb sample 3','', '115565', 'smallest08',957)
+tex+=allImages('smallest: color sample 2, i-sb sample 0','', '93093','smallest09',807)
+tex+=allImages('smallest: color sample 2, i-sb sample 1','', '76778', 'smallest10',662)
+tex+=allImages('smallest: color sample 2, i-sb sample 2','', '133790','smallest11',1221)
+tex+=allImages('smallest: color sample 2, i-sb sample 3','', '66672', 'smallest12',554)
+tex+=allImages('smallest: color sample 3, i-sb sample 0','', '141473', 'smallest13',1451)
+tex+=allImages('smallest: color sample 3, i-sb sample 1','', '91658', 'smallest14',791)
+tex+=allImages('smallest: color sample 3, i-sb sample 2','', '136051', 'smallest15',1273)
+tex+=allImages('smallest: color sample 3, i-sb sample  3','', '98900', 'smallest16',844)
+tex+=allImages('random: color sample 0, i-sb sample 0','', '142962', 'random01',1555)
+tex+=allImages('random: color sample 0, i-sb sample 1','', '138272', 'random02',1317)
+tex+=allImages('random: color sample 0, i-sb sample 2','', '69210', 'random03',604)
+tex+=allImages('random: color sample 0, i-sb sample 3','', '28067', 'random04',227)
+tex+=allImages('random: color sample 1, i-sb sample 0','', '154089', 'random05',1816)
+tex+=allImages('random: color sample 1, i-sb sample 1','', '142446', 'random06',1525)
+tex+=allImages('random: color sample 1, i-sb sample 2','', '146349', 'random07',1681)
+tex+=allImages('random: color sample 1, i-sb sample 3','', '140045', 'random08',1358)
+tex+=allImages('random: color sample 2, i-sb sample 0','', '149192','random09',1735)
+tex+=allImages('random: color sample 2, i-sb sample 1','', '145871', 'random10',1666)
+tex+=allImages('random: color sample 2, i-sb sample 2','', '157310','random11',1862)
+tex+=allImages('random: color sample 2, i-sb sample 3','', '96631', 'random12',828)
+tex+=allImages('random: color sample 3, i-sb sample 0','', '162027', 'random13',1963)
+tex+=allImages('random: color sample 3, i-sb sample 1','', '140952', 'random14',1400)
+tex+=allImages('random: color sample 3, i-sb sample 2','', '140377', 'random15',1374)
+tex+=allImages('random: color sample 3, i-sb sample  3','', '155051', 'random16',1827)
 
 
 tex += r'\end{document}' + '\n'
