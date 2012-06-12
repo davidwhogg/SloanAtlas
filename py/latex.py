@@ -1,3 +1,4 @@
+#created prospectus plots (48) with tex formatting
 import matplotlib
 matplotlib.use('Agg')
 import numpy as np
@@ -5,7 +6,7 @@ import pylab as plt
 import pyfits as pyf
 import os
 from yanny import *
-
+import Image
 
 if __name__ == '__main__':
     data = pyf.open("../data/nsa-short.fits.gz")[1].data
@@ -37,7 +38,16 @@ def Mag1(y):
     return 22.5-2.5*np.log10(np.abs(y))     
 def SB(y):
     return 2.5*np.log10(2*np.pi*y)
-        
+def resize(x):
+	imagefile="%s.jpg" %(x)
+	im1=Image.open(imagefile)
+	width=640
+	height=640
+	im2=im1.resize((width,height),Image.ANTIALIAS)
+	#im2.show()
+	im3=im2.save("%s_.jpeg" %(x)) 
+	return im2
+	
 #magnitudes
 u=Mag1(y[:,0][good])
 g=Mag1(y[:,1][good]) 
@@ -72,12 +82,14 @@ tex=r'''
 '''
 
 def allImages(title,nsaid2,samplename,t):
+	resize(nsaid2)
 	page = r'''
 	\frame{
 	\textbf{%s}
-    \includegraphics[scale=0.20]{%s.jpg}
+    \includegraphics[scale=0.20]{%s_.jpeg}
     \includegraphics[scale=0.25]{%s_plot3.pdf}\\
-    NSAID: %s
+    {\footnotesize %s image}
+    \newline NSAID: %s						
     \newline RA: %s
     \newline Dec: %s
 	\newline Radius (arcsec): %s
@@ -89,16 +101,17 @@ def allImages(title,nsaid2,samplename,t):
 	\newline nsauser: %s
 	\newline time: %s}'''
 	temp=''
+	
+	im1=Image.open("%s.jpg" %(nsaid2))
 	if int(nsaid2) in nsaid:
 		for i in range(len(nsaid)):
 			if nsaid[i]==int(nsaid2):
-				temp+= page % (title,nsaid2,samplename,e[good][t],a[good][t], b[good][t],z[good][t],(p90[good][t])/60,f[good][t],ug[t], gr[t], ri[t], iz[t],r[t], comment[i],nsauser[i],time[i])
+				temp+= page % (title,nsaid2,samplename,im1.size,e[good][t],a[good][t], b[good][t],z[good][t],(p90[good][t])/60,f[good][t],ug[t], gr[t], ri[t], iz[t],r[t], comment[i],nsauser[i],time[i])
 	else:
-		temp=page % (title,nsaid2,samplename,e[good][t],a[good][t], b[good][t],z[good][t],(p90[good][t])/60,f[good][t],ug[t], gr[t], ri[t], iz[t],r[t],'none','none','none')			
+		temp=page % (title,nsaid2,samplename,im1.size,e[good][t],a[good][t], b[good][t],z[good][t],(p90[good][t])/60,f[good][t],ug[t], gr[t], ri[t], iz[t],r[t],'none','none','none')			
 	return temp
-    
-
-	
+    	
+    	
 tex+=allImages('exemplar: color sample 0, i-sb sample 0', '88297','exemplar01',757)
 tex+=allImages('exemplar: color sample 0, i-sb sample 1', '158651','exemplar02',1882)
 tex+=allImages('exemplar: color sample 0, i-sb sample 2', '74038','exemplar03', 643)
