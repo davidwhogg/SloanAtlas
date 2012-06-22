@@ -89,12 +89,12 @@ def find(t):
         if ra2 < a[good][t] < ra1 and  dec2 < b[good][t] < dec1:
             x=[type1[i],type2[i],type3[i], type4[i], type5[i], type6[i], type7[i]]  
             print x
-            classes=['elliptical','clockwise','anti-clockwise','edge-on','dont know' ,'merger', 'combined spiral']
+            classes=["elliptical","clockwise","anti-clockwise","edge-on","dont know" ,"merger", "combined spiral"]
             y=max(x)
             print y
-            z=[i for i in xrange(len(classes)) if y in x]
-            for i in z:
-                return y, classes[i]
+            for i in xrange(len(x)):
+                if x[i]==max(x): 
+                    return y, classes[i]
     return None
 
 	
