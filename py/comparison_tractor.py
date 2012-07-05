@@ -129,10 +129,8 @@ for ngc in ngcs:
     iz_colors.append(iz_corrected)
 
 #flux ratio
-    top=mag2flux(dev[3])
-    bottom=(mag2flux(dev[3])+mag2flux(exp[3])) 
-    print 'fr1',top,bottom
-    fluxratio=top/bottom
+    fluxratio=(mag2flux(dev[3]))/(mag2flux(dev[3])+mag2flux(exp[3])) 
+    print 'fr',fluxratio
     ratios.append(fluxratio)
 
 print ug_colors,gr_colors,ri_colors,iz_colors
