@@ -75,7 +75,6 @@ badri=badr-badi
 badiz=badi-badz 
 
 
-
 plt.plot(badgr,badri,'m.', alpha=0.5)
 plt.plot(gr, ri,'k.', alpha=0.5)
 plt.xlabel(r"$g-r$")
@@ -87,12 +86,9 @@ plt.plot(0.792,0.4623,'*',ms=12,markeredgecolor='green',markeredgewidth=1,marker
 plt.plot(.8657,.4770,'*',ms=12,markeredgecolor='red',markeredgewidth=1,markerfacecolor='none', label='741(r)')
 plt.plot(0.4213,0.203,'*',ms=12,markeredgecolor='blue',markeredgewidth=1,markerfacecolor='none', label='2552(b)')
 
-#plt.plot(,'*',ms=12,markeredgecolor='blue',markeredgewidth=1,markerfacecolor='none', label='4258')
-# RUN 4258 successfully and add in color marker
 plt.xlim(0,1.2)
 plt.ylim(-.1,0.8)
 plt.legend(loc='lower right')
 plt.savefig('colorplotcomparison.pdf')
-
 
 plt.show()
