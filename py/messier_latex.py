@@ -34,7 +34,6 @@ if __name__ == '__main__':
     good[indx3]=False
     print z[good].shape
 
-
 #fnugriz
 #0123456    
     def Mag1(y):
@@ -95,16 +94,6 @@ for ngc in ngcs:
     print tot
     pos=CG.getPosition()
     print pos
-    dev=CG.brightnessDev
-    exp = CG.brightnessExp
-
-
-#extinction values by filter for Sloan
-    sloanu=5.155
-    sloang=3.793
-    sloanr=2.751
-    sloani=2.086
-    sloanz=1.479
 
 #get extinction from SFD
     galactic=radectolb(pos[0],pos[1])
@@ -115,12 +104,12 @@ for ngc in ngcs:
     print corrected_mags
     tracgr=tot[1]-tot[2]
     tracri=tot[2]-tot[3]
-    print tracgr
-    print tracri
+#    print tracgr
+#    print tracri
     gr_corrected=corrected_mags[1]-corrected_mags[2]
     ri_corrected=corrected_mags[2]-corrected_mags[3]
-    print gr_corrected
-    print ri_corrected
+#    print gr_corrected
+#    print ri_corrected
 
     color1=[tracgr, gr_corrected]
     color2=[tracri, ri_corrected]
@@ -155,7 +144,6 @@ for ngc in ngcs:
     tracri=tot[2]-tot[3]
     plt.plot(tracgr,tracri,'*', ms=12, markeredgecolor='cyan',markeredgewidth=1,markerfacecolor='none')
 
-
 plt.subplot(122)
 plt.title('tractor with extinction')
 plt.plot(badgr,badri,'m.', alpha=0.5)
@@ -172,15 +160,6 @@ for ngc in ngcs:
     print tot
     pos=CG.getPosition()
     print pos
-    dev=CG.brightnessDev
-    print dev
-
-#extinction values by filter for Sloan
-    sloanu=5.155
-    sloang=3.793
-    sloanr=2.751
-    sloani=2.086
-    sloanz=1.479
 
 #get extinction from SFD
     galactic=radectolb(pos[0],pos[1])
@@ -189,8 +168,6 @@ for ngc in ngcs:
     correction=[x*sloanu,x*sloang,x*sloanr,x*sloani,x*sloanz]
     corrected_mags=map(operator.sub,tot,correction)
     print corrected_mags
-    tracgr=tot[1]-tot[2]
-    tracri=tot[2]-tot[3]
     gr_corrected=corrected_mags[1]-corrected_mags[2]
     ri_corrected=corrected_mags[2]-corrected_mags[3]
     plt.plot(gr_corrected,ri_corrected,'*', ms=10, markeredgecolor='orange',markeredgewidth=1,markerfacecolor='none')
@@ -243,10 +220,7 @@ label1='bad colors'
 label2='good colors'
 label3='all mags'
 label4='exp,total,dev'
-
 #plt.legend(label4, loc='lower right')
-
-
 plt.savefig('test_messier3.pdf')
 os.system('cp test_messier3.pdf public_html/messiercomparisons/')
 
@@ -264,11 +238,11 @@ for ngc in ngcs:
     print ngc
     CG=unpickle_from_file('ngc-%s.pickle'%(ngc)) 
     tot=CG.getBrightness()
-    print tot
+ #   print tot
     dev=CG.brightnessDev
-    print dev
+ #   print dev
     exp = CG.brightnessExp
-    print exp
+ #   print exp
 
     tracgr=tot[1]-tot[2]
     tracri=tot[2]-tot[3]
@@ -290,6 +264,57 @@ plt.legend((label3,label4,label5),loc='lower right')
 plt.savefig('test_messier4.pdf')
 os.system('cp test_messier4.pdf public_html/messiercomparisons/')
 
+
+fig5=plt.figure(5)
+plt.title('total, dev, and exp mags distribution with extinction')
+plt.plot(badgr,badri,'m.', alpha=0.5,label='_nolegend_')
+plt.plot(gr, ri,'k.', alpha=0.5,label='_nolegend_')
+plt.xlabel(r"$g-r$")
+plt.ylabel(r"$r-i$")
+plt.xlim(0,1.2)
+plt.ylim(-.1,0.8)
+
+for ngc in ngcs:
+    print ngc
+    CG=unpickle_from_file('ngc-%s.pickle'%(ngc)) 
+    tot=CG.getBrightness()
+#    print tot
+    dev=CG.brightnessDev
+#    print dev
+    exp = CG.brightnessExp
+#    print exp
+    
+#get extinction from SFD
+    galactic=radectolb(pos[0],pos[1])
+    print galactic
+    x=get_SFD_dust(galactic[0], galactic[1],dustmap='ebv',interpolate=True)
+    correction=[x*sloanu,x*sloang,x*sloanr,x*sloani,x*sloanz]
+    corrected_mags=map(operator.sub,tot,correction)
+    corrected_dev=map(operator.sub,dev,correction)
+    corrected_exp=map(operator.sub,exp,correction)
+#corrected total mags
+    gr_corrected=corrected_mags[1]-corrected_mags[2]
+    ri_corrected=corrected_mags[2]-corrected_mags[3]
+#corrected dev mags
+    gr_dev=corrected_dev[1]-corrected_dev[2]
+    ri_dev=corrected_dev[2]-corrected_dev[3]
+#corrected exp mags
+    gr_exp=corrected_exp[1]-corrected_exp[2]
+    ri_exp=corrected_exp[2]-corrected_exp[3]
+   
+    plt.plot(gr_corrected,ri_corrected,'*', linestyle='-', color='c',ms=10, markeredgecolor='c',markeredgewidth=1,markerfacecolor='none')     
+    plt.plot(gr_dev,ri_dev,'s', linestyle='-', color='y',ms=10, markeredgecolor='y',markeredgewidth=1,markerfacecolor='none')     
+    plt.plot(gr_exp,ri_exp,'^',linestyle='-', color='r', ms=10, markeredgecolor='r',markeredgewidth=1,markerfacecolor='none')     
+
+label1='bad colors'
+label2='good colors'
+label3='total mags'
+label4='dev mags'
+label5='exp mags'   
+plt.legend((label3,label4,label5),loc='lower right')
+plt.savefig('test_messier5.pdf')
+os.system('cp test_messier5.pdf public_html/messiercomparisons/')
+
 tex=r'''
 \documentclass[8pt]{beamer}
 \usepackage{helvet}
@@ -307,9 +332,12 @@ tex=r'''
 \frame{
 \includegraphics[scale=.5]{test_messier4.pdf}
 \newline \tiny Figure 4. The \textit{Tractor} output and symbols remain the same as described above in Figure 3, but this plot shows the distribution of all non-extinction corrected colors of the Messier galaxies.}
+\frame{
+\includegraphics[scale=.5]{test_messier5.pdf}
+\newline \tiny Figure 5. This contains the same NASA-Sloan data as mentioned above. However, the stars that represent each Messier galaxy are extinction corrected with the SFD dust maps in the colors given by each of the three magnitudes output by \textit{Tractor}.} 
 \end{document}'''
 
-#add in the distribution of colors from all mags with extinction
+
 
 fn='messier'+'.tex'
 print 'Writing' ,fn
