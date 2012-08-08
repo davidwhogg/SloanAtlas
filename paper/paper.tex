@@ -1,0 +1,20 @@
+\documentclass{article}
+\usepackage{mathtools}
+
+\begin{document}
+For the purpose of measuring and optimizing on a single galaxy at a time, all other objects were removed from within a circle centered on the galaxy center and radius, both given by the RC3 catalog for that particular catalog. This was done rather than working within the SDSS catalog because SDSS frequently split up large galaxies into numerous small ones and so it was much easier to simply start over with a single galaxy. As initialization, that galaxy was given magnitudes of 15 in every band and a radius given by the RC3 catalog.
+
+In order to deal with the problems of stars that overlap with the galaxy which we are interested in, we decided to mask them out. The stars were found using the data in the TYCHO2 star catalog using the spherematch function of astrometry.net. The stars were masked out to a radius of \begin{equation}25*2^{\text{max}(11-\text{mag},0)}\end{equation} (I'm not sure why these values, I got them from Dustin)
+
+The iteratively-reweighted least squares process is used to update the inverse variances after each iteration of optimization. The formula used is: \begin{equation}
+\frac{1}{\sigma}=\frac{Q2}{Q2+\chi^2}
+\end{equation}
+
+(Is Q2 the right name? It's used in the code, but I don't know what it means.)
+
+We start the fitting with an exponential galaxy and then optimize simply that galaxy six times. Following that, we switch to a composite galaxy, with both exponential and deVaucouleur components. These components are free to vary separately in order to best fit the data. This new composite galaxy is also optimized six times by itself.
+
+In order to measure the half-light radius, the 90 percent radius and the concentration, we took the model of the galaxy that had been optimized and places it in an empty frame within the tractor. Next, over a series of increasing intervals of radii we summed up the total flux within the circles and then interpolated to find r50 and r90. We divided r90 by r50 to determine the concentration.
+
+\end{document}
+
