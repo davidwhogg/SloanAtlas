@@ -23,11 +23,10 @@ stars were found using the data in the TYCHO2 star catalog using the
 spherematch function of astrometry.net. The stars were masked out to a
 radius of
 \begin{equation}
-\theta_{\mathrm{exclude}} = \max(25, 25\,2^{[11\,\mag-B]}
+\theta_{\mathrm{exclude}} = \max(25, 25\,2^{[11\,\mag-V]}
 \end{equation}
-where $B$ is ...
-(DM did you use $B$?)
-(I'm not sure why these values, I got them from Dustin)
+where $V$ is the visual magnitude given by TYCHO2
+I'm not sure why these values, I got them from Dustin)
 
 The iteratively-reweighted least squares process is used to update the
 inverse variances after each iteration of optimization. The formula
@@ -46,8 +45,7 @@ radius $\rninety$ and the concentration parameter $\conc\equiv
 \rninety/\rfifty$, we took the model of the galaxy that had been
 optimized and places it in an empty frame within the tractor. Next,
 over a series of increasing intervals of radii we summed up the total
-flux within the circles and then interpolated to find r50 and r90. We
-divided r90 by r50 to determine the concentration.
+flux within the circles and then interpolated to find $\rfifty$ and $\rninety$.
 
 \end{document}
 
