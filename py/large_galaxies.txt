@@ -1,0 +1,4 @@
+# notes on galaxies that are problematic
+MCG-1-57-18: center of this fit is not accuraete, needs to move upwards
+UGC 11861: initializes at a bad place and never found a center, possibily needs a few more iterations
+PGC 70104: superimposed star is throwing this off
