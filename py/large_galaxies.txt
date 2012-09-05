@@ -2,3 +2,6 @@
 MCG-1-57-18: center of this fit is not accuraete, needs to move upwards
 UGC 11861: initializes at a bad place and never found a center, possibily needs a few more iterations
 PGC 70104: superimposed star is throwing this off
+A_0002-07: the total magnitude in the i band is given as infinity from the updated pickle file...
+NGC 4148: good results but having an error with the getName function that is preventing it from being added to the fits file
+NGC 4066: see NGC 4148
