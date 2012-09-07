@@ -1,3 +1,7 @@
 *~
 *.png
+*.aux
+*.dvi
+*.log
+paper/paper.pdf
 nsa*.fits*
