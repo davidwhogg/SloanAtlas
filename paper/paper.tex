@@ -7,6 +7,10 @@
 \newcommand{\conc}{C}
 
 \begin{document}
+%INTRO?
+
+Saturated pixels from the SDSS images were masked and then a binary dilation with three iterations was applied (using the SciPy function) more details needed here?
+
 For the purpose of measuring and optimizing on a single galaxy at a
 time, all other objects were removed from within a circle centered on
 the galaxy center and radius, both given by the RC3 catalog (which
@@ -19,21 +23,21 @@ catalog.
 
 In order to deal with the problems of stars that overlap with the
 galaxy which we are interested in, we decided to mask them out. The
-stars were found using the data in the TYCHO2 star catalog using the
-spherematch function of astrometry.net. The stars were masked out to a
+stars were found using the data in the TYCHO2 star catalog Add tycho2 cite
+ using the spherematch function of astrometry.net. The stars were masked out to a
 radius of
 \begin{equation}
-\theta_{\mathrm{exclude}} = \max(25, 25\,2^{[11\,\mag-B]}
+\theta_{\mathrm{exclude}} = \max(25, 25\,2^{[11\,\mag-V]}
 \end{equation}
-where $B$ is ...
-(DM did you use $B$?)
+where $V$ is the visual magnitude given by TYCHO2.
 (I'm not sure why these values, I got them from Dustin)
 
 The iteratively-reweighted least squares process is used to update the
 inverse variances after each iteration of optimization. The formula
 used is: \begin{equation} \frac{1}{\sigma}=\frac{Q^2}{Q^2+\chi^2}
 \end{equation}
-where $Q$ is the number of ``sigma'' at which the residual saturates.
+where $Q$ is the number of ``sigma'' at which the residual saturates. $Q$ for these fittings was chosen to be 5. (Find out why)
+
 
 We start the fitting with an exponential galaxy and then optimize
 simply that galaxy six times. Following that, we switch to a composite
@@ -46,8 +50,17 @@ radius $\rninety$ and the concentration parameter $\conc\equiv
 \rninety/\rfifty$, we took the model of the galaxy that had been
 optimized and places it in an empty frame within the tractor. Next,
 over a series of increasing intervals of radii we summed up the total
-flux within the circles and then interpolated to find r50 and r90. We
-divided r90 by r50 to determine the concentration.
+flux within the circles and then interpolated to find $\rfifty$ and $\rninety$.
+Exceptional cases were flagged for later review if $\rfifty$ was not between the deVaucouleur and exponential radii for that galaxy, and concentration was flagged as incorrect if $\frac{1}{\conc}$ was not between .29 and .46. TODO: Add citation to paper for these numbers
+
+All data that was flagged for review was reviewed by examination of the flipbook for that galaxy, in order that changes could be made to the initialization for that galaxy, or if the expected galaxy was nonexistent and therefore a mistake in a prior catalog, removed entirely from the catalog. 
+
+
+
+Citations: Figure out how to actually cite these:
+http://www.astro.ku.dk/~erik/Tycho-2/letter.pdf  - TYCHO-2
+
+
 
 \end{document}
 

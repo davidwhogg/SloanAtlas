@@ -1,0 +1,14 @@
+# notes on galaxies that are problematic
+MCG-1-57-18: center of this fit is not accuraete, needs to move upwards
+UGC 11861: initializes at a bad place and never found a center, possibily needs a few more iterations
+PGC 70104: superimposed star is throwing this off
+A_0002-07: the total magnitude in the i band is given as infinity from the updated pickle file...
+NGC 4148: good results but having an error with the getName function that is preventing it from being added to the fits file
+NGC 4066: see NGC 4148
+NGC 988: large, bright star in front of the galaxy blocks most of it
+IC 1870: Bright star blocking most of the galaxy
+PGC 70104: Bad sky level in i band?
+NGC 3365: bad fit, not sure why
+NGC 221: famous galaxy, very bad fit
+UGCA 295: Bad sky level in i band?
+UGC 7332: crazy morphology, fit not great
