@@ -3,5 +3,7 @@
 *.aux
 *.dvi
 *.log
+paper/catalog.pdf
 paper/paper.pdf
+paper/method.pdf
 nsa*.fits*
