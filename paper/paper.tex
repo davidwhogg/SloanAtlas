@@ -1,13 +1,52 @@
-\documentclass{article}
+\documentclass[12pt,preprint,dvipdf]{aastex}
+\newcounter{address}
+\newcommand{\project}[1]{\textsl{#1}}
 \newcommand{\units}[1]{\mathrm{#1}}
 \renewcommand{\mag}{\units{mag}}
-
+\renewcommand{\arcmin}{\units{arcmin}}
 \newcommand{\rfifty}{r_{50}}
 \newcommand{\rninety}{r_{90}}
 \newcommand{\conc}{C}
 
 \begin{document}
-%INTRO?
+\title{
+       Measuring galaxies with very large angular sizes.
+      }
+\author{
+        David Mykytyn\altaffilmark{\ref{CCPP}},
+        Dustin Lang\altaffilmark{\ref{CMU}},
+        Ekta Patel\altaffilmark{\ref{CCPP}},
+        David W. Hogg\altaffilmark{\ref{CCPP},\ref{MPIA},\ref{email}}
+       }
+\setcounter{address}{1}
+\altaffiltext{\theaddress}{\stepcounter{address}\label{CCPP} Center
+  for Cosmology and Particle Physics, Department of Physics, New York
+  University, 4 Washington Place, New York, NY 10003}
+\altaffiltext{\theaddress}{\stepcounter{address}\label{CMU} Carnegie
+  Mellon University}
+\altaffiltext{\theaddress}{\stepcounter{address}\label{MPIA}
+  Max-Planck-Institut f\"ur Astronomie, K\"onigstuhl 17, D-69117
+  Heidelberg, Germany}
+\altaffiltext{\theaddress}{\stepcounter{address}\label{email} To whom
+  correspondence should be addressed: \texttt{david.hogg@nyu.edu}}
+
+\begin{abstract}
+The measurement of galaxies with large angular sizes is challenging,
+and has rarely been done well in automated settings.  Issues include
+that the galaxies overlap field boundaries, overlap foreground stars,
+and show detailed and confusing internal structure at high
+signal-to-noise.  We take a generative modeling or likelihood approach
+to making measurements of the galaxies, but with the likelihood
+modified for robustness.  We show that we get reliable measurements
+for very large galaxies ($>1~\arcmin$ in diameter) in the
+\project{Sloan Digital Sky Survey} imaging data.
+\end{abstract}
+
+\section{Introduction}
+
+\section{Data and input catalogs}
+
+\section{Method}
 
 Saturated pixels from the SDSS images were masked and then a binary dilation with three iterations was applied (using the SciPy function) more details needed here?
 
@@ -60,7 +99,9 @@ All data that was flagged for review was reviewed by examination of the flipbook
 Citations: Figure out how to actually cite these:
 http://www.astro.ku.dk/~erik/Tycho-2/letter.pdf  - TYCHO-2
 
+\section{Selected results}
 
+\section{Discussion}
 
 \end{document}
 
