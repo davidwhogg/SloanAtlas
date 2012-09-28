@@ -75,7 +75,7 @@ stars were found using the data in the TYCHO2 star catalog Add tycho2 cite
  using the spherematch function of astrometry.net. The stars were masked out to a
 radius of
 \begin{equation}
-\theta_{\mathrm{exclude}} = \max(25, 25\,2^{[11\,\mag-V]}
+\theta_{\mathrm{exclude}} = \max(25, 25\,2^{[11\,\mag-V]})
 \end{equation}
 where $V$ is the visual magnitude given by TYCHO2.
 (I'm not sure why these values, I got them from Dustin)
@@ -100,6 +100,8 @@ optimized and places it in an empty frame within the tractor. Next,
 over a series of increasing intervals of radii we summed up the total
 flux within the circles and then interpolated to find $\rfifty$ and $\rninety$.
 Exceptional cases were flagged for later review if $\rfifty$ was not between the deVaucouleur and exponential radii for that galaxy, and concentration was flagged as incorrect if $\frac{1}{\conc}$ was not between .29 and .46. TODO: Add citation to paper for these numbers
+
+For instance, the galaxy M81 had too large of a radius in RC3 in order to run properly so it was manually reduced so as to fit into the memory of the machine. Another example is M51a and M51b, which were simultaneously fit in order to ensure that the fit measured both galaxies simultaneously. 
 
 All data that was flagged for review was reviewed by examination of the flipbook for that galaxy, in order that changes could be made to the initialization for that galaxy, or if the expected galaxy was nonexistent and therefore a mistake in a prior catalog, removed entirely from the catalog. 
 
