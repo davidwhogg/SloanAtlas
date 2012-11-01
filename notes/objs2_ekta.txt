@@ -1,115 +1,115 @@
-3294
-4521
-5282
-7781
-9019
-12138
-14376
-15346
-15986
-18601
-21438
-23275
-24040
-25475
-27897
-28818
-29634
-34337
-35101
-36426
-37738
-39317
-41970
-42502
-42718
-43001
-44171
-44388
-48714
-49753
-50171
-51797
-56405
-58104
-60295
-62098
-62593
-63052
-64814
-65970
-67442
-67946
-68861
-69822
-70267
-71352
-72878
-73924
-75613
-76881
-81822
-82931
-83367
-86983
-88219
-90729
-91359
-92825
-94370
-94670
-95425
-97687
-99644
-101136
-102822
-104709
-108843
-109951
-112177
-113889
-116193
-117659
-122462
-123968
-126048
-127313
-129111
-131128
-132779
-133521
-134320
-135525
-136416
-140101
-141503
-142062
-142659
-142835
-143041
-143732
-144919
-145616
-146180
-147056
-147832
-148498
-148713
-149455
-150143
-150661
-151140
-151528
-152824
-153896
-155673
-155746
-156576
-158348
-160774
-162110
-165704
-166832
-167826
-168764
-170455
+3294 0 small and faint
+4521 0 group of small galaxies
+5282 0 bright star
+7781 0 small and fait
+9019 1 seems to be large enough
+12138 0 small and faint 
+14376 1 decent size
+15346 0 small
+15986 0 group of small galaxies
+18601 0 bright star covers galaxy
+21438 0 small
+23275 0 faint 
+24040 0 no galaxy
+25475 1 small, but might turn out
+27897 0 off-centered galaxy
+28818 0 no galaxy
+29634 0 small and faint 
+34337 0 faint
+35101 0 faint  
+36426 1 faint, two bright stars
+37738 0 faint
+39317 0 group of small galaxies 
+41970 0 large field, no central galaxy
+42502 0 nothing
+42718 0 faint 
+43001 0 faint 
+44171 0 nothing
+44388 0 nothing 
+48714 0 nothing 
+49753 0 off centered, small galaxy
+50171 0 two bright stars and flares
+51797 0 bright star
+56405 0 faint 
+58104 0 too small 
+60295 0 small faint 
+62098 0 nothing 
+62593 0 nothing 
+63052 0 nothing 
+64814 0 flare?
+65970 1 pretty spiral and slight bar
+67442 0 faint and small
+67946 0 faint and anything?
+68861 0 bright star
+69822 1 two bright stars, might be masked during fit
+70267 1 flattened galaxy
+71352 1 pretty spiral bar
+72878 0 flare, bright star 
+73924 0 too small 
+75613 0 too faint
+76881 1 small galaxy and bright star, possible?
+81822 0 nothing
+82931 0 nothing 
+83367 0 too faint 
+86983 1 flattened, debatable result 
+88219 0 too small 
+90729 0 too small, large bright star
+91359 0 bright star 
+92825 0 faint, irregular galaxies 
+94370 0 small faint, bright star
+94670 0 faint
+95425 1 flattened, small galaxy but large star 
+97687 0 faint star
+99644 0 small  
+101136 0 small
+102822 1 pretty!
+104709 0 two, small and faint
+108843 0 small, faint
+109951 0 flare
+112177 0 bright, saturated star
+113889 0 small and faint 
+116193 1 good candidate
+117659 1 flattened, spiral. cool!
+122462 0 faint
+123968 1 good galaxy, but bright star
+126048 1 two small galaxies, but could be too small
+127313 1 very flattened
+129111 0 too small
+131128 0 huge, saturated star
+132779 0 too small
+133521 0 huge saturated star
+134320 0 large field, bright star 
+135525 0 nothing in center, bright star
+136416 0 nothing
+140101 0 huge, bright star
+141503 1 only one image of this huge galaxy?
+142062 0 faint galaxy, bright star
+142659 1 irregular 
+142835 0 field of off-centered galaxies
+143041 0 too small 
+143732 1 irregular
+144919 0 field, bright star
+145616 0 nothing
+146180 0 nothing
+147056 1 good galaxy
+147832 0 nothing in field
+148498 0 large flare
+148713 0 saturated star
+149455 0 too small
+150143 1 small but probable
+150661 1 cool galaxy
+151140 1 elliptical
+151528 0 nothing
+152824 0 bright star covering galaxy
+153896 0 satellite trail
+155673 1 small
+155746 1 small
+156576 1 small with large field
+158348 1 flattened 
+160774 1 cool galaxy, star
+162110 0 nothing 
+165704 0 nothing 
+166832 0 huge saturated star 
+167826 0 giant field of stars and galaxies 
+168764 0 too small 
+170455 0 nothing 
