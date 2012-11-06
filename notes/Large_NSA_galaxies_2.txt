@@ -1,0 +1,11 @@
+131288 - small galaxy, expands too much due to background
+133224 - good model, not sure how this is not in RC3
+133245 - galaxy near star got completely masked out, result is junk!
+134400 - cant tell if the big galaxy would already be in the catalog or if that's the target
+136258 - faint double galaxies i think
+142373 - i think this is supposed to model a small galaxy next to a big one, but ends up modeling the big one. Big one is probably in RC3?
+144510 - way too big, galaxy itself is too small for catalog
+148151 - Looks like a good fit!
+148473 - Extemds too far, probably due to lots of stars in background
+157610 - Very, very faint, hard to tell quality of fit
+
