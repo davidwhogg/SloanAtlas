@@ -1,116 +1,116 @@
-3221
-3365
-4799
-7279
-8336
-11251
-12262
-14464
-15364
-16526
-19133
-21558
-23573
-24337
-25602
-28067
-28844
-31750
-34446
-35150
-36482
-37876
-41083
-42052
-42600
-42814
-43083
-44245
-44429
-49604
-49759
-50734
-52279
-56588
-59376
-61817
-62178
-62852
-64322
-65007
-67034
-67630
-68441
-68991
-69827
-70335
-71450
-72964
-75167
-76674
-80022
-82430
-83035
-84867
-87253
-89043
-91214
-91953
-92832
-94392
-94855
-95810
-98725
-100565
-102010
-103464
-106146
-109305
-110200
-112401
-116048
-116421
-118385
-122757
-125287
-126335
-127741
-130764
-132185
-133332
-134171
-134887
-135541
-137641
-140915
-141536
-142450
-142677
-142863
-143336
-143898
-145068
-145769
-146278
-147285
-147852
-148555
-149255
-149508
-150242
-150845
-151169
-152312
-153413
-154573
-155690
-155763
-157310
-158646
-160825
-164651
-166185
-167282
-167831
-169183
-170819
+3221 0 star flare
+3365 1 prob too small
+4799 0 too small
+7279 1 prob too small
+8336 0 cluster of galaxies, sky
+11251 1 looks good
+12262 1 low s/b big enough
+14464 1 prob too small
+15364 0 too small
+16526 1 insanity but maybe big enough
+19133 1 looks good
+21558 0 too small
+23573 1 woah seriously low sb object or nothing THIS MAY BE A DISCOVERY
+24337 1 worth a shot
+25602 1 prob too small
+28067 1 near a star but maybe big enough?
+28844 0 too small
+31750 1 good
+34446 0 too small
+35150 1 good
+36482 1 worth a shot, strange
+37876 1 strange dwarf
+41083 0 too small
+42052 0 too small
+42600 0 too small
+42814 1 looks good
+43083 1 insane star flare but maybe good anyway?
+44245 0 too small
+44429 0 too small
+49604 1 star flare probably bad
+49759 0 nothing
+50734 1 awesome
+52279 1 awesome
+56588 0 crazy smudge WHAT IS THAT?
+59376 0 too small (flare)
+61817 1 diffraction spike but maybe okay
+62178 0 too small
+62852 0 too small
+64322 1 worth a shot
+65007 1 worth a shot near a spike
+67034 1 awesome!
+67630 0 too small
+68441 0 too small
+68991 0 too small
+69827 1 worth a shot
+70335 1 OMG that's not in rc3?
+71450 0 too small
+72964 0 too small
+75167 0 too small
+76674 1 worth a shot
+80022 1 worth a shot
+82430 0 satellite
+83035 1 OMG NOT IN RC3?
+84867 1 good
+87253 1 lsb
+89043 0 too small
+91214 0 to small
+91953 0 too small
+92832 0 too small
+94392 1 awesome
+94855 1 worth a shot (on spike)
+95810 1 awesome
+98725 1 prob too small
+100565 0 too small
+102010 1 good
+103464 0 too small
+106146 0 too small
+109305 1 worth a shot
+110200 1 in star flare but good
+112401 1 lsb
+116048 0 too small
+116421 1 worth trying
+118385 1 prob too small
+122757 0 satellite
+125287 0 too small
+126335 1 looks possible
+127741 1 good
+130764 0 too small
+132185 0 nothing
+133332 1 good
+134171 1 prob too small
+134887 1 worth a shot
+135541 0 flare
+137641 0 too small
+140915 0 too small
+141536 0 nothing
+142450 1 very faint!
+142677 0 too small
+142863 0 nothing
+143336 0 nothing
+143898 0 too small
+145068 0 nothing
+145769 1 worth a shot
+146278 1 lsb
+147285 0 nothing
+147852 0 too small
+148555 1 high stellar density
+149255 0 nothing
+149508 0 too small
+150242 1 good!
+150845 1 good
+151169 1 good lsb
+152312 0 nothing (near galaxy)
+153413 0 nothing
+154573 0 too small
+155690 1 very red double
+155763 1 very red
+157310 1 looks okay
+158646 0 too small
+160825 1 awesome lsb dwarf
+164651 1 good
+166185 0 too small; flare
+167282 1 high stellar density
+167831 1 high stellar density
+169183 0 nothing
+170819 0 too small
