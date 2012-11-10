@@ -2,7 +2,7 @@
 MCG_-1-57-18 center of this fit is not accuraete, needs to move upwards
 UGC_11861 initializes at a bad place and never found a center, possibily needs a few more iterations
 PGC_70104 superimposed star is throwing this off
-A_0002-07 the total magnitude in the i band is given as infinity from the updated pickle file...
+A_0002-07 the total magnitude in the i band is given as infinity from the updated pickle file because there is no galaxy being fitted, just sky field
 NGC_4148 good results but having an error with the getName function that is preventing it from being added to the fits file
 NGC_406 good results but having an error with the getName function that is preventing it from being added to the fits file
 NGC_988 large, bright star in front of the galaxy blocks most of it
@@ -16,3 +16,14 @@ UGC_9394 very bad fit
 LEO_A low surface brightness, but good fit
 NGC_52 initializes and fits the bright star next to it
 NGC_5194 bad fit, lies off of the color-color plot (M51a)
+UGC_7697 not sure what is happening here, inf i flux but a galaxy is not being fit here probably because the galaxy is off-center
+A_1402+09 inf i flux, off center galaxy, measures a patch of the sky instead
+NGC_5919 inf i flux because this was a group of galaxies which are individually too small to fit, should not be included
+A_1153+31 inf i flux because a galaxy is not being measured in these images
+UGC_8304 inf i flux, galaxy is off center and the fit is not initializing on the galaxy, but random patch of the sky
+NGC_3733 inf i flux, in  masking the huge bright star next to this galaxy, the galaxy becomes masked as well
+UGC_3165 inf i flux, fit is not intiliazing on the galaxy in the images
+A_114752 inf i flux, the fit does not initialize on a galaxy (off center)
+A_2302+16 inf i flux, the fit does not initialize on a galaxy (off center)
+UGC_10050 inf i flux, bad image for this galaxy, bright star and off center...bad candidate to include
+
