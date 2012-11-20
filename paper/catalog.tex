@@ -4,6 +4,7 @@
 \newcommand{\units}[1]{\mathrm{#1}}
 \renewcommand{\mag}{\units{mag}}
 \renewcommand{\arcmin}{\units{arcmin}}
+\renewcommand{\arcsec}{\units{arcsec}}
 \newcommand{\rfifty}{r_{50}}
 \newcommand{\rninety}{r_{90}}
 \newcommand{\conc}{C}
@@ -35,49 +36,63 @@
 We present the \project{SDSS Large Galaxy Atlas}, which contains
 accurate positions and photometry for galaxies with half-light radii
 greater than $1~\arcmin$.
+
+
+... advertise big, bright galaxies that are not in RC3 but have been found in NSA, number of them, some names,how big?, example?...
 \end{abstract}
 
 \section{Introduction}
 
-... The \project{SDSS} never made good photometry for the brightest galaxies ... The NS Atlas ...
+The \project{SDSS} never made good photometry for the brightest galaxies because it oversubtracts the sky for very large objects. The Nasa-Sloan Atlas rephotometered all redshifts for galaxies within the SDSS Data Release 8. It takes the images from the \textit{ugriz} bands of SDSS and the NUV and FUV bands from \textit{GALEX}. (List issues from the caveats on nsatlas.org here, cite Blanton et al. 2011)
 
 ... The \project{SDSS} made beautiful images ...
 
 ... Related work:  2MASS ... anything else? ...
 
-The \textit{GALEX} Ultraviolet Atlas of Nearby Galaxies provides photometry, surface brightness and color profiles for 1034 nearby galaxies with a diameter larger than 1' and a surface brightness in the b-band, $u_B$=25 mag arcsec$^{-2}$ . The galaxies chosen for this data set come from \textit{GALEX} satellite, which observed galaxies in the far-ultra violet(FUV) and near-ultra violet(NUV) bands. Supplemental galaxies were chosen from other \textit{GALEX} initiatives that viewed the same fields of the sky with equivalent depth. All galaxies with a diamater larger than 1' from the Third Reference Catalog of Bright Galaxies (RC3) were also added to the sample. A total of 81 out of 1136 galaxies were not included in the Atlas because they were in regions of very high background, high Galactic extinction, extremely low UV surface brightness, or simply had images that were not of sufficient quality for analysis. 
-
-...positions,axis diameters,morphological type, distance...
-...getting magnitudes...
-...galaxy type and shape...
-...measuring surface brightness...
-...properties by type...
-...color-mag and color-color plots?...
-...dust extinction...
+    The \textit{GALEX} Ultraviolet Atlas of Nearby Galaxies provides photometry, surface brightness and color profiles for 1034 nearby galaxies with a diameter larger than $1~\arcmin$ and a surface brightness in the b-band, $u_B$=25 mag arcsec$^{-2}$ . The galaxies chosen for this data set come from the \textit{GALEX} Nearby Galaxies Survey and other equivalent\textit{GALEX} initiatives that viewed the same fields of the sky in the far-ultra violet(FUV) and near-ultra violet(NUV) bands. All galaxies with a diamater larger than $1~\arcmin$ from the Third Reference Catalog of Bright Galaxies (RC3) were also added to the sample. A total of 81 out of 1136 galaxies were not included in the Atlas because they were in regions of very high background, high Galactic extinction, extremely low UV surface brightness, or simply had images that were not of sufficient quality for analysis. The surface brightness was measured using the central position, ellipticity, and position angle of the D25 ellipse. It is computed to within the annuli of ellipse's central angle increasing out by $6~\arcsec$ from the major-axis until it reaches at least 1.5 times D25. Point sources in the images with colors redder than FUV-NUV=1 were automatically masked and visually checked. After the SExtractor-detected sources were masked within a 5x5 pixel range of each source, the mean of the skywas used as the estimate of the background due to low background in FUV. Galactic color excess is taken from Schlegel et al.(1998) and used with the extinction law from Cardelli et al.(1989). The surface brightness profiles were then used to compute asympototic magnitudes, colors, luminosities and concentrations. Magnitudes, effective radii, and colors were found by extrapolating growth curves to infinity and performing error-weighted linear fits. The morphology of the UV surface brightness profiles were determined visually using a two-letter naming scheme, the first describing the outer profile and the second describing the inner profile.(cite Gil de Paz et al. 2006)
 
 
 \section{Data and input catalogs}
 
 ... Hogg: Stuff about the \project{SDSS} imaging ...
 
-... Mykytyn: How did you make the input catalog(s)? ...
-
-The input catalog was formed out of the union of the Third Reference Catalog of Bright Galaxies (RC3), the NASA-Sloan Atlas (NSA), and the 2MASS Large Galaxy Atlas (LGA). Objects were searched for in those catalogs with an angular diameter greater than or equal to two arcminutes. For the Third Reference Catalog the cut made was based on the measured apparent major isophotal diameter of the surface brightness $\mu_{B}$ greater than 2 arcminutes. For the NASA-Sloan Atlas the cut made was based on the 50\% light radius of the SERSIC fit. Finally for the 2MASS Large Galaxy Atlas the cut was made based on the isophotal fiduciary radius in the K-band, again cutting to a radius of 1 arcminute.
+The initial input catalog was formed out of the union of the Third Reference Catalog of Bright Galaxies (RC3), the NASA-Sloan Atlas (NSA), and the 2MASS Large Galaxy Atlas (LGA). Objects were searched for in those catalogs with an angular diameter greater than or equal to two arcminutes. For the Third Reference Catalog the cut made was based on the measured apparent major isophotal diameter of the surface brightness $\mu_{B}$ greater than 2 arcminutes. For the NASA-Sloan Atlas the cut made was based on the 50\% light radius of the SERSIC fit. Finally for the 2MASS Large Galaxy Atlas the cut was made based on the isophotal fiduciary radius in the K-band, again cutting to a radius of 1 arcminute. Additional galaxies were added to the catalog down to a radius of $30~\arcsec$. These galaxies were visually checked for size appropriate size and galactic matter. Some interesting galaxies that were not contained in RC3 were found and measured and have been included in the Atlas. Some of these images contained two galaxies, which we fit individually,, while others...
 
 \section{Method}
 
 ... Refer to the method paper but summarize highlights ...
 
+
+For the largest of galaxies, SDSS provided many fields where each field contained images in each of the \textit{ugriz}. Examples of these include the Messier galaxies. For those galaxies which had between 10 and 20 images, the pixels in the images were scaled down by a factor of 2. Galaxies with 20 to 40 images each were scaled down by a factor of 4. Galaxies with 40 to 80 images were scaled down by a factor of 8 and those with more than 80 images could not be run through the \textit{Tractor} successfully. The binning of the pixels in these images did, however, provide sufficient accuracy to within a few percent for the colors in comparison to colors resulting from no binning. 
+
 ... Output vetting and re-running and manual tweaking---what did we do and why? ...
+
+...extinction, post-tractor, computing surface brightness, total mags, cocnentrations, radii...
 
 ... A few examples showing what works and what doesn't ...
 
 \section{Catalog}
+For the locations of all galaxies included in the Atlas, see Figure 1. 
 
-... The big table ...
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{ra_dec.png}
+\caption{RA vs. DEC for all galaxies in our data set. Note that the galaxies measured are mostly contained in the northern galactic hemisphere as a result of the location of the telescope used for the Sloan Digital Sky Survery Data at Apache Point Observatory, New Mexico.}
+\end{figure}
+
+
+The table of data contains the RA, Dec, and name given by each galaxy's source catalog(RC3 or Nasa-Sloan Atlas). The data from the composite galaxies includes the RA, Dec, magnitudes, half-light radii, colors, etc. See Table 1. Those galaxies which we have denoted with flags... 
+
 
 ... Also exceptions tables ...
 
+
+Galaxies that have not been included are those which have been measured to have infinite i-band fluxes, galaxies near bright stars, which when are masked also mask out the galaxy partially or entirely, galaxies whose fits initiliazed off-center...
+
+See our comments from visual inspections in $large\_galaxies.txt$ and in $large\_NSA\_galaxies.txt$
+
 \section{Discussion}
+
+The Owl Nebula was included in the list of objects that are not in RC3, but have been included in NAsa-Sloan Atlas. Though we are not particularly interested in nebulae, the fit for the Owl Nebula is succesffully.
 
 \end{document}
