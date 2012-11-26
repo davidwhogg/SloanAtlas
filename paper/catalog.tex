@@ -33,66 +33,82 @@
   Mellon University}
 
 \begin{abstract}
-We present the \project{SDSS Large Galaxy Atlas}, which contains
-accurate positions and photometry for galaxies with half-light radii
-greater than $1~\arcmin$.
+We present the \project{Sloan Digital Sky Survey Large Galaxy Atlas}, which contains
+accurate positions and photometry for galaxies with half-light diameter
+greater than $1~\arcmin$. Galaxies of this size have rarely been measured with great accuracy. We present a table of measurements for such galaxies including their positions, colors, magnitudes, sizes, concentrations, surface brightness and axis ratios. Our input data has been taken largely from SDSS as well as the Third Reference Catalog of Bright Galaxies(RC3), the Two Micron All Sky Survey Large Galaxy Atlas and the NASA-Sloan Atlas. A description of the methods used to make measurements of the galaxies provided in this table can be found in the companion paper for this project, Mykytyn et al. 2013. We specifically highlight those large galaxies which have not been found in RC3, but, have been included in the NASA-Sloan Atlas with $50\%$ light radii $>? \arcsec$. Some examples of these include ??? which have been measured as large as $???\arcsec$ while retaining accurate galactic properties... 
 
-
-... advertise big, bright galaxies that are not in RC3 but have been found in NSA, number of them, some names,how big?, example?...
 \end{abstract}
 
 \section{Introduction}
 
-The \project{SDSS} never made good photometry for the brightest galaxies because it oversubtracts the sky for very large objects. The Nasa-Sloan Atlas rephotometered all redshifts for galaxies within the SDSS Data Release 8. It takes the images from the \textit{ugriz} bands of SDSS and the NUV and FUV bands from \textit{GALEX}. (List issues from the caveats on nsatlas.org here, cite Blanton et al. 2011)
+The \project{SDSS} never made good photometry for the brightest galaxies because it oversubtracts the sky for very large objects, but it did make beautiful images. The Nasa-Sloan Atlas(NSA) rephotometered all redshifts for galaxies within the SDSS Data Release 8. It takes the images from the \textit{ugriz} bands of SDSS and the NUV and FUV bands from \textit{GALEX}.(www.nsatlas.org) The methods used in the NSA is an improvement are those used by SDSS. (Blanton et al. 2011)
 
-... The \project{SDSS} made beautiful images ...
+The 2MASS Large Galaxy Atlas(LGA) provides near-infrared photometry for large galaxies to connect the gap between optical wavelengths and longer wavelengths. We have checked for galaxies in the LGA that were not included in RC3 down to a radius of $1\arcmin$, which was the lower size limit for galaxies included in this catalog. The radius measurement in 2MASS was based on the K-band isophotal properties (Jarret et al. 2003).  
 
-... Related work:  2MASS ... anything else? ...
-
-    The \textit{GALEX} Ultraviolet Atlas of Nearby Galaxies provides photometry, surface brightness and color profiles for 1034 nearby galaxies with a diameter larger than $1~\arcmin$ and a surface brightness in the b-band, $u_B$=25 mag arcsec$^{-2}$ . The galaxies chosen for this data set come from the \textit{GALEX} Nearby Galaxies Survey and other equivalent\textit{GALEX} initiatives that viewed the same fields of the sky in the far-ultra violet(FUV) and near-ultra violet(NUV) bands. All galaxies with a diamater larger than $1~\arcmin$ from the Third Reference Catalog of Bright Galaxies (RC3) were also added to the sample. A total of 81 out of 1136 galaxies were not included in the Atlas because they were in regions of very high background, high Galactic extinction, extremely low UV surface brightness, or simply had images that were not of sufficient quality for analysis. The surface brightness was measured using the central position, ellipticity, and position angle of the D25 ellipse. It is computed to within the annuli of ellipse's central angle increasing out by $6~\arcsec$ from the major-axis until it reaches at least 1.5 times D25. Point sources in the images with colors redder than FUV-NUV=1 were automatically masked and visually checked. After the SExtractor-detected sources were masked within a 5x5 pixel range of each source, the mean of the skywas used as the estimate of the background due to low background in FUV. Galactic color excess is taken from Schlegel et al.(1998) and used with the extinction law from Cardelli et al.(1989). The surface brightness profiles were then used to compute asympototic magnitudes, colors, luminosities and concentrations. Magnitudes, effective radii, and colors were found by extrapolating growth curves to infinity and performing error-weighted linear fits. The morphology of the UV surface brightness profiles were determined visually using a two-letter naming scheme, the first describing the outer profile and the second describing the inner profile.(cite Gil de Paz et al. 2006)
+The \textit{GALEX} Ultraviolet Atlas of Nearby Galaxies provides photometry, surface brightness and color profiles for 1034 nearby galaxies with a diameter larger than $1~\arcmin$ and a surface brightness in the b-band, $u_B$=25 mag arcsec$^{-2}$ . The galaxies chosen for this data set come from the \textit{GALEX} Nearby Galaxies Survey and other equivalent\textit{GALEX} initiatives that viewed the same fields of the sky in the far-ultra violet(FUV) and near-ultra violet(NUV) bands. All galaxies with a diamater larger than $1~\arcmin$ from RC3 were also added to the sample. A total of 81 out of 1136 galaxies were not included in the Atlas because they were in regions of very high background, high Galactic extinction, extremely low UV surface brightness, or simply had images that were not of sufficient quality for analysis. The surface brightness was measured using the central position, ellipticity, and position angle of the D25 ellipse. It is computed to within the annuli of ellipse's central angle increasing out by $6~\arcsec$ from the major-axis until it reaches at least 1.5 times D25. Point sources in the images with colors redder than FUV-NUV=1 were automatically masked and visually checked. After the SExtractor-detected sources were masked within a 5x5 pixel range of each source, the mean of the skywas used as the estimate of the background due to low background in FUV. Galactic color excess is taken from Schlegel et al.(1998) and used with the extinction law from Cardelli et al.(1989). The surface brightness profiles were then used to compute asympototic magnitudes, colors, luminosities and concentrations. Magnitudes, effective radii, and colors were found by extrapolating growth curves to infinity and performing error-weighted linear fits. The morphology of the UV surface brightness profiles were determined visually using a two-letter naming scheme, the first describing the outer profile and the second describing the inner profile.(Gil de Paz et al. 2006)
 
 
 \section{Data and input catalogs}
 
 ... Hogg: Stuff about the \project{SDSS} imaging ...
 
-The initial input catalog was formed out of the union of the Third Reference Catalog of Bright Galaxies (RC3), the NASA-Sloan Atlas (NSA), and the 2MASS Large Galaxy Atlas (LGA). Objects were searched for in those catalogs with an angular diameter greater than or equal to two arcminutes. For the Third Reference Catalog the cut made was based on the measured apparent major isophotal diameter of the surface brightness $\mu_{B}$ greater than 2 arcminutes. For the NASA-Sloan Atlas the cut made was based on the 50\% light radius of the SERSIC fit. Finally for the 2MASS Large Galaxy Atlas the cut was made based on the isophotal fiduciary radius in the K-band, again cutting to a radius of 1 arcminute. Additional galaxies were added to the catalog down to a radius of $30~\arcsec$. These galaxies were visually checked for size appropriate size and galactic matter. Some interesting galaxies that were not contained in RC3 were found and measured and have been included in the Atlas. Some of these images contained two galaxies, which we fit individually,, while others...
+The initial input catalog was formed out of the union of the Third Reference Catalog of Bright Galaxies (RC3), the NASA-Sloan Atlas (NSA), and the 2MASS Large Galaxy Atlas (LGA). Objects were searched for in those catalogs with an angular diameter greater than or equal to two arcminutes. For the Third Reference Catalog the cut made was based on the measured apparent major isophotal diameter of the surface brightness $\mu_{B}$ greater than 1 arcminute. For the NASA-Sloan Atlas the cut made was based on the 50\% light radius of the SERSIC fit. Finally for the 2MASS Large Galaxy Atlas the cut was made based on the isophotal fiduciary radius in the K-band, again cutting to a radius of 1 arcminute. Additional galaxies from the NASA-Sloan Atlas were added to the catalog down to a radius of $30~\arcsec$. These galaxies were visually checked for size appropriate size and galactic matter. Some interesting galaxies that were not contained in RC3 were found and measured and have been included in the Atlas. Some of these images contained two galaxies, which we fit individually, while others...
 
 \section{Method}
 
 ... Refer to the method paper but summarize highlights ...
 
+For the largest of galaxies, SDSS provided many fields where each field contained images in each of the \textit{ugriz}. Examples of these include the Messier galaxies. For those galaxies which had between 10 and 20 images, the pixels in the images were scaled down by a factor of 2. Galaxies with 20 to 40 images each were scaled down by a factor of 4. Galaxies with 40 to 80 images were scaled down by a factor of 8 and those with more than 80 images could not be run through the \textit{Tractor} successfully. The binning of the pixels in these images did, however, provide sufficient accuracy to within a few percent for the colors in comparison to colors resulting from no binning. Other cases of galaxies that had to be treated specially include those in which there was a pair of galaxies in one image. These scenarios were manually measured as two individual galaxies. Some examples include M51 and the Mice Galaxies(what was their accuracy?) in which cases the measurement of one galaxy resulted in a better result than the other. Another special case is that of a bright star whose masking caused a part or whole of the galaxy to be masked with it. In some cases, these were re-run manually, while those in which the whole galaxy was masked were discarded.  Additionally, we observed those cases in which galaxies were off-center in the images and re-ran those manually with an initiliazation beginning at the center of ther galazy rather than the center of the image. 
 
-For the largest of galaxies, SDSS provided many fields where each field contained images in each of the \textit{ugriz}. Examples of these include the Messier galaxies. For those galaxies which had between 10 and 20 images, the pixels in the images were scaled down by a factor of 2. Galaxies with 20 to 40 images each were scaled down by a factor of 4. Galaxies with 40 to 80 images were scaled down by a factor of 8 and those with more than 80 images could not be run through the \textit{Tractor} successfully. The binning of the pixels in these images did, however, provide sufficient accuracy to within a few percent for the colors in comparison to colors resulting from no binning. 
+RC3 made its measurements by... we used similar techniques on our data output from the $Tractor$. 
 
-... Output vetting and re-running and manual tweaking---what did we do and why? ...
+With the raw results from the $Tractor$, we first applied extinction corrections as given by Schlegel et al. 1998 using the \textbf{astropysics} package(cite?). Astropysics converts the RA and DEC to galactic coordinates and provides the extinction for each Sloan Band. With the corrected magnitudes, we were then able to compute surface brightness with \begin{equation} \mu_{50,i}=m_i+2.5log(\pi{r_{50}}^2) \end{equation} where $m_i$ is the corrected magnitude in the i-band and $r_{50,i}$ is the half-light radius in the i-band. For a description of how the radii, concentrations, magnitudes, and axis ratios were computed see the methodology in Mykytyn et al. 2013. 
 
-...extinction, post-tractor, computing surface brightness, total mags, cocnentrations, radii...
 
 ... A few examples showing what works and what doesn't ...
 
 \section{Catalog}
-For the locations of all galaxies included in the Atlas, see Figure 1. 
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{ra_dec.png}
-\caption{RA vs. DEC for all galaxies in our data set. Note that the galaxies measured are mostly contained in the northern galactic hemisphere as a result of the location of the telescope used for the Sloan Digital Sky Survery Data at Apache Point Observatory, New Mexico.}
-\end{figure}
-
-
-The table of data contains the RA, Dec, and name given by each galaxy's source catalog(RC3 or Nasa-Sloan Atlas). The data from the composite galaxies includes the RA, Dec, magnitudes, half-light radii, colors, etc. See Table 1. Those galaxies which we have denoted with flags... 
-
+The table of data contains the RA, Dec, and name given by each galaxy's source catalog(RC3 or Nasa-Sloan Atlas).For the measured positions of all galaxies included in the Atlas, see Figure 1. The data from the composite galaxies includes the RA, Dec, magnitudes, half-light radii, colors, etc. See Table 1. Those galaxies which we have denoted with flags... 
 
 ... Also exceptions tables ...
 
-
-Galaxies that have not been included are those which have been measured to have infinite i-band fluxes, galaxies near bright stars, which when are masked also mask out the galaxy partially or entirely, galaxies whose fits initiliazed off-center...
-
-See our comments from visual inspections in $large\_galaxies.txt$ and in $large\_NSA\_galaxies.txt$
+Galaxies that have been marked with exceptions include those which have been discussed in section 3. These are galaxies which have been determined to give poor results by eye and were then re-run manually. In some cases, the second result provided valuable measurements, while in others the data was not included for continuous poor measurements. See our comments from visual inspections in $large\_galaxies.txt$ and in $large\_NSA\_galaxies.txt$
 
 \section{Discussion}
 
-The Owl Nebula was included in the list of objects that are not in RC3, but have been included in NAsa-Sloan Atlas. Though we are not particularly interested in nebulae, the fit for the Owl Nebula is succesffully.
+The Owl Nebula was included in the list of objects that are not in RC3, but have been included in NASA-Sloan Atlas. Though we are not particularly interested in nebulae, the fit for the Owl Nebula is succesffully.
 
+\acknowledgements
+
+It is a pleasure to thank Michael Blanton, Dan Foreman-Mackey, Douglas Finkbeiner, Thomas Robitaille(asked him about SFD interface), Benjamin Weaver for their time and conversations with regards to the Atlas. 
+Funding for the SDSS Large Galaxy Atlas has been provided by New York University's College of Arts and Science Dean's Undergraduate Research Fund and  SDSS grants.
+
+The code for the methods used to make the measurements in this catalog can be found at: github
+
+INSERT BIBLIOGRAPHY CITINGS HERE
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{ra_dec.pdf}
+\caption{RA vs. DEC for all galaxies in our data set. Note that the galaxies measured are mostly contained in the northern galactic hemisphere as a result of the location of the telescope used for the Sloan Digital Sky Survery Data at Apache Point Observatory, New Mexico.}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{gi_ri.pdf}
+\caption{The g-i vs. r-i colors for all galaxies.}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{r50_i.pdf}
+\caption{The half-light radius of the i-band flux vs. the i-band magnitude. The i-band magnitudes given are corrected using the Schlegel and Finkbeiner dust maps (cite).}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{gi_mu_c.pdf}
+\caption{A comparison of the g-i colors vs. surface brightness in the i-band vs. the ratio of half-light radius to 90\% light radius. The vertical lines provide the quartiles of the data set.}
+\end{figure}
 \end{document}
