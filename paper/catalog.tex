@@ -1,4 +1,4 @@
-\documentclass[12pt,preprint,dvipdf]{aastex}
+\documentclass[12pt,preprint,pdftex]{aastex}
 \newcounter{address}
 \newcommand{\project}[1]{\textsl{#1}}
 \newcommand{\units}[1]{\mathrm{#1}}
@@ -45,7 +45,7 @@ The \project{SDSS} never made good photometry for the brightest galaxies because
 
 The 2MASS Large Galaxy Atlas(LGA) provides near-infrared photometry for large galaxies to connect the gap between optical wavelengths and longer wavelengths. We have checked for galaxies in the LGA that were not included in RC3 down to a radius of $1\arcmin$, which was the lower size limit for galaxies included in this catalog. The radius measurement in 2MASS was based on the K-band isophotal properties (Jarret et al. 2003).  
 
-The \textit{GALEX} Ultraviolet Atlas of Nearby Galaxies provides photometry, surface brightness and color profiles for 1034 nearby galaxies with a diameter larger than $1~\arcmin$ and a surface brightness in the b-band, $u_B$=25 mag arcsec$^{-2}$ . The galaxies chosen for this data set come from the \textit{GALEX} Nearby Galaxies Survey and other equivalent\textit{GALEX} initiatives that viewed the same fields of the sky in the far-ultra violet(FUV) and near-ultra violet(NUV) bands. All galaxies with a diamater larger than $1~\arcmin$ from RC3 were also added to the sample. A total of 81 out of 1136 galaxies were not included in the Atlas because they were in regions of very high background, high Galactic extinction, extremely low UV surface brightness, or simply had images that were not of sufficient quality for analysis. The surface brightness was measured using the central position, ellipticity, and position angle of the D25 ellipse. It is computed to within the annuli of ellipse's central angle increasing out by $6~\arcsec$ from the major-axis until it reaches at least 1.5 times D25. Point sources in the images with colors redder than FUV-NUV=1 were automatically masked and visually checked. After the SExtractor-detected sources were masked within a 5x5 pixel range of each source, the mean of the skywas used as the estimate of the background due to low background in FUV. Galactic color excess is taken from Schlegel et al.(1998) and used with the extinction law from Cardelli et al.(1989). The surface brightness profiles were then used to compute asympototic magnitudes, colors, luminosities and concentrations. Magnitudes, effective radii, and colors were found by extrapolating growth curves to infinity and performing error-weighted linear fits. The morphology of the UV surface brightness profiles were determined visually using a two-letter naming scheme, the first describing the outer profile and the second describing the inner profile.(Gil de Paz et al. 2006)
+The \textit{GALEX} Ultraviolet Atlas of Nearby Galaxies provides photometry, surface brightness and color profiles for 1034 nearby galaxies with a diameter larger than $1~\arcmin$ and a surface brightness in the b-band, $u_B$=25 mag arcsec$^{-2}$ . The galaxies chosen for this data set come from the \textit{GALEX} Nearby Galaxies Survey and other equivalent\textit{GALEX} initiatives that viewed the same fields of the sky in the far-ultra violet(FUV) and near-ultra violet(NUV) bands. All galaxies with a diameter larger than $1~\arcmin$ from RC3 were also added to the sample. A total of 81 out of 1136 galaxies were not included in the Atlas because they were in regions of very high background, high Galactic extinction, extremely low UV surface brightness, or simply had images that were not of sufficient quality for analysis. The surface brightness was measured using the central position, ellipticity, and position angle of the D25 ellipse. It is computed to within the annuli of ellipse's central angle increasing out by $6~\arcsec$ from the major-axis until it reaches at least 1.5 times D25. Point sources in the images with colors redder than FUV-NUV=1 were automatically masked and visually checked. After the SExtractor-detected sources were masked within a 5x5 pixel range of each source, the mean of the sky was used as the estimate of the background due to low background in FUV. Galactic color excess is taken from Schlegel et al.(1998) and used with the extinction law from Cardelli et al.(1989). The surface brightness profiles were then used to compute asymptotic magnitudes, colors, luminosities and concentrations. Magnitudes, effective radii, and colors were found by extrapolating growth curves to infinity and performing error-weighted linear fits. The morphology of the UV surface brightness profiles were determined visually using a two-letter naming scheme, the first describing the outer profile and the second describing the inner profile.(Gil de Paz et al. 2006)
 
 
 \section{Data and input catalogs}
@@ -58,7 +58,7 @@ The initial input catalog was formed out of the union of the Third Reference Cat
 
 ... Refer to the method paper but summarize highlights ...
 
-For the largest of galaxies, SDSS provided many fields where each field contained images in each of the \textit{ugriz}. Examples of these include the Messier galaxies. For those galaxies which had between 10 and 20 images, the pixels in the images were scaled down by a factor of 2. Galaxies with 20 to 40 images each were scaled down by a factor of 4. Galaxies with 40 to 80 images were scaled down by a factor of 8 and those with more than 80 images could not be run through the \textit{Tractor} successfully. The binning of the pixels in these images did, however, provide sufficient accuracy to within a few percent for the colors in comparison to colors resulting from no binning. Other cases of galaxies that had to be treated specially include those in which there was a pair of galaxies in one image. These scenarios were manually measured as two individual galaxies. Some examples include M51 and the Mice Galaxies(what was their accuracy?) in which cases the measurement of one galaxy resulted in a better result than the other. Another special case is that of a bright star whose masking caused a part or whole of the galaxy to be masked with it. In some cases, these were re-run manually, while those in which the whole galaxy was masked were discarded.  Additionally, we observed those cases in which galaxies were off-center in the images and re-ran those manually with an initiliazation beginning at the center of ther galazy rather than the center of the image. 
+For the largest of galaxies, SDSS provided many fields where each field contained images in each of the \textit{ugriz}. Examples of these include the Messier galaxies. For those galaxies which had between 10 and 20 images, the pixels in the images were scaled down by a factor of 2. Galaxies with 20 to 40 images each were scaled down by a factor of 4. Galaxies with 40 to 80 images were scaled down by a factor of 8 and those with more than 80 images could not be run through the \textit{Tractor} successfully. The binning of the pixels in these images did, however, provide sufficient accuracy to within a few percent for the colors in comparison to colors resulting from no binning. Other cases of galaxies that had to be treated specially include those in which there was a pair of galaxies in one image. These scenarios were manually measured as two individual galaxies. Some examples include M51 and the Mice Galaxies(what was their accuracy?) in which cases the measurement of one galaxy resulted in a better result than the other. Another special case is that of a bright star whose masking caused a part or whole of the galaxy to be masked with it. In some cases, these were re-run manually, while those in which the whole galaxy was masked were discarded.  Additionally, we observed those cases in which galaxies were off-center in the images and re-ran those manually with an initialization beginning at the center of the galaxy rather than the center of the image. 
 
 RC3 made its measurements by... we used similar techniques on our data output from the $Tractor$. 
 
@@ -76,7 +76,7 @@ Galaxies that have been marked with exceptions include those which have been dis
 
 \section{Discussion}
 
-The Owl Nebula was included in the list of objects that are not in RC3, but have been included in NASA-Sloan Atlas. Though we are not particularly interested in nebulae, the fit for the Owl Nebula is succesffully.
+The Owl Nebula was included in the list of objects that are not in RC3, but have been included in NASA-Sloan Atlas. Though we are not particularly interested in nebulae, the fit for the Owl Nebula is succesfully.
 
 \acknowledgements
 
@@ -89,26 +89,26 @@ INSERT BIBLIOGRAPHY CITINGS HERE
 
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{ra_dec.pdf}
-\caption{RA vs. DEC for all galaxies in our data set. Note that the galaxies measured are mostly contained in the northern galactic hemisphere as a result of the location of the telescope used for the Sloan Digital Sky Survery Data at Apache Point Observatory, New Mexico.}
+\includegraphics[trim= 15mm 0mm 0mm 0mm]{ra_dec.pdf}
+\caption{RA vs. DEC for all galaxies in our data set. Note that the galaxies measured are mostly contained in the northern galactic hemisphere as a result of the location of the telescope used for the Sloan Digital Sky Survey Data at Apache Point Observatory, New Mexico.}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{gi_ri.pdf}
+\includegraphics[trim= 15mm 0mm 0mm 0mm]{gi_ri.pdf}
 \caption{The g-i vs. r-i colors for all galaxies.}
 \end{figure}
 
 
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{r50_i.pdf}
+\includegraphics[trim= 15mm 0mm 0mm 0mm]{r50_i.pdf}
 \caption{The half-light radius of the i-band flux vs. the i-band magnitude. The i-band magnitudes given are corrected using the Schlegel and Finkbeiner dust maps (cite).}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{gi_mu_c.pdf}
+\includegraphics[trim= 15mm 0mm 0mm 0mm]{gi_mu_c.pdf}
 \caption{A comparison of the g-i colors vs. surface brightness in the i-band vs. the ratio of half-light radius to 90\% light radius. The vertical lines provide the quartiles of the data set.}
 \end{figure}
 \end{document}
