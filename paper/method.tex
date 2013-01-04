@@ -45,25 +45,55 @@ and has rarely been done well in automated settings.  Issues include
 that the galaxies overlap field boundaries, overlap foreground stars,
 and show detailed and confusing internal structure at high
 signal-to-noise.  We take a generative modeling or likelihood approach
-to making measurements of the galaxies, but with the likelihood
-modified for robustness.  We show that we get reliable measurements
-for very large galaxies ($>1~\arcmin$ in diameter) in the
-\project{Sloan Digital Sky Survey} imaging data.
+to making measurements of the galaxies, using very simplified
+few-parameter morphological models and with the likelihood modified
+for robustness.  We show that we can get precise and reliable (though
+possibly biased) measurements of colors and surface brightnesses for
+very large galaxies ($>1~\arcmin$ in diameter) in the \project{Sloan
+  Digital Sky Survey} imaging data.
 \end{abstract}
 
 \section{Introduction}
 
+There are many ways to measure the flux of a galaxy; each has flaws.
+\begin{itemize}
+\item aperture photometry...
+\item isophotal photometry...
+\item azimuthally averaged profiles...
+\item Petrosian photometry...
+\item fitting flexible models...
+\item fitting inflexible models...
+\end{itemize}
+In some sense, it is not possible to perform accurate photometry on
+galaxies.  All these problems with photometric measurements flow into
+other kinds of measurements, like sizes, concentrations, surface
+brightnesses, and so-on, because these measurements are (or involve)
+transformations of photometric measurements.
+
+The best choice among measurement procedures depends on the uses to
+which the measurements are going to be put; in some cases precision is
+paramount, in others consistency across distance, in others robustness
+to varying point-spread function, in others consistency across
+morphological types.
+
+Our goals are...so we do...
+
 \section{Data and input catalogs}
 The primary source of for the input catalog was the Third Reference Catalog of Bright Galaxies (RC3) from which we pulled all objects which had an angular diameter equal to or greater than 2 arcminutes as measured in the apparent major isophotal diameter at the surface brightness level $\mu_B = 25,0$ B-mag per square arcsecond. Next, we checked the NASA-Sloan Atlas (NSA) for any objects of significant size that were also not in RC3. The cut was for objects with a 50\% light radius of the SERSIC fit greater than 30 arcseconds. The objects were then examined by eye to determine which ones were actual large galaxies, and which were errors in the NSA. Example errors included stars causing saturation, interstellar medium, and nebulae. We also checked the 2MASS Large Galaxy Atlas but no galaxies of the correct size not already in RC3 were found. The only objects found were either not in the Sloan Survey, or were globular clusters. The cut for 2MASS was based on the isophotal fiduciary radius in the K-band, which was checked to a radius of 1 arcminute.
-
 
 \section{Tractor}
 Models: Write about the types of models used?? Different galaxies types etc?
 The Tractor functions first by building a model, using initial parameter data that is supplied. Next, it takes the derivative of that in parameter space. It performs a least square optimization of that, attempting to minimize the difference between the data and the model. Once the best direction is found, it makes a series of increasings steps (how is step size determined??) until the $\chi^2$ stops improving (I think this is imprecise/wrong) Finally the parameters are updated in that direction. The tractor is capable of freezing certain parameters, so that they are excluded from the optimization. 
 The iteratively-reweighted least squares process is used to update the
-inverse variances after each iteration of optimization. The formula
-used is: \begin{equation} \frac{1}{\sigma}=\frac{Q^2}{Q^2+\chi^2}
-\end{equation}
+inverse variances after each iteration of optimization. The math is:
+\begin{eqnarray}
+\chi^2 &\equiv& \sum_n \chi_n^2
+\\
+\chi_n^2 &\equiv& \frac{[d_n - m_n]^2}{\sigma_n^2}
+\\
+\frac{1}{\sigma_n^2} &\leftarrow& \frac{1}{\sigma_n^2}\,\frac{Q^2}{Q^2+\chi_n^2}
+\quad ,
+\end{eqnarray}
 where $Q$ is the number of ``sigma'' at which the residual saturates. $Q$ for these fittings was chosen to be 5. (Find out why)
 
 \section{Method}
