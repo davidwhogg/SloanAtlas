@@ -10,11 +10,13 @@ See also <http://SloanAtlas.org/>.
 - David W. Hogg, New York University, <http://cosmo.nyu.edu/hogg/>
 
 ## Undergraduate Researchers:
-- Ekta Patel, New York University 
+
+- David Mykytyn, New York University
+- Ekta Patel, New York University
 
 ## License:
 
-Copyright 2012 David W. Hogg (NYU).  All rights reserved.
+Copyright 2012, 2013 the contributors.  All rights reserved.
 
 ## Dependencies:
 
@@ -23,4 +25,4 @@ Copyright 2012 David W. Hogg (NYU).  All rights reserved.
 - matplotlib
 - Python Imaging Library
 - pyfits
-- pappy <http://github.com/drphilmarshall/pappy>
+- triangle.py ?
