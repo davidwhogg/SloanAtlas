@@ -10,6 +10,7 @@
 \documentclass[12pt,preprint,pdftex]{aastex}
 \newcounter{address}
 \newcommand{\project}[1]{\textsl{#1}}
+\newcommand{\documentname}{\textsl{Article}}
 \newcommand{\units}[1]{\mathrm{#1}}
 \renewcommand{\mag}{\units{mag}}
 \renewcommand{\arcmin}{\units{arcmin}}
@@ -45,25 +46,166 @@ and has rarely been done well in automated settings.  Issues include
 that the galaxies overlap field boundaries, overlap foreground stars,
 and show detailed and confusing internal structure at high
 signal-to-noise.  We take a generative modeling or likelihood approach
-to making measurements of the galaxies, but with the likelihood
-modified for robustness.  We show that we get reliable measurements
-for very large galaxies ($>1~\arcmin$ in diameter) in the
-\project{Sloan Digital Sky Survey} imaging data.
+to making measurements of the galaxies, using very simplified
+few-parameter morphological models and with the likelihood modified
+for robustness.  We show that we can get precise and reliable (though
+possibly biased) measurements of colors and surface brightnesses for
+very large galaxies ($>1~\arcmin$ in diameter) in the \project{Sloan
+  Digital Sky Survey} imaging data.
 \end{abstract}
 
 \section{Introduction}
 
+There is a deep sense in which obtaining precise and accurate galaxy
+photometry is fundamentally impossible.  The reasons are multiple, but
+the dominant reasons are, first, that the angular outskirts of
+galaxies can contain significant luminosity but at incredibly low
+surface brightness and unknown morphology, and secondly, that the
+imaging point-spread function (PSF) can also have large-angle
+contributions that are unknown.  The latter problem affects stellar
+photometry also, but so long as the PSF is constant, and precise and
+accurate stellar photometry \emph{is} possible.  The difference
+between galaxies and stars is that all point-like stars will
+illuminate the PSF (correlate with it) identically.  Stellar
+photometry does not have to get all this right so long as it deals
+with it \emph{consistently}.  Not so for galaxies, each of which might
+have very different correlations with the PSF at large angles.  There
+is no way to produce consistent photometry without knowing things
+about every ggalaxy and every PSF that are---almost in
+principle---unknowable.
+
+These fundamental issues and also many pragmatic issues of noisy,
+badly calibrated, and crowded imaging have forced astronomers to
+consider many different methods for measuring galaxy fluxes.  Each has
+flaws.  Here we give a highly biased and very brief review.
+\begin{itemize}
+\item Given digital imaging of a patch of sky that includes a galaxy,
+  the simplest way to measure the flux of that galaxy is
+  \emph{aperture photometry}.  This is the measurement of the total
+  light (the integral of the intensity, found by summing pixel values)
+  in the image above the sky (foreground and background) intensity
+  within a fixed circular angular aperture, centered on the galaxy.
+  This kind of photometry obtains different fractions of the galaxy
+  light in galaxies that have different proper sizes or which lie at
+  different radial (angular-diameter) distances; in this sense it
+  doesn't produce photometry that is distance-independent.  It has
+  many other problems as well, some of which will come up later in
+  this list.
+\item Aperture photometry can in principle be improved by scaling the
+  radius of the aperture with the inverse radial (angular-diameter)
+  distance to the galaxy.  This helps in making the photometry
+  distance-independent, but it requires prior knowledge of the galaxy
+  distances.  It also doesn't perfectly compensate for distance
+  because galaxies at different distances but subject to the same (in
+  angular size) PSF illuminate even the properly scaled apertures
+  differently.  This change also doesn't account for galaxies with
+  different proper sizes.
+\item Aperture photometry can be made adaptive, adapting the aperture
+  to the observed angular size of each galaxy.  This requires image
+  analysis---galaxy size measurement---prior to the photometry.  In
+  one extreme version, \emph{Isophotal photometry}, the photometric
+  aperture is made the (usually very non-trivial) precise \emph{shape}
+  of a particular intensity contour in the galaxy image.  Isophotal
+  photometry is close to distance-independent for low-redshift
+  galaxies; at high redshift relativistic intensity dimming
+  ($[1+z]^{-4}$) breaks that symmetry.  Also, isophotal photometry
+  will in general get very different fractions of the galaxy light
+  from high and low surface-brightness galaxies.  It also remains at
+  least slightly dependent on the PSF for the same reasons as the
+  previous methods.
+\item \emph{Petrosian photometry} (cite) adapts the angular radius of
+  the photometry aperture using a statistic of the galaxy profile that
+  is insensitive to total surface brightness.  It works by identifying
+  a radius at which the (azimuthally averaged) intensity is a fixed
+  fraction of the mean within that radius.  Again, this method is at
+  least slightly dependent on distance, again because of the PSF.
+\item The most adaptive methods in common use---not the most adaptive
+  \emph{possible}---involve measuring the galaxy's \emph{radial
+    profile} by averaging the intensity above the sky intensity in
+  narrow circular (or sometimes elliptical) annuli centered on the
+  galaxy, and then summing the annular contributions to the flux, and
+  maybe also extrapolating at large radius.  These methods are usually
+  designed to attempt to get ``all the light''.  They do not overcome
+  the fundamental problem of large-radius galaxy and PSF morphology.
+\item One problem in common to all the above approaches is that they
+  involve ``adding up'' the flux in pixels.  This arithmetic operation
+  creates what is classically called a ``statistic'' of the data; it
+  will not be the minimum-variance estimator of anything.  That is, if
+  information preservation or precision is of high value, none of the
+  above methods are palatable.  Information-preserving inference
+  requires fitting probabilistic models, wich a likelihood funtion at
+  least and maybe also informative priors.  In the enormous
+  \project{Sloan Digital Sky Survey}, despite the fact that aperture
+  and Petrosian magnitudes were measured and published, it was the
+  magnitudes based on \emph{model fitting} that got the most use: They
+  produced more precise colors.  It is also the case that model
+  fitting is the first method in this list that has a shot at
+  producing truly distance-independent measurements, because a
+  component of the model fit is the PSF.  Inasmuch as the galaxy and
+  PSF models are appropriate and correct, model fitting is in some
+  sense provably the best way to measure galaxy photometry.  Of course
+  it doesn't overcome the fundamental problems of galaxy photometry
+  with which this \documentname\ opens: We don't understand galaxy
+  profiles or the PSF at large angular radii, and though there can be
+  significant light out there, it is hard to find in the data.
+  Furthermore, in the standard methodologies of model fitting,
+  extremely simple galaxy models are used, such as elliptical
+  exponentials and de~Vaucouleurs profiles (cite).  These smooth
+  models are not at all a good description of two-dimensional images
+  of most real galaxies at \emph{any} angular radius (think: spiral
+  arms, bars, rings, HII regions, dust lanes, and so on).
+\item An almost unexplored territory for galaxy photometry is to
+  consider extremely flexible galaxy models, models so flexible that
+  they can capture all of the details.  This would require a
+  significant technical investment and a lot of computer time, but it
+  might pay off.  It ought to give the best measurements in the end;
+  it is the ultimate in ``letting the data decide''.  However, even
+  this flexible approach won't overcome the fundamental problems; in
+  some sense the true, total photometry of a galaxy is \emph{not an
+    observable}.
+\end{itemize}
+All the problems with these different photometric measurement
+techniques flow into the subsequent or simultaneous measurements made
+of other quantities of interest, like sizes, concentrations, surface
+brightnesses, and so-on, because these measurements are (or involve)
+transformations of photometric measurements.  The best choice among
+techniques will depend on the uses to which the measurements are going
+to be put; in some cases precision is paramount, in others consistency
+across distance, in others robustness to varying PSF, in others
+consistency across morphological types.  In this project, our goal is
+to obtain consistent multi-band photometry for a large set of galaxies
+at a wide range of distances, with a large range of morphologies,
+surface-brightnesses, and angular sizes relative to the PSF.
+Importantly, we want to do the very (angularly) large galaxies just as
+well as the (angularly) compact.
+
+In addition to all the photometric method problems, there are a large
+number of separate pragmatic issues when we consider the problem of
+performing photometry automatically and consistently in a large and
+heterogeneous data set...deblending...superimposed stars...NSA...
+
+...Our goals are...so we do fitting...strong endorsement of fitting here...
+
+...Why can we live with inflexible models?...
+
+...Why will you object to what we are doing and why should you shut up?...
+
 \section{Data and input catalogs}
 The primary source of for the input catalog was the Third Reference Catalog of Bright Galaxies (RC3) from which we pulled all objects which had an angular diameter equal to or greater than 2 arcminutes as measured in the apparent major isophotal diameter at the surface brightness level $\mu_B = 25,0$ B-mag per square arcsecond. Next, we checked the NASA-Sloan Atlas (NSA) for any objects of significant size that were also not in RC3. The cut was for objects with a 50\% light radius of the SERSIC fit greater than 30 arcseconds. The objects were then examined by eye to determine which ones were actual large galaxies, and which were errors in the NSA. Example errors included stars causing saturation, interstellar medium, and nebulae. We also checked the 2MASS Large Galaxy Atlas but no galaxies of the correct size not already in RC3 were found. The only objects found were either not in the Sloan Survey, or were globular clusters. The cut for 2MASS was based on the isophotal fiduciary radius in the K-band, which was checked to a radius of 1 arcminute.
-
 
 \section{Tractor}
 Models: Write about the types of models used?? Different galaxies types etc?
 The Tractor functions first by building a model, using initial parameter data that is supplied. Next, it takes the derivative of that in parameter space. It performs a least square optimization of that, attempting to minimize the difference between the data and the model. Once the best direction is found, it makes a series of increasings steps (how is step size determined??) until the $\chi^2$ stops improving (I think this is imprecise/wrong) Finally the parameters are updated in that direction. The tractor is capable of freezing certain parameters, so that they are excluded from the optimization. 
 The iteratively-reweighted least squares process is used to update the
-inverse variances after each iteration of optimization. The formula
-used is: \begin{equation} \frac{1}{\sigma}=\frac{Q^2}{Q^2+\chi^2}
-\end{equation}
+inverse variances after each iteration of optimization. The math is:
+\begin{eqnarray}
+\chi^2 &\equiv& \sum_n \chi_n^2
+\\
+\chi_n^2 &\equiv& \frac{[d_n - m_n]^2}{\sigma_n^2}
+\\
+\frac{1}{\sigma_n^2} &\leftarrow& \frac{1}{\sigma_n^2}\,\frac{Q^2}{Q^2+\chi_n^2}
+\quad ,
+\end{eqnarray}
 where $Q$ is the number of ``sigma'' at which the residual saturates. $Q$ for these fittings was chosen to be 5. (Find out why)
 
 \section{Method}
@@ -119,6 +261,22 @@ http://www.astro.ku.dk/~erik/Tycho-2/letter.pdf  - TYCHO-2
 \section{Selected results}
 
 \section{Discussion}
+
+\acknowledgements It is a pleasure to thank
+  Jim Gunn (Princeton),
+  Robert Lupton (Princeton), and
+  David Spergel (Princeton)
+for valuable discussions.
+This work was supported in part by The Princeton University Press,
+NASA (grant NNX12AI50G) and the NSF (grant IIS-1124794).
+
+...HOGG: Insert relevant SDSS boilerplate here...
+
+\begin{thebibliography}{70}
+\bibitem[de~Vaucouleurs(1948)]{dev}
+de~Vaucouleurs,~G., 1948, Annales d'Astrophysique, 11, 247
+\end{thebibliography}
+
 
 \end{document}
 
