@@ -181,7 +181,7 @@ well as the (angularly) compact.
 
 ...Our goals are...so we do fitting...strong endorsement of fitting here...
 
-...Why can we live with inflexible models?...
+...Why can we live with inflexible models even though they are bad fits?...
 
 In addition to the photometric issues discussed above, there are a
 large number of separate pragmatic issues when we consider the problem
@@ -189,11 +189,28 @@ of performing galaxy photometry automatically and consistently in a
 large and heterogeneous data set.  When galaxies are angularly large,
 as they will be here, they often overlap stars.  Bright stars make it
 hard to precisely measure the fainter galaxy.  Faint stars are
-challenging to deblend from the galaxy reliably.  At all angular
-sizes, galaxies frequently overlap, both because galaxies are
-spatially clustered and because some ``galaxies'' are really pairs of
-galaxies merging.  In what follows, we won't have much to help these
-matters; we deal with them more-or-less ``by hand''.
+challenging to deblend from the galaxy reliably.
+
+In addition to overlapping stars, galaxies frequently overlap other
+galaxies, both because galaxies are spatially clustered and because
+some ``galaxies'' are really pairs of galaxies merging.  Overlapping
+galaxies must be ``deblended'', which is a source of consternation in
+many imaging surveys.  The consternaton arises both because proper
+deblending is an ill-posed problem and because it is very
+distance-dependent.  The problem is ill-posed because there is no
+definition of the boundary between two galaxies and one; even if there
+were, we wouldn't know how to separate the observed intensity into the
+two components.  Clever data-driven heuristic proposals and methods
+exist (cite Lupton and SExtractor) but nothing is reliable for
+angularly large galaxies, where enormous non-smooth detail is visible
+for a large range of Hubble types.  Deblending is distance-dependent,
+because a galaxy observed nearby is much larger than the PSF; all of
+the spiral structure and HII regions are well resolved.  A distant
+galaxy is a smooth blob under the PSF.  The deblending simply can't be
+the same if it is based on flexible heuristics.  This is another place
+where fitting inflexible models will help us: Although the inflexible
+models are never good fits, they provide objective methods for
+simultaneously measuring two overlapping galaxies.
 
 ...Why will you object to what we are doing and why should you shut up?...
 
