@@ -67,11 +67,11 @@ photometry also, but so long as the PSF is constant, and precise and
 accurate stellar photometry \emph{is} possible.  The difference
 between galaxies and stars is that all point-like stars will
 illuminate the PSF (correlate with it) identically.  Stellar
-photometry does not have to get all this right so long as it deals
-with it \emph{consistently}.  Not so for galaxies, each of which might
-have very different correlations with the PSF at large angles.  There
-is no way to produce consistent photometry without knowing things
-about every ggalaxy and every PSF that are---almost in
+photometry does not rely on getting all this right so long as it deals
+with it \emph{consistently} across stars.  Not so for galaxies, each
+of which might have very different correlations with the PSF at large
+angles.  There is no way to produce consistent photometry without
+knowing things about every ggalaxy and every PSF that are---almost in
 principle---unknowable.
 
 These fundamental issues and also many pragmatic issues of noisy,
@@ -179,14 +179,21 @@ surface-brightnesses, and angular sizes relative to the PSF.
 Importantly, we want to do the very (angularly) large galaxies just as
 well as the (angularly) compact.
 
-In addition to all the photometric method problems, there are a large
-number of separate pragmatic issues when we consider the problem of
-performing photometry automatically and consistently in a large and
-heterogeneous data set...deblending...superimposed stars...NSA...
-
 ...Our goals are...so we do fitting...strong endorsement of fitting here...
 
 ...Why can we live with inflexible models?...
+
+In addition to the photometric issues discussed above, there are a
+large number of separate pragmatic issues when we consider the problem
+of performing galaxy photometry automatically and consistently in a
+large and heterogeneous data set.  When galaxies are angularly large,
+as they will be here, they often overlap stars.  Bright stars make it
+hard to precisely measure the fainter galaxy.  Faint stars are
+challenging to deblend from the galaxy reliably.  At all angular
+sizes, galaxies frequently overlap, both because galaxies are
+spatially clustered and because some ``galaxies'' are really pairs of
+galaxies merging.  In what follows, we won't have much to help these
+matters; we deal with them more-or-less ``by hand''.
 
 ...Why will you object to what we are doing and why should you shut up?...
 
