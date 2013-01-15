@@ -54,7 +54,7 @@ very large galaxies ($>1~\arcmin$ in diameter) in the \project{Sloan
   Digital Sky Survey} imaging data.
 \end{abstract}
 
-\section{Introduction}
+\section{Galaxy photometry is impossible}
 
 There is a deep sense in which obtaining precise and accurate galaxy
 photometry is fundamentally impossible.  The reasons are multiple, but
@@ -172,16 +172,39 @@ transformations of photometric measurements.  The best choice among
 techniques will depend on the uses to which the measurements are going
 to be put; in some cases precision is paramount, in others consistency
 across distance, in others robustness to varying PSF, in others
-consistency across morphological types.  In this project, our goal is
-to obtain consistent multi-band photometry for a large set of galaxies
-at a wide range of distances, with a large range of morphologies,
-surface-brightnesses, and angular sizes relative to the PSF.
-Importantly, we want to do the very (angularly) large galaxies just as
-well as the (angularly) compact.
+consistency across morphological types.
 
-...Our goals are...so we do fitting...strong endorsement of fitting here...
+In this project, our goal is to obtain consistent multi-band
+photometry for a large set of galaxies at a wide range of distances,
+with a large range of morphologies, surface-brightnesses, and angular
+sizes relative to the PSF.  Importantly, we want to do the very
+(angularly) large galaxies in the same way as we do the (angularly)
+compact.  Consistency is more important than accuracy, in the sense
+that we would like to get numbers that---if they must be wrong---are
+wrong \emph{in the same way} for the \emph{same galaxy} observed at
+different distances or through different atmospheric PSFs.  We also
+want precision---we want to avoid introducing unnecessary scatter or
+noise by our choice of procedure.
 
-...Why can we live with inflexible models even though they are bad fits?...
+These considerations argue \emph{for} probabilistic modeling and
+\emph{against} using very flexible models.  We are making a catalog of
+photometry, not delivering posterior PDFs; our photometry will
+therefore contain \emph{estimators} for flux, color, size, and so-on.
+Minimum variance estimators are maximum-likelihood estimators, so we
+will only consider approaches in which we (under assumptions)
+construct an approximate likelihood function and optimize it.  As we
+note above, the requirement that our photometry be distance and
+PSF-independent also argues for modeling approaches.  The reason we
+prefer inflexible models to flexible models is that at the optimum in
+the likelihood, a large angular-size galaxy will exercise much more
+model freedom than a small angular-size galaxy: In the large galaxy,
+many more features and details are visible under finite PSF.  Again,
+distance and PSF consistency requires that we restrict model freedom
+identically or as identically as possible for all galaxies we measure.
+This argues for overly simplistic models; the models we will use below
+do \emph{not} capture the full two-dimensional structure of the
+galaxies being measured, but (as we will show), they do provide
+robust, high signal-to-noise, consistent measurements.
 
 In addition to the photometric issues discussed above, there are a
 large number of separate pragmatic issues when we consider the problem
@@ -212,12 +235,36 @@ where fitting inflexible models will help us: Although the inflexible
 models are never good fits, they provide objective methods for
 simultaneously measuring two overlapping galaxies.
 
+...Why can we live with inflexible models even though they are bad fits?...
+
 ...Why will you object to what we are doing and why should you shut up?...
 
 \section{Data and input catalogs}
-The primary source of for the input catalog was the Third Reference Catalog of Bright Galaxies (RC3) from which we pulled all objects which had an angular diameter equal to or greater than 2 arcminutes as measured in the apparent major isophotal diameter at the surface brightness level $\mu_B = 25,0$ B-mag per square arcsecond. Next, we checked the NASA-Sloan Atlas (NSA) for any objects of significant size that were also not in RC3. The cut was for objects with a 50\% light radius of the SERSIC fit greater than 30 arcseconds. The objects were then examined by eye to determine which ones were actual large galaxies, and which were errors in the NSA. Example errors included stars causing saturation, interstellar medium, and nebulae. We also checked the 2MASS Large Galaxy Atlas but no galaxies of the correct size not already in RC3 were found. The only objects found were either not in the Sloan Survey, or were globular clusters. The cut for 2MASS was based on the isophotal fiduciary radius in the K-band, which was checked to a radius of 1 arcminute.
 
-\section{Tractor}
+The primary source of for the input catalog---our source for galaxy
+celestial positions---was the Third Reference Catalog of Bright
+Galaxies (RC3) from which we pulled all objects which had an angular
+diameter equal to or greater than 2 arcminutes as measured in the
+apparent major isophotal diameter at the surface brightness level
+$\mu_B = 25,0$ B-mag per square arcsecond. Next, we checked the
+NASA-Sloan Atlas (NSA) for any objects of significant size that were
+also not in RC3. The cut was for objects with a 50\% light radius of
+the SERSIC fit greater than 30 arcseconds. The objects were then
+examined by eye to determine which ones were actual large galaxies,
+and which were errors in the NSA. Example errors included stars
+causing saturation, interstellar medium, and nebulae. We also checked
+the 2MASS Large Galaxy Atlas but no galaxies of the correct size not
+already in RC3 were found. The only objects found were either not in
+the Sloan Survey, or were globular clusters. The cut for 2MASS was
+based on the isophotal fiduciary radius in the K-band, which was
+checked to a radius of 1 arcminute.
+
+...Sloan data; what do we use and how do we get it and what calibrations do we use?..
+
+...Error model; what do we use and what's wrong with it?..
+
+\section{The Tractor}
+
 Models: Write about the types of models used?? Different galaxies types etc?
 The Tractor functions first by building a model, using initial parameter data that is supplied. Next, it takes the derivative of that in parameter space. It performs a least square optimization of that, attempting to minimize the difference between the data and the model. Once the best direction is found, it makes a series of increasings steps (how is step size determined??) until the $\chi^2$ stops improving (I think this is imprecise/wrong) Finally the parameters are updated in that direction. The tractor is capable of freezing certain parameters, so that they are excluded from the optimization. 
 The iteratively-reweighted least squares process is used to update the
