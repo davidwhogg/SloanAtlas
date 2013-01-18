@@ -235,11 +235,27 @@ where fitting inflexible models will help us: Although the inflexible
 models are never good fits, they provide objective methods for
 simultaneously measuring two overlapping galaxies.
 
-...Why can we live with inflexible models even though they are bad fits?...
-
-...Why will you object to what we are doing and why should you shut up?...
+In what follows, we fit \project{Sloan Digital Sky Survey} imaging
+data on and near large angular size galaxies using simple (inflexible)
+models---mixtures of exponential and de~Vaucouleurs models.  For each
+galaxy, we optimize a justifiable scalar objective function that is an
+approximation to a likelihood, with modifications to make the fitting
+less sensitive (than traditionally) to outliers and morphological
+oddities in the galaxies.  The galaxies are typically as large as or
+larger than an individual \project{SDSS} frame, but we don't co-add or
+mosaic he data before fitting; the fitting is perfomed on all the
+individual disjoint science exposures simultaneously.  For most
+galaxies we look at, the simple models we are using are \emph{not}
+good fits: They can't be, because they don't capture spiral arms, HII
+regions, dust lanes, or other morphological non-trivialities.
+However, as we will show, they produce precise, robust photometry that
+appears to be invariant with galaxy angular size or distance.
 
 \section{Data and input catalogs}
+
+...Sloan data; what do we use and how do we get it and what calibrations do we use?..
+
+...Error model; what do we use and what's wrong with it?..
 
 The primary source of for the input catalog---our source for galaxy
 celestial positions---was the Third Reference Catalog of Bright
@@ -258,10 +274,6 @@ already in RC3 were found. The only objects found were either not in
 the Sloan Survey, or were globular clusters. The cut for 2MASS was
 based on the isophotal fiduciary radius in the K-band, which was
 checked to a radius of 1 arcminute.
-
-...Sloan data; what do we use and how do we get it and what calibrations do we use?..
-
-...Error model; what do we use and what's wrong with it?..
 
 \section{The Tractor}
 
