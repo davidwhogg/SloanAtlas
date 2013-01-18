@@ -238,13 +238,14 @@ simultaneously measuring two overlapping galaxies.
 In what follows, we fit \project{Sloan Digital Sky Survey} imaging
 data on and near large angular size galaxies using simple (inflexible)
 models---mixtures of exponential and de~Vaucouleurs models.  For each
-galaxy, we optimize a justifiable scalar objective function that is an
+galaxy, we use our package \project{The Tractor} (HOGG CITE) to
+optimize a justifiable scalar objective function that is an
 approximation to a likelihood, with modifications to make the fitting
 less sensitive (than traditionally) to outliers and morphological
 oddities in the galaxies.  The galaxies are typically as large as or
-larger than an individual \project{SDSS} frame, but we don't co-add or
-mosaic he data before fitting; the fitting is perfomed on all the
-individual disjoint science exposures simultaneously.  For most
+larger than an individual \project{SDSS} frame, but \project{The
+  Tractor} doesn't need a co-add or mosaic of the data; it fits all
+the individual disjoint science exposures simultaneously.  For most
 galaxies we look at, the simple models we are using are \emph{not}
 good fits: They can't be, because they don't capture spiral arms, HII
 regions, dust lanes, or other morphological non-trivialities.
