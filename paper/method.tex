@@ -9,6 +9,8 @@
 
 \documentclass[12pt,preprint,pdftex]{aastex}
 \newcounter{address}
+\newcommand{\foreign}[1]{\emph{#1}}
+\newcommand{\etal}{\foreign{et\,al.}}
 \newcommand{\project}[1]{\textsl{#1}}
 \newcommand{\documentname}{\textsl{Article}}
 \newcommand{\units}[1]{\mathrm{#1}}
@@ -254,9 +256,36 @@ appears to be invariant with galaxy angular size or distance.
 
 \section{Data and input catalogs}
 
-...Sloan data; what do we use and how do we get it and what calibrations do we use?..
+The imaging data for this project come from the \project{Sloan Digital
+  Sky Survey} fully public \project{Data Release 8} (CITE), which is
+the first data release of the \project{SDSS-III} project (CITE).  It
+includes fully recalibrated imaging (CITE PADMANABHAN) from the
+combined imaging projects of \project{SDSS} (CITE) and
+\project{SDSS-II} (CITE).
 
-...Error model; what do we use and what's wrong with it?..
+The fitting code (\project{The Tractor}, described briefly below, and
+more completely in Lang \etal, forthcoming) locates \project{SDSS}
+imaging fields that overlap a large circular footprint centered on the
+pre-fitting (input) galaxy center.  It downloads (on the fly)
+\project{DR8} imaging data files corresponding to those fields from
+the \project{SDSS-III} \project{Data Archive Server} (CITE?).  The
+downloaded data files are the photometrically calibrated,
+background-subtracted ``frames'' files.
+
+For every pixel of the imaging, we construct an approximate ``inverse
+variance'' value, which is the reciprocal of the variance expected
+given the Poisson photon, Poisson dark-current, and Gaussian
+read-noise error models.  In detail, we use the equations recommended
+by the \project{SDSS-III}
+Collaboration.\footnote{\url{http://data.sdss3.org/datamodel/files/BOSS\_PHOTOOBJ/frames/RERUN/RUN/CAMCOL/frame.html}}
+We set the inverse variance to zero for any pixels that lie in regions
+that were interpolated, saturated, or affected by cosmic rays or ghost
+images.
+
+...For the PSF model, we are using the SDSS double-Gaussian
+model....obtained where...and...
+
+...Extinction corrections...
 
 The primary source of for the input catalog---our source for galaxy
 celestial positions---was the Third Reference Catalog of Bright
