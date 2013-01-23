@@ -321,7 +321,7 @@ inverse variances after each iteration of optimization. The math is:
 where $Q$ is the number of ``sigma'' at which the residual saturates. $Q$ for these fittings was chosen to be 5. (Find out why)
 
 \section{Method}
-When given an RA and a DEC and a radius, the program searches the SDSS data for fields which overlap anywhere in that space. It downloads all those fields, in all bands, as fits files, and then imports them into the program as arrays. The initial inverse variances are also downloaded from Sloan.
+When given an RA and a Dec and a radius, the program searches the SDSS data for fields which overlap anywhere in that space. It downloads all those fields, in all bands, as fits files, and then imports them into the program as arrays. The initial inverse variances are also downloaded from Sloan.
 Saturated pixels from the SDSS images were masked and then a binary dilation with three iterations was applied. (more details needed here?)
 
 For the purpose of measuring and optimizing on a single galaxy at a
@@ -336,13 +336,13 @@ catalog.
 
 In order to deal with the problems of stars that overlap with the
 galaxy which we are interested in, we decided to mask them out. The
-stars were found using the data in the TYCHO2 star catalog (Add tycho2 cite)
- using the spherematch function of astrometry.net. The stars were masked out to a
+stars were found using the data in the Tycho-2 star catalog \citep{tycho2}.
+The stars were masked out to a
 radius of
 \begin{equation}
 \theta_{\mathrm{exclude}} = \max(25, 25\,2^{[11\,\mag-V]})
 \end{equation}
-where $V$ is the visual magnitude given by TYCHO2.
+where $V$ is the visual magnitude given by Tycho-2.
 (I'm not sure why these values, I got them from Dustin)
 
 
@@ -366,10 +366,6 @@ For instance, the galaxy M81 had too large of a radius in RC3 in order to run pr
 All data that was flagged for review was reviewed by examination of the flipbook for that galaxy, in order that changes could be made to the initialization for that galaxy, or if the expected galaxy was nonexistent and therefore a mistake in a prior catalog, removed entirely from the catalog. 
 
 
-
-Citations: Figure out how to actually cite these:
-http://www.astro.ku.dk/~erik/Tycho-2/letter.pdf  - TYCHO-2
-
 \section{Selected results}
 
 \section{Discussion}
@@ -387,7 +383,19 @@ NASA (grant NNX12AI50G) and the NSF (grant IIS-1124794).
 \begin{thebibliography}{70}
 \bibitem[de~Vaucouleurs(1948)]{dev}
 de~Vaucouleurs,~G., 1948, Annales d'Astrophysique, 11, 247
+
+\bibitem[H\o{}g~\etal(2000)]{tycho2}
+H\o{}g,~E. \etal, 2000, \aap 335, L27
 \end{thebibliography}
+
+% @Article{tycho2,
+%      author    = {H\o{}g, E. and others},
+%      title     = {The Tycho-2 catalogue of the 2.5 million brightest stars},
+%      journal   = {\aap},
+%      volume    = {355},
+%      year      = {2000},
+%      pages     = {L27--30},
+% }
 
 
 \end{document}
