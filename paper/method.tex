@@ -286,12 +286,12 @@ For the PSF model, we use the SDSS double-Gaussian model stored in the ``psField
 
 ...Extinction corrections...
 
-The primary source of for the input catalog---our source for galaxy
+The primary input catalog---our source for galaxy
 celestial positions---was the Third Reference Catalog of Bright
-Galaxies (RC3) from which we pulled all objects which had an angular
-diameter equal to or greater than 2 arcminutes as measured in the
+Galaxies (RC3) from which we pulled all objects with an angular
+diameter of at least 2 arcminutes as measured in the
 apparent major isophotal diameter at the surface brightness level
-$\mu_B = 25,0$ B-mag per square arcsecond. Next, we checked the
+$\mu_B = 25.0$ B-mag per square arcsecond. Next, we checked the
 NASA-Sloan Atlas (NSA) for any objects of significant size that were
 also not in RC3. The cut was for objects with a 50\% light radius of
 the SERSIC fit greater than 30 arcseconds. The objects were then
@@ -307,7 +307,7 @@ checked to a radius of 1 arcminute.
 \section{The Tractor}
 
 Models: Write about the types of models used?? Different galaxies types etc?
-The Tractor functions first by building a model, using initial parameter data that is supplied. Next, it takes the derivative of that in parameter space. It performs a least square optimization of that, attempting to minimize the difference between the data and the model. Once the best direction is found, it makes a series of increasings steps (how is step size determined??) until the $\chi^2$ stops improving (I think this is imprecise/wrong) Finally the parameters are updated in that direction. The tractor is capable of freezing certain parameters, so that they are excluded from the optimization. 
+The Tractor functions first by building a model, using initial parameter data that is supplied. Next, it takes the derivative of each parameter and performs a weighted least-squares fit to find a parameter update that will minimize $\chi^2$.  Since this is a linearization of a non-linear problem, we perform a line search along the update direction, taking steps of increasing size starting from $1/1024$ and increasing by factors of $2$ up to a factor of $2$ of the linear direction; we halt the line-search when the $\chi^2$ stops decreasing.  Finally the parameters are updated in that direction. The tractor is capable of freezing certain parameters, so that they are excluded from the optimization. 
 The iteratively-reweighted least squares process is used to update the
 inverse variances after each iteration of optimization. The math is:
 \begin{eqnarray}
