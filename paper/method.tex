@@ -282,9 +282,18 @@ We set the inverse variance to zero for any pixels that lie in regions
 that were interpolated, saturated, or affected by cosmic rays or ghost
 images.
 
-For the PSF model, we use the SDSS double-Gaussian model stored in the ``psField'' file.  DSTN:  What do we get as parameters for that double-Gaussian model?  I think it is less than 1 + 4 + 6 parameters that a K=2 D=2 MoG would have, right?
+For the PSF model, we use the SDSS double-Gaussian model stored in the
+``psField'' file.  DSTN: What do we get as parameters for that
+double-Gaussian model?  I think it is less than 1 + 4 + 6 parameters
+that a K=2 D=2 MoG would have, right?
 
-EKTA: ...Extinction corrections...
+Galactic extinction $E(B-V)$ values are taken at the galaxy center
+positions from the standard maps (\citealt{schlegel98}).  The
+reddening values are then multiplied by the appropriate coefficients
+A(V)/E(B-V) per Sloan bandpass to obtain the total extinction to be
+subtracted from the individual magnitudes of each bandpass. The
+coefficiens are the following: u-5.155,g-3.793, r-2.751, i-2.086,
+z-1.479.
 
 The primary input catalog---our source for galaxy
 celestial positions---was the Third Reference Catalog of Bright
@@ -383,20 +392,10 @@ NASA (grant NNX12AI50G) and the NSF (grant IIS-1124794).
 \begin{thebibliography}{70}
 \bibitem[de~Vaucouleurs(1948)]{dev}
 de~Vaucouleurs,~G., 1948, Annales d'Astrophysique, 11, 247
-
 \bibitem[H\o{}g~\etal(2000)]{tycho2}
 H\o{}g,~E. \etal, 2000, \aap 335, L27
+\bibitem[Schlegel \etal(1998)]{schlegel98}
+Schlegel,~D.~J., Finkbeiner,~D.~P., Davis,~M., \apj 500, 525
 \end{thebibliography}
 
-% @Article{tycho2,
-%      author    = {H\o{}g, E. and others},
-%      title     = {The Tycho-2 catalogue of the 2.5 million brightest stars},
-%      journal   = {\aap},
-%      volume    = {355},
-%      year      = {2000},
-%      pages     = {L27--30},
-% }
-
-
 \end{document}
-
