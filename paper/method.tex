@@ -275,6 +275,8 @@ Exceptional cases were flagged for later review if $\rfifty$ was not between the
 
 For instance, the galaxy M81 had too large of a radius in RC3 in order to run properly so it was manually reduced so as to fit into the memory of the machine. The scaling factors used were if the number of fields were between ten and twenty, a factor of two scaling. Four was used for between twenty and forty, and eight was used for between forty and eighty. Above eighty, the galaxy was skipped. (Put into table?) Another example is M51a and M51b, which were simultaneously fit in order to ensure that the fit measured both galaxies simultaneously. 
 
+Galactic extinction is taken from dust maps given by Schlegel et al. (1998). The get_sfd_dust function in the obstools module of the {\bf astropysics} package allows us to retrieve the reddening value E(B-V) from the dust maps by converting the RA and Dec that we measure to galactic coordinates. The reddening values are then multiplied by the appropriate coefficients A(V)/E(B-V) per Sloan bandpass to obtain the total extinction to be subtracted from the individual magnitudes of each bandpass. The coefficiens are the following: u-5.155,g-3.793, r-2.751, i-2.086, z-1.479.   
+
 All data that was flagged for review was reviewed by examination of the flipbook for that galaxy, in order that changes could be made to the initialization for that galaxy, or if the expected galaxy was nonexistent and therefore a mistake in a prior catalog, removed entirely from the catalog. 
 
 
