@@ -295,23 +295,23 @@ subtracted from the individual magnitudes of each bandpass. The
 coefficiens are the following: u-5.155,g-3.793, r-2.751, i-2.086,
 z-1.479.
 
-The primary input catalog---our source for galaxy
-celestial positions---was the Third Reference Catalog of Bright
-Galaxies (RC3) from which we pulled all objects with an angular
-diameter of at least 2 arcminutes as measured in the
-apparent major isophotal diameter at the surface brightness level
-$\mu_B = 25.0$ B-mag per square arcsecond. Next, we checked the
-NASA-Sloan Atlas (NSA) for any objects of significant size that were
-also not in RC3. The cut was for objects with a 50\% light radius of
-the SERSIC fit greater than 30 arcseconds. The objects were then
-examined by eye to determine which ones were actual large galaxies,
-and which were errors in the NSA. Example errors included stars
-causing saturation, interstellar medium, and nebulae. We also checked
-the 2MASS Large Galaxy Atlas but no galaxies of the correct size not
-already in RC3 were found. The only objects found were either not in
-the Sloan Survey, or were globular clusters. The cut for 2MASS was
-based on the isophotal fiduciary radius in the K-band, which was
-checked to a radius of 1 arcminute.
+%% The primary input catalog---our source for galaxy
+%% celestial positions---was the Third Reference Catalog of Bright
+%% Galaxies (RC3) from which we pulled all objects with an angular
+%% diameter of at least 2 arcminutes as measured in the
+%% apparent major isophotal diameter at the surface brightness level
+%% $\mu_B = 25.0$ B-mag per square arcsecond. Next, we checked the
+%% NASA-Sloan Atlas (NSA) for any objects of significant size that were
+%% also not in RC3. The cut was for objects with a 50\% light radius of
+%% the SERSIC fit greater than 30 arcseconds. The objects were then
+%% examined by eye to determine which ones were actual large galaxies,
+%% and which were errors in the NSA. Example errors included stars
+%% causing saturation, interstellar medium, and nebulae. We also checked
+%% the 2MASS Large Galaxy Atlas but no galaxies of the correct size not
+%% already in RC3 were found. The only objects found were either not in
+%% the Sloan Survey, or were globular clusters. The cut for 2MASS was
+%% based on the isophotal fiduciary radius in the K-band, which was
+%% checked to a radius of 1 arcminute.
 
 \section{The Tractor}
 
@@ -367,8 +367,13 @@ radius $\rninety$ and the concentration parameter $\conc\equiv
 \rninety/\rfifty$, we took the model of the galaxy that had been
 optimized and places it in an empty frame within the tractor. Next,
 over a series of increasing intervals of radii we summed up the total
-flux within the circles and then interpolated to find $\rfifty$ and $\rninety$. We used sixty-four radii equally spaced in pixel logarithms from zero to half the height of the image.
-Exceptional cases were flagged for later review if $\rfifty$ was not between the deVaucouleur and exponential radii for that galaxy, and concentration was flagged as incorrect if $\frac{1}{\conc}$ was not between .29 and .46. (We are not getting these numbers, mention in discussion?) TODO: Add citation to paper for these numbers
+flux within the circles and then interpolated to find $\rfifty$ and $\rninety$.
+ We used sixty-four radii equally spaced in pixel logarithms from zero
+ to half the height of the image. Exceptional cases were flagged for later
+ review if $\rfifty$ was not between the deVaucouleur and exponential radii
+ for that galaxy, and concentration was flagged as incorrect if $\frac{1}{\conc}$
+ was not between .29 and .46. (We are not getting these numbers, mention in
+ discussion?) TODO: Add citation to paper for these numbers
 
 For instance, the galaxy M81 had too large of a radius in RC3 in order to run properly so it was manually reduced so as to fit into the memory of the machine. The scaling factors used were if the number of fields were between ten and twenty, a factor of two scaling. Four was used for between twenty and forty, and eight was used for between forty and eighty. Above eighty, the galaxy was skipped. (Put into table?) Another example is M51a and M51b, which were simultaneously fit in order to ensure that the fit measured both galaxies simultaneously. 
 
