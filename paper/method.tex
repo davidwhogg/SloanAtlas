@@ -13,6 +13,8 @@
 \newcommand{\etal}{\foreign{et\,al.}}
 \newcommand{\project}[1]{\textsl{#1}}
 \newcommand{\documentname}{\textsl{Article}}
+\newcommand{\sectionname}{Section}
+\newcommand{\sectionnames}{\sectionname s}
 \newcommand{\units}[1]{\mathrm{#1}}
 \renewcommand{\mag}{\units{mag}}
 \renewcommand{\arcmin}{\units{arcmin}}
@@ -56,7 +58,22 @@ very large galaxies ($>1~\arcmin$ in diameter) in the \project{Sloan
   Digital Sky Survey} imaging data.
 \end{abstract}
 
-\section{Galaxy photometry is impossible}
+\section{Introduction}
+
+...why are we doing this?
+
+...what are the limits of SDSS pipeline photometry?
+
+...what has changed that makes this possible?
+
+Readers who don't want to read the long philosophical position
+outlined in \sectionname~\ref{sec:philosophy} can skip either to the
+data and method descriptions in \sectionnames~\ref{sec:data} and
+\ref{sec:method} or else straight to the results in
+\sectionname~\ref{sec:results}.  There is a short final discussion in
+\sectionname~\ref{sec:discussion}.
+
+\section{Galaxy photometry is impossible}\label{sec:philosophy}
 
 There is a deep sense in which obtaining precise and accurate galaxy
 photometry is fundamentally impossible.  The reasons are multiple, but
@@ -254,7 +271,7 @@ regions, dust lanes, or other morphological non-trivialities.
 However, as we will show, they produce precise, robust photometry that
 appears to be invariant with galaxy angular size or distance.
 
-\section{Data and input catalogs}
+\section{Data and input catalogs}\label{sec:data}
 
 The imaging data for this project come from the \project{Sloan Digital
   Sky Survey} fully public \project{Data Release 8} (CITE), which is
@@ -313,7 +330,9 @@ the Sloan Survey, or were globular clusters. The cut for 2MASS was
 based on the isophotal fiduciary radius in the K-band, which was
 checked to a radius of 1 arcminute.
 
-\section{The Tractor}
+\section{Method}\label{sec:method}
+
+...first a few words about \project{The Tractor}
 
 Models: Write about the types of models used?? Different galaxies types etc?
 The Tractor functions first by building a model, using initial parameter data that is supplied. Next, it takes the derivative of each parameter and performs a weighted least-squares fit to find a parameter update that will minimize $\chi^2$.  Since this is a linearization of a non-linear problem, we perform a line search along the update direction, taking steps of increasing size starting from $1/1024$ and increasing by factors of $2$ up to a factor of $2$ of the linear direction; we halt the line-search when the $\chi^2$ stops decreasing.  Finally the parameters are updated in that direction. The tractor is capable of freezing certain parameters, so that they are excluded from the optimization. 
@@ -329,7 +348,8 @@ inverse variances after each iteration of optimization. The math is:
 \end{eqnarray}
 where $Q$ is the number of ``sigma'' at which the residual saturates. $Q$ for these fittings was chosen to be 5. (Find out why)
 
-\section{Method}
+...now the specifics of what we actually do
+
 When given an RA and a Dec and a radius, the program searches the SDSS data for fields which overlap anywhere in that space. It downloads all those fields, in all bands, as fits files, and then imports them into the program as arrays. The initial inverse variances are also downloaded from Sloan.
 Saturated pixels from the SDSS images were masked and then a binary dilation with three iterations was applied. (more details needed here?)
 
@@ -375,9 +395,9 @@ For instance, the galaxy M81 had too large of a radius in RC3 in order to run pr
 All data that was flagged for review was reviewed by examination of the flipbook for that galaxy, in order that changes could be made to the initialization for that galaxy, or if the expected galaxy was nonexistent and therefore a mistake in a prior catalog, removed entirely from the catalog. 
 
 
-\section{Selected results}
+\section{Selected results}\label{sec:results}
 
-\section{Discussion}
+\section{Discussion}\label{sec:discussion}
 
 \acknowledgements It is a pleasure to thank
   Jim Gunn (Princeton),
