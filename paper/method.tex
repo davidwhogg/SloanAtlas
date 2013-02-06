@@ -64,7 +64,24 @@ very large galaxies ($>1~\arcmin$ in diameter) in the \project{Sloan
 
 ...what are the limits of SDSS pipeline photometry?
 
-...what has changed that makes this possible?
+...what has changed that makes this possible and necessary?
+
+In what follows, we fit \project{Sloan Digital Sky Survey} imaging
+data on and near large angular-size galaxies using simple (inflexible)
+models---mixtures of exponential and de~Vaucouleurs models.  For each
+galaxy, we use our package \project{The Tractor} (HOGG CITE) to
+optimize a justifiable scalar objective function that is an
+approximation to a likelihood, with modifications to make the fitting
+less sensitive (than traditionally) to outliers and morphological
+oddities in the galaxies.  The galaxies are typically as large as or
+larger than an individual \project{SDSS} frame, but \project{The
+  Tractor} doesn't need a co-add or mosaic of the data; it fits all
+the individual disjoint science exposures simultaneously.  For most
+galaxies we look at, the simple models we are using are \emph{not}
+good fits: They can't be, because they don't capture spiral arms, HII
+regions, dust lanes, or other morphological non-trivialities.
+However, as we will show, they produce precise, robust photometry that
+appears to be invariant with galaxy angular size or distance.
 
 Readers who don't want to read the long philosophical position
 outlined in \sectionname~\ref{sec:philosophy} can skip either to the
@@ -253,23 +270,6 @@ the same if it is based on flexible heuristics.  This is another place
 where fitting inflexible models will help us: Although the inflexible
 models are never good fits, they provide objective methods for
 simultaneously measuring two overlapping galaxies.
-
-In what follows, we fit \project{Sloan Digital Sky Survey} imaging
-data on and near large angular size galaxies using simple (inflexible)
-models---mixtures of exponential and de~Vaucouleurs models.  For each
-galaxy, we use our package \project{The Tractor} (HOGG CITE) to
-optimize a justifiable scalar objective function that is an
-approximation to a likelihood, with modifications to make the fitting
-less sensitive (than traditionally) to outliers and morphological
-oddities in the galaxies.  The galaxies are typically as large as or
-larger than an individual \project{SDSS} frame, but \project{The
-  Tractor} doesn't need a co-add or mosaic of the data; it fits all
-the individual disjoint science exposures simultaneously.  For most
-galaxies we look at, the simple models we are using are \emph{not}
-good fits: They can't be, because they don't capture spiral arms, HII
-regions, dust lanes, or other morphological non-trivialities.
-However, as we will show, they produce precise, robust photometry that
-appears to be invariant with galaxy angular size or distance.
 
 \section{Data and input catalogs}\label{sec:data}
 
