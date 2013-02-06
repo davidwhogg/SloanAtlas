@@ -132,7 +132,7 @@ flaws.  Here we give a highly biased and very brief review.
   from high and low surface-brightness galaxies.  It also remains at
   least slightly dependent on the PSF for the same reasons as the
   previous methods.
-\item \emph{Petrosian photometry} (cite) adapts the angular radius of
+\item \emph{Petrosian photometry} \citep{petrosian} adapts the angular radius of
   the photometry aperture using a statistic of the galaxy profile that
   is insensitive to total surface brightness.  It works by identifying
   a radius at which the (azimuthally averaged) intensity is a fixed
@@ -169,7 +169,7 @@ flaws.  Here we give a highly biased and very brief review.
   significant light out there, it is hard to find in the data.
   Furthermore, in the standard methodologies of model fitting,
   extremely simple galaxy models are used, such as elliptical
-  exponentials and de~Vaucouleurs profiles (cite).  These smooth
+  exponentials and de~Vaucouleurs profiles \citep{dev}.  These smooth
   models are not at all a good description of two-dimensional images
   of most real galaxies at \emph{any} angular radius (think: spiral
   arms, bars, rings, HII regions, dust lanes, and so on).
@@ -274,11 +274,11 @@ appears to be invariant with galaxy angular size or distance.
 \section{Data and input catalogs}\label{sec:data}
 
 The imaging data for this project come from the \project{Sloan Digital
-  Sky Survey} fully public \project{Data Release 8} (CITE), which is
-the first data release of the \project{SDSS-III} project (CITE).  It
-includes fully recalibrated imaging (CITE PADMANABHAN) from the
-combined imaging projects of \project{SDSS} (CITE) and
-\project{SDSS-II} (CITE).
+  Sky Survey} fully public \project{Data Release 8} \citep{dr8}, which is
+the first data release of the \project{SDSS-III} project \citep{sdssiii}.  It
+includes fully recalibrated imaging \citep{padmanabhan} from the
+combined imaging projects of \project{SDSS} \citep{york}  and
+\project{SDSS-II} \citep{sdssii}.
 
 The fitting code (\project{The Tractor}, described briefly below, and
 more completely in Lang \etal, forthcoming) locates \project{SDSS}
@@ -312,23 +312,23 @@ subtracted from the individual magnitudes of each bandpass. The
 coefficiens are the following: u-5.155,g-3.793, r-2.751, i-2.086,
 z-1.479.
 
-The primary input catalog---our source for galaxy
-celestial positions---was the Third Reference Catalog of Bright
-Galaxies (RC3) from which we pulled all objects with an angular
-diameter of at least 2 arcminutes as measured in the
-apparent major isophotal diameter at the surface brightness level
-$\mu_B = 25.0$ B-mag per square arcsecond. Next, we checked the
-NASA-Sloan Atlas (NSA) for any objects of significant size that were
-also not in RC3. The cut was for objects with a 50\% light radius of
-the SERSIC fit greater than 30 arcseconds. The objects were then
-examined by eye to determine which ones were actual large galaxies,
-and which were errors in the NSA. Example errors included stars
-causing saturation, interstellar medium, and nebulae. We also checked
-the 2MASS Large Galaxy Atlas but no galaxies of the correct size not
-already in RC3 were found. The only objects found were either not in
-the Sloan Survey, or were globular clusters. The cut for 2MASS was
-based on the isophotal fiduciary radius in the K-band, which was
-checked to a radius of 1 arcminute.
+%% The primary input catalog---our source for galaxy
+%% celestial positions---was the Third Reference Catalog of Bright
+%% Galaxies (RC3) from which we pulled all objects with an angular
+%% diameter of at least 2 arcminutes as measured in the
+%% apparent major isophotal diameter at the surface brightness level
+%% $\mu_B = 25.0$ B-mag per square arcsecond. Next, we checked the
+%% NASA-Sloan Atlas (NSA) for any objects of significant size that were
+%% also not in RC3. The cut was for objects with a 50\% light radius of
+%% the SERSIC fit greater than 30 arcseconds. The objects were then
+%% examined by eye to determine which ones were actual large galaxies,
+%% and which were errors in the NSA. Example errors included stars
+%% causing saturation, interstellar medium, and nebulae. We also checked
+%% the 2MASS Large Galaxy Atlas but no galaxies of the correct size not
+%% already in RC3 were found. The only objects found were either not in
+%% the Sloan Survey, or were globular clusters. The cut for 2MASS was
+%% based on the isophotal fiduciary radius in the K-band, which was
+%% checked to a radius of 1 arcminute.
 
 \section{Method}\label{sec:method}
 
@@ -387,8 +387,13 @@ radius $\rninety$ and the concentration parameter $\conc\equiv
 \rninety/\rfifty$, we took the model of the galaxy that had been
 optimized and places it in an empty frame within the tractor. Next,
 over a series of increasing intervals of radii we summed up the total
-flux within the circles and then interpolated to find $\rfifty$ and $\rninety$. We used sixty-four radii equally spaced in pixel logarithms from zero to half the height of the image.
-Exceptional cases were flagged for later review if $\rfifty$ was not between the deVaucouleur and exponential radii for that galaxy, and concentration was flagged as incorrect if $\frac{1}{\conc}$ was not between .29 and .46. (We are not getting these numbers, mention in discussion?) TODO: Add citation to paper for these numbers
+flux within the circles and then interpolated to find $\rfifty$ and $\rninety$.
+ We used sixty-four radii equally spaced in pixel logarithms from zero
+ to half the height of the image. Exceptional cases were flagged for later
+ review if $\rfifty$ was not between the deVaucouleur and exponential radii
+ for that galaxy, and concentration was flagged as incorrect if $\frac{1}{\conc}$
+ was not between .29 and .46. (We are not getting these numbers, mention in
+ discussion?) TODO: Add citation to paper for these numbers
 
 For instance, the galaxy M81 had too large of a radius in RC3 in order to run properly so it was manually reduced so as to fit into the memory of the machine. The scaling factors used were if the number of fields were between ten and twenty, a factor of two scaling. Four was used for between twenty and forty, and eight was used for between forty and eighty. Above eighty, the galaxy was skipped. (Put into table?) Another example is M51a and M51b, which were simultaneously fit in order to ensure that the fit measured both galaxies simultaneously. 
 
@@ -410,12 +415,26 @@ NASA (grant NNX12AI50G) and the NSF (grant IIS-1124794).
 ...HOGG: Insert relevant SDSS boilerplate here...
 
 \begin{thebibliography}{70}
-\bibitem[de~Vaucouleurs(1948)]{dev}
-de~Vaucouleurs,~G., 1948, Annales d'Astrophysique, 11, 247
+\bibitem[Aihara, ~H. \etal(2011)]{dr8}
+Aihara, ~H., 2011, The Astrophysical Journal Supplement \volume{193}(2), article 29
+\bibitem[Eisenstein, ~D. \etal(2011)]{sdssiii}
+Eisenstein, ~D., 2011. \aj~142, 72 
+\bibitem[Frieman, ~J. \etal(2008)]{sdssii} %Not sure if this is correct sdss-ii paper
+Frieman, ~J., 2008. \aj~135, 338
 \bibitem[H\o{}g~\etal(2000)]{tycho2}
 H\o{}g,~E. \etal, 2000, \aap 335, L27
+\bibitem[Lupton, ~R. \etal(2001)]{lupton}
+Lupton, ~R., 2001. ASP Conf. Ser. 10, 269
+\bibitem[Padmanabhan, ~N. \etal(2008)]{padmanabhan}
+Padmanabhan, ~N.,2008, \apj~135, 10-19
+\bibitem[Petrosian, ~V. (1976)]{petrosian}
+Petrosian, ~V., 1976. Astrophysical Journal, 209, L1 %Not sure if this is the right way to cite this journal
 \bibitem[Schlegel \etal(1998)]{schlegel98}
-Schlegel,~D.~J., Finkbeiner,~D.~P., Davis,~M., \apj 500, 525
+Schlegel,~D.~J., Finkbeiner,~D.~P., Davis,~M., \apj~500, 525
+\bibitem[de~Vaucouleurs(1948)]{dev}
+de~Vaucouleurs,~G., 1948, Annales d'Astrophysique, 11, 247
+\bibitem[York, D.~G. \etal(2000)]{york}
+York, D.~G., 2000, \aj~120, 1579
 \end{thebibliography}
 
 \end{document}
