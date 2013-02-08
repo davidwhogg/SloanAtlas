@@ -1,7 +1,5 @@
 % to-do
 % -----
-% - outline full paper (see notes in hardcover book 2012-09-12)
-% - fill out intro section
 % - fill out data section
 % - fill out method section
 % - decide on best ``functional tests'' to convince any skeptical reader
@@ -60,16 +58,51 @@ very large galaxies ($>1~\arcmin$ in diameter) in the \project{Sloan
 
 \section{Introduction}
 
-...why are we doing this?
+The \project{Sloan Digital Sky Survey} (\project{SDSS}) and its
+successor projects \project{SDSS-II} and \project{SDSS-III} have had
+enormous impact, forming the observational basis for literally
+\emph{thousands} of refereed papers.  The success of these surveys can
+be attributed to multiple factors, not least the unaccountable
+diversity of phenomenology presented to us by our fecund Universe.
+One significant factor has been the fact that these surveys have
+endeavored to produce and distribute (to the public) reliable,
+calibrated, easy-to-use photometric and spectroscopic data.
 
-...what are the limits of SDSS pipeline photometry?
+All that said, the goals of the \project{SDSS} were heavily weighted
+towards galaxies and stars with visible brightnesses around 18~mag.
+The camera, observing strategy, and data-reduction pipelines were all
+optimized for performance at 15 to 22~mag.  Importantly---and to the
+chagrin of some investigators (CITE SOMETHING)---the \project{SDSS}
+photometry of very bright, nearby galaxies has been substantially
+biased.  The dominant reason for this is that the \project{SDSS-I}
+photometric pipelines employed an ``aggressive'' sky estimation
+algorithm that removed much of the light from sources with large
+angular footprints.  A secondary reason is that the ``deblending''
+heuristics for disentangling the light in overlapping galaxies don't
+deal well with sources that are hundreds or thousands of times the
+solid angle of the core of the point-spread function.
 
-...what has changed that makes this possible and necessary?
+The nearby galaxies are interesting and important!  Because the
+\project{SDSS} is supremely well calibrated photometrically, and
+because it is a drift-scanning survey, it is particularly well suited
+to measuring these objects with large angular extents.  In this
+\documentname, we make an attempt to photometer some nearby galaxies
+in the \project{SDSS} imaging data and test the precision of those
+measurements.
 
-In what follows, we fit \project{Sloan Digital Sky Survey} imaging
+This project has been made possible by two developments.  The first is
+that for \project{SDSS-III}, a new global, continuous sky function was
+fit to the imaging data, fit to the ``blank'' pixels.  This sky
+function does not remove light from large galaxies, or not nearly as
+much as previous generations of sky algorithms.  The second is that we
+have developed a package \project{The Tractor} (HOGG CITE) for fitting
+probabilistic models to astronomical imaging data and the
+\project{SDSS} imaging in particular.
+
+In what follows, we fit \project{SDSS} imaging
 data on and near large angular-size galaxies using simple (inflexible)
 models---mixtures of exponential and de~Vaucouleurs models.  For each
-galaxy, we use our package \project{The Tractor} (HOGG CITE) to
+galaxy, we use \project{The Tractor} to
 optimize a justifiable scalar objective function that is an
 approximation to a likelihood, with modifications to make the fitting
 less sensitive (than traditionally) to outliers and morphological
@@ -367,7 +400,7 @@ radius of
 where $V$ is the visual magnitude given by Tycho-2.
 (I'm not sure why these values, I got them from Dustin)
 
-
+...initialization...
 
 We start the fitting with an exponential galaxy and then optimize
 simply that galaxy six times. Following that, we switch to a composite
