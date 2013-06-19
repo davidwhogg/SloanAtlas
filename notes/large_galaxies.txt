@@ -27,3 +27,18 @@ A_114752 inf i flux, the fit does not initialize on a galaxy (off center)
 A_2302+16 inf i flux, the fit does not initialize on a galaxy (off center)
 UGC_10050 inf i flux, bad image for this galaxy, bright star and off center...bad candidate to include
 
+
+
+as of 6/10/13(while look for reruns)
+NGC_3227 its partner 3226 is out of the image
+NGC_988 star is obstructing the galaxy
+UGC 10245 is out of the field of the image...so its not measuring anything, what to do?
+UGC_3437 i dont see a galaxy here
+
+check flipbooks first:
+NGC_3691 fb?
+UGC_10961 fb?
+A_1646+62 fb?
+A+1402+09 fb?
+A_114752  fb?
+A_2302+16 fb?

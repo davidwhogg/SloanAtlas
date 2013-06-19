@@ -21,3 +21,6 @@
 148473 Extemds too far, probably due to lots of stars in background
 157610 Very, very faint, hard to tell quality of fit
 
+as of 6/10/13 (while looking for reruns)
+NSA_ID_44968 group of galaxies, but this center one is too small, throw it out? it's being measured as 3 in 1
+NSA_ID_128520 is a HUGE star that is saturated in the image
