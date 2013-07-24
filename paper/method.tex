@@ -283,6 +283,8 @@ as they will be here, they often overlap stars.  Bright stars make it
 hard to precisely measure the fainter galaxy.  Faint stars are
 challenging to deblend from the galaxy reliably.
 
+
+
 In addition to overlapping stars, galaxies frequently overlap other
 galaxies, both because galaxies are spatially clustered and because
 some ``galaxies'' are really pairs of galaxies merging.  Overlapping
@@ -427,27 +429,7 @@ All data that was flagged for review was reviewed by examination of the flipbook
 
 
 \section{Selected results}\label{sec:results}
-\begin{figure}[]
-\centering
-\includegraphics[trim = 1cm 3.2cm 3.8cm 2.15cm,clip=true,width=\textwidth] {data.pdf}
-\caption{This shows the six different fields of data which are combined for the galaxy NGC 4605}
-\end{figure}
-\begin{figure}[]
-\centering
-\includegraphics[trim = 1cm 3.2cm 3.8cm 2.15cm,clip=true,width=\textwidth] {model.pdf}
-\caption{This shows the model of NGC 4605 in six different fields which are combined}
-\end{figure}
 
-\begin{figure}[]
-\centering
-\includegraphics[trim = 1cm 3.2cm 3.8cm 2.15cm,clip=true,width=\textwidth] {diff.pdf}
-\caption{This shows the difference between the data and the model}
-\end{figure}
-\begin{figure}[]
-\centering
-\includegraphics[trim = 1cm 3.2cm 3.8cm 2.15cm,clip=true,width=\textwidth] {chi.pdf}
-\caption{This shows the chi values for NGC 4605}
-\end{figure}
 
 
 
@@ -512,6 +494,77 @@ York, D.~G., 2000, \aj~120, 1579
 \includegraphics[trim = 15mm 0mm 0mm 0mm]{method_sb2_nsa.pdf}
 \caption{Surface brightness in the i-band versus the r-i color for the NASA-Sloan Atlas data}
 \end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[trim = 1cm 3.2cm 3.8cm 2.15cm,clip=true,width=\textwidth] {data.pdf}
+\caption{This shows the six different fields of data which are combined for the galaxy NGC 4605. The different fields represent different images taken by the Sloan telescope at different positions and different times.}
+\label{fig:4605data}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[trim = 1cm 3.2cm 3.8cm 2.15cm,clip=true,width=\textwidth] {model.pdf}
+\caption{This is like fig \ref{fig:4605data} but shows the model we have built for the galaxy}
+\label{fig:4605model}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[trim = 1cm 3.2cm 3.8cm 2.15cm,clip=true,width=\textwidth] {diff.pdf}
+\caption{This figure shows the difference between fig \ref{fig:4605data} and fig \ref{fig:4605model}}
+\label{fig:4605diff}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[trim = 1cm 3.2cm 3.8cm 2.15cm,clip=true,width=\textwidth] {chi.pdf}
+\caption{This is the same as fig \ref{fig:4605diff} but shows the chi values, meaning that some pixels are masked out if they contain bad data.}
+\label{fig:4605chi}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[trim = .9cm 4.5cm 1.15cm 2.9cm,clip=true,width=\textwidth] {gooddouble.pdf}
+\caption{This figure show the fit for the galaxies NGC 3395 and NGC 3396, which are fit simultaneously. From left to right, this shows the data, the model, the residues, and the chi values in just one of the fields.}
+\label{fig:gooddouble}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[trim = .9cm 4.5cm 1.15cm 2.9cm,clip=true,width=\textwidth] {badsingle.pdf}
+\caption{This figure show the fit for the galaxy UGC 5613. This fit is bad because it fails to take into account that UGC 5613 is composed of a merger of two different galaxies, which causes our fit to fail. From left to right, this shows the data, the model, the residues, and the chi values in just one of the fields.}
+\label{fig:badsingle}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[trim = .9cm 4.5cm 1.15cm 2.9cm,clip=true,width=\textwidth] {baddouble.pdf}
+\caption{This figure show the fit for the galaxies NGC 4647 and NGC 4649. This example shows a failure of the attempt to fit two galaxies simultaneously. From left to right, this shows the data, the model, the residues, and the chi values in just one of the fields.}
+\label{fig:baddouble}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[trim = .9cm 4.5cm 0cm 2.9cm,clip=true,width=\textwidth] {goodsingle-colors-data.pdf}
+\caption{This figure show the data for the five different bands for NGC 4605.}
+\label{fig:colorsdata}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[trim = .9cm 4.5cm 0cm 2.9cm,clip=true,width=\textwidth] {goodsingle-colors-model.pdf}
+\caption{This figure show the model for the five different bands for NGC 4605.}
+\label{fig:colorsmodel}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[trim = .9cm 4.5cm 0cm 2.9cm,clip=true,width=\textwidth] {goodsingle-colors-diff.pdf}
+\caption{This figure show the diff for the five different bands for NGC 4605.}
+\label{fig:colorsdiff}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[trim = .9cm 4.5cm 0cm 2.9cm,clip=true,width=\textwidth] {goodsingle-colors-chi.pdf}
+\caption{This figure show the chi for the five different bands for NGC 4605.}
+\label{fig:colorschi}
+\end{figure}
+
+
+
+
 
 
 
