@@ -376,21 +376,6 @@ inverse variances after each iteration of optimization. The math is:
 \end{eqnarray}
 where $Q$ is the number of ``sigma'' at which the residual saturates. $Q$ for these fittings was chosen to be 5. (Find out why)
 
-...now the specifics of what we actually do
-
-When given an RA and a Dec and a radius, the program searches the SDSS data for fields which overlap anywhere in that space. It downloads all those fields, in all bands, as fits files, and then imports them into the program as arrays. The initial inverse variances are also downloaded from Sloan.
-Saturated pixels from the SDSS images were masked and then a binary dilation with three iterations was applied. (more details needed here?)
-
-For the purpose of measuring and optimizing on a single galaxy at a
-time, all other objects were removed from within a circle centered on
-the galaxy center and radius, both given by the RC3 catalog (using the major isophotal diameter)
-(which radius?) for that particular catalog. This was done rather than
-working within the SDSS catalog because SDSS frequently splits up large
-galaxies into numerous small ones and so it was much easier to simply
-start over with a single galaxy. As initialization, that galaxy was
-given magnitudes of 15 in every band and a radius given by the RC3
-catalog.
-
 In order to deal with the problems of stars that overlap with the
 galaxy which we are interested in, we decided to mask them out. The
 stars were found using the data in the Tycho-2 star catalog \citep{tycho2}.
@@ -400,9 +385,25 @@ radius of
 \theta_{\mathrm{exclude}} = \max(25, 25\,2^{[11\,\mag-V]})
 \end{equation}
 where $V$ is the visual magnitude given by Tycho-2.
-(I'm not sure why these values, I got them from Dustin)
+(I'm not sure why these values, I got them from Dustin) The mask was applied by setting the chi values of the masked out pixels to zero.
 
-...initialization...
+
+
+...now the specifics of what we actually do
+
+When given an RA and a Dec and a radius, the program searches the SDSS data for fields which overlap anywhere in that space. It downloads all those fields, in all bands, as fits files, and then imports them into the program as arrays. The initial inverse variances are also downloaded from Sloan.
+Saturated pixels from the SDSS images were masked and then a binary dilation with three iterations was applied. (more details needed here?)
+
+For the purpose of measuring and optimizing on a single galaxy at a
+time, all other objects were removed from within a circle centered on
+the galaxy center and radius, both given by the RC3 catalog (using the major isophotal diameter)
+ for that particular catalog. This was done rather than
+working within the SDSS catalog because SDSS frequently splits up large
+galaxies into numerous small ones and so it was much easier to simply
+start over with a single galaxy. As initialization, that galaxy was
+given magnitudes of 15 in every band and a radius given by the RC3
+catalog.
+
 
 We start the fitting with an exponential galaxy and then optimize
 simply that galaxy six times. Following that, we switch to a composite
@@ -421,20 +422,26 @@ flux within the circles and then interpolated to find $\rfifty$ and $\rninety$.
  review if $\rfifty$ was not between the deVaucouleur and exponential radii
  for that galaxy, and concentration was flagged as incorrect if $\frac{1}{\conc}$
  was not between .29 and .46. (We are not getting these numbers, mention in
- discussion?) TODO: Add citation to paper for these numbers
+ discussion?) TODO: Add citation to paper for these numbers.
 
+An example of the finished result is given for NGC 4605, which had 6 fields that combined to make our image. These six are shown separately here. In fig \ref{fig:4605data} the data from these fields are shown in the i-band. Fig \ref{fig:4605model} shows our completed model for this galaxy. Fig \ref{fig:4605diff} is the difference between the data and the model. Finally \ref{fig:4605chi} shows our chi values for the galaxy. Fig \ref{fig:colorsdata} shows the different data for each band, and figs \ref{fig:colorsmodel}, \ref{fig:colorsdiff}, \ref{fig:colorschi} shows the results for the model, the difference between the model and the data, and the chi values.
+
+
+
+
+
+\section{Exceptions and issues}\label{sec:results}
 For instance, the galaxy M81 had too large of a radius in RC3 in order to run properly so it was manually reduced so as to fit into the memory of the machine. The scaling factors used were if the number of fields were between ten and twenty, a factor of two scaling. Four was used for between twenty and forty, and eight was used for between forty and eighty. Above eighty, the galaxy was skipped. (Put into table?) Another example is M51a and M51b, which were simultaneously fit in order to ensure that the fit measured both galaxies simultaneously. 
+
+An example of two galaxies that were fit together and succeeded is fig \ref{fig:gooddouble} which shows the fit for NGC 3395 and NGC 3396. A bad fit of two galaxies is shown in fig \ref{fig:baddouble} of NGC 4647 and NGC 4649. In addition, fig \ref{fig:badsingle} shows an attempt to fit UGC 5613, which fails because it is actually composed of two merging galaxies.
+
+Another common error cause is edge-on galaxies, as shown in fig \ref{fig:edgeon} which shows the failure of a fit of edge-on galaxy NGC 5907. 
 
 All data that was flagged for review was reviewed by examination of the flipbook for that galaxy, in order that changes could be made to the initialization for that galaxy, or if the expected galaxy was nonexistent and therefore a mistake in a prior catalog, removed entirely from the catalog. 
 
 
-\section{Selected results}\label{sec:results}
-
-
-
-
-
 \section{Discussion}\label{sec:discussion}
+Precision of colors...
 
 \acknowledgements It is a pleasure to thank
   Jim Gunn (Princeton),
@@ -561,6 +568,13 @@ York, D.~G., 2000, \aj~120, 1579
 \caption{This figure show the chi for the five different bands for NGC 4605.}
 \label{fig:colorschi}
 \end{figure}
+\begin{figure}
+\centering
+\includegraphics[trim = .9cm 4.5cm 1.15cm 2.9cm,clip=true,width=\textwidth] {edgeon.pdf}
+\caption{This figure show the fit for the galaxy NGC 5907. This fit is bad because it fails on edge-on galaxies. From left to right, this shows the data, the model, the residues, and the chi values in just one of the fields.}
+\label{fig:edgeon}
+\end{figure}
+
 
 
 
