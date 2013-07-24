@@ -81,11 +81,23 @@ With the raw results from the $Tractor$, we first applied extinction corrections
 %A few examples showing what works and what doesn't ...
 
 \section{Catalog}
-The table of data contains the RA, Dec, and name given by each galaxy's source catalog(RC3 or Nasa-Sloan Atlas).For the measured positions of all galaxies included in the Atlas, see Figure 1. The data from the composite galaxies includes the RA, Dec, magnitudes, half-light radii, colors, etc. See Table 1. Those galaxies which we have denoted with flags... 
+The table of data contains the RA, Dec, and name given by each galaxy's source catalog(RC3 or Nasa-Sloan Atlas).For the measured positions of all galaxies included in the Atlas, see Figure 1. The data from the composite galaxies includes the RA, Dec, magnitudes, half-light radii, colors, etc. See Table 1. Those galaxies which wehave denoted with flags can be found in the exceptions table. See Table 2. 
 
-%Also exceptions tables ...
+%insert exceptions table and snippet of our final atlas
 
-Galaxies that have been marked with exceptions include those which have been discussed in section 3. These are galaxies which have been determined to give poor results by eye and were then re-run manually. In some cases, the second result provided valuable measurements, while in others the data was not included for continuous poor measurements. See our comments from visual inspections in $large\_galaxies.txt$ and in $large\_NSA\_galaxies.txt$
+\subsection{Hand-Vetting}
+We have made various visual checks on our galaxies, which have led to a number of manual reruns for improved measurements. In some cases, the second result provided more valuable measurements, while in others, the rerun did not seem to improve the original measurements. For a full list of our comments from visual inspections, see Table 2. One of the first interesting selections that we chose to inspect was a set of all objects that came from the NASA-Sloan Atlas and contained a radius larger than 30 \arcsec. We chose to observe these objects because we only chose objects from NASA-Sloan that did not already belong to RC3. In many cases, the galaxies were being obstructed by large stars in the same field as the galaxy, causing saturation of the image and imporper measurement of the galaxy overall. Other galaxies, however, such as NSA ID 148151 have proven to results in a good fit. Others were simply groups of galaxies, each too small individually to fulfill the size criteria for our catalog. Lastly, there were some irregular galaxies with very low surface brightnesses.
+
+Another set of galaxies that was observed individually by eye were those which had an infinite i-band flux. Many of these images had bad sky levels in the i-band as well due to groups of galaxies or stars in the vicinity. Other fits were not initializing in the correct place for galaxies that were not in the center of their fields. For those, we reran our fits giving an intial position for the fit to measure from, which in most cases improved the measurement enough to discard the original fit. This set of galaxies also contained candidates that simply did not produce good fits because of a large bright star in the background or foreground of the galaxy.
+%Hogg:Do we want to give examples of both a bad one and one that was able to improve through manual tweaking or should we direct them to the method paper?
+
+Galaxies that were outliers on a plot of half-light i-band surface brightness and g-i color were investigated as well. In the case where two galaxies were in the same field, we measured each galaxy individually. For merging galaxies, most pairs led to good fits for each galaxy individually despite the lack of explicit boundaries between the merging galaxies. NGC 3395 and NGC 3396 are an example of a merging pair of galaxies that were measured well. Pairs of galaxies that are not merging, however, were not as succesful overall. For some pairs, the individual measurement of one galaxy overtook the fit of the second galaxy, causing innacurate measurements. An example of a bad fit of a pair of galaxies is NGC 4649 and NGC 4647. For pairs that did not run as two separate succesful galaxies, we only include the galaxy that has a better fit. The rest of the outliers in this investigation of our fits were galaxies whose measurements did not initialize at the location of the galaxy due to the galaxy being off-center in its field. For these galaxies, new position parameters were given using the NASA/IPAC Extragalactic Database. A majority of these galaxies showed significant improvements in their new measurements. 
+
+Two pairs of galaxies that were rerun as two individual galaxies included companion galaxies that were not included in either NASA-Sloan or in RC3. The companions are NED 01, found next to NSA ID 86994 and PGC 1563523, which is found with NGC 52. They have not been included in our table. 
+
+%Hogg: Will we want to add those two companions in manually to the atlas even though they won't have 'source' information from NSA or RC3?
+
+%Hogg: Are we including the plot of sb and color with our hand drawn line of it to show what we mean by outliers?
 
 \section{Discussion}
 
