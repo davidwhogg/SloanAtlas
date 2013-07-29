@@ -8,6 +8,8 @@
 ;   suffix  - add this suffix to file names
 ;   columns - set the number of columns in the html table (default 6)
 ;   maxgal  - maximum number of plates to make.
+;   quantile - chooses galaxies with only this quantile number,
+;              integer 0-15
 ; KEYWORDS:
 ; OUTPUTS:
 ; OPTIONAL OUTPUTS:
@@ -26,7 +28,7 @@
 ;   2013-02-23  began branch to Sloan Atlas - Hogg
 ;   2013-07-22  moved to github - Hogg
 ;-
-pro sloan_atlas, suffix=suffix,columns=columns,maxgal=maxgal
+pro sloan_atlas, suffix=suffix,columns=columns,maxgal=maxgal,quantile=quantile
 
 ; set defaults
 nxpix= 1024
@@ -72,15 +74,23 @@ printf, wlun,'<table>'
 
 ; read in and loop over input data
 table_rows = ['foo']
-tabfilename = getenv('ATLAS_DIR') + '/data/sloan_atlas.fits'
+tabfilename = './sdss_atlas_for_images_all.fits' 
 tab = mrdfits(tabfilename, 1)
 print, tag_names(tab)
-ngal = n_elements(tab)
+
 if keyword_set(maxgal) then ngal = ngal < maxgal
-tab = tab[sort(tab.cg_r50s[3])]
+;tab = tab[sort(tab.cg_r50s[3])]
+tab=tab[reverse(sort(tab.cg_r90s[3]))]
+q=WHERE(tab.quantile EQ quantile)
+tab = tab(q)
+;print, n_elements(tab)
+ngal = n_elements(tab)
 ii= 0
 for j=0L,ngal-1L do begin
     thistab= tab[j]
+;    print,j, thistab.name
+;    CONTINUE
+
 
 ;;; HOGG FIXME!
 ; set pixscale and image size
