@@ -488,7 +488,7 @@ When given an RA, a Dec, and a radius, \emph{The Tractor} searches the SDSS imag
 data for fields which overlap anywhere in that space. It downloads all
 those fields, in all bands, as fits files, and then imports them into
 the program as arrays. The initial inverse variances are also
-downloaded from Sloan.  Saturated pixels from the SDSS images were
+downloaded from SDSS.  Saturated pixels from the SDSS images were
 masked and then a binary dilation with three iterations is
 applied.
 
@@ -497,7 +497,7 @@ time, all other objects were removed from within a circle centered on
 the galaxy center which extended out to its radius given by the source
 catalog for that galaxy. This method was used rather than working within the
 SDSS catalog data itself because SDSS frequently splits up large galaxies into
-numerous small ones. As initialization parameters, each galaxy was
+numerous frames. As initialization parameters, each galaxy was
 given magnitudes of 15 in every band.
 
 We start the fitting with an exponential galaxy and then optimize only
@@ -622,7 +622,7 @@ include the galaxy that has a better fit. The rest of the outliers in
 this set of galaxies were those whose measurements did not initialize
 at the location of the galaxy due to the galaxy being off-center in
 its field. For these galaxies, new position parameters were given
-using the NED. A majority of these galaxies showed significant
+using NED. A majority of these galaxies showed significant
 improvements in their new measurements. In all cases where a galaxy
 was an outlier, the new measurement was accepted as good and the
 original measurement was discarded unless otherwise noted in Table 2.
@@ -681,13 +681,24 @@ for the galaxies that are not fully or partially face-on. Figure
 \ref{fig:edgeon} shows an example of NGC 5907, an edge-on galaxy that
 we cannot measure well.
  
-UGC 5613 is another galaxy that does not react well to the methods of \emph{The Tractor} because it is actually composed of two galaxies that are in the late stages of merging. Some tidal tails can be seen in the SDSS phtometry, leading to a bad fit. See Figure \ref{fig:badsingle}
+UGC 5613 is another galaxy that does not react well to the methods of
+\emph{The Tractor} because it is actually composed of two galaxies
+that are in the late stages of merging. Some tidal tails can be seen
+in the SDSS phtometry, leading to a bad fit. See Figure
+\ref{fig:badsingle}.
 
-All data that was flagged for review after an initial failed fit was reviewed by examination of
-the full flipbook for that galaxy.
+All data that was flagged for review after an initial failed fit was
+reviewed by examination of the full flipbook for that galaxy.
 
 \section{Discussion}\label{sec:discussion}
-We successfully measure consistent colors properties for galaxies of all sizes, showing that the \emph{The Tractor} is indeed a good tool to measure galaxies at different distances and of different morphological types. The color properties have a tight correlation and improve on those measured by the NSA, showin in Figure \ref{fig:nsacolors}. It is also clearly shown between Figure \ref{fig:atlasconsistency} and Figure \ref{fig:nsacolors} that we provide good measurements across galaxies with varying radii.
+We successfully measure consistent colors properties for galaxies of
+all sizes, showing that the \emph{The Tractor} is indeed a good tool
+to measure galaxies at different distances and of different
+morphological types. The color properties have a tight correlation and
+improve on those measured by the NSA, shown in Figure
+\ref{fig:nsacolors}. It is also clear between Figure
+\ref{fig:atlasconsistency} and Figure \ref{fig:nsacolors} that we
+provide good measurements across galaxies with varying radii.
 
 The Owl Nebula was included in the list of objects that are not in
 RC3, but have been included in the NSA. Though we are not
