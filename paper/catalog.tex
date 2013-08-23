@@ -56,7 +56,7 @@ Galaxies (RC3) and the NASA-Sloan Atlas (NSA). Because the parent
 sample is gathered from heterogeneous sources, it is not expected to
 be complete, especially at the lowest surface brightnesses.  Our
 sample includes measurements of galaxies with radii as large as $\sim
-208\,\arcsec$ in radius, such as the Pinwheel Galaxy(M101), while
+200\,\arcsec$ in radius (such as M101), while
 retaining consistency in galactic properties compared to galaxies of
 smaller radii.
 \end{abstract}
@@ -98,7 +98,7 @@ measurements.
 
 This project has been made possible by two developments.  The first is
 that for \project{SDSS-III}, a new global, continuous sky function was
-fit to the imaging data, fit to the ``blank'' pixels (HOGG:CITE BLANTON).  This sky
+fit to the imaging data, fit to the ``blank'' pixels (EKTA: CITE BLANTON).  This sky
 function does not remove light from large galaxies, or not nearly as
 much as previous generations of sky algorithms.  The second is that we
 have developed a package \project{The Tractor} (HOGG CITE) for fitting
@@ -122,12 +122,24 @@ regions, dust lanes, or other morphological non-trivialities.
 However, as we will show, they produce precise, robust photometry that
 appears to be invariant with galaxy angular size or distance.
 
-%% Readers who don't want to read the long philosophical position
-%% outlined in \sectionname~\ref{sec:philosophy} can skip either to the
-%% data and method descriptions in \sectionnames~\ref{sec:data} and
-%% \ref{sec:method} or else straight to the results in
-%% \sectionname~\ref{sec:results}.  There is a short final discussion in
-%% \sectionname~\ref{sec:discussion}. %Not sure that this is necessary, but if so the logic is now all out of order
+There has been much work done fitting big, bright galaxies, sometimes
+with very flexible models and sometimes with very rigid ones...EKTA: TEXT HERE.
+
+EKTA: Another thing is to look at Emsellem and ``multi-gaussian
+expansions''.  There should be one relevant paper to cite.
+
+Galaxies show enormous diversity, and no simple model (exponential or
+de~Vaucouleurs or mixture of those) is---in any technical sense---a
+good fit to the data.  However, simple models are very valuable when
+the goal is \emph{consistency} of photometric measurement across size
+or distance or data quality.  As data quality or angular resolution
+improves, or distance decreases, it becomes easier to fit more and
+more complex models.  However, if the goal is consistent model fitting
+across populations or data that span different resolutions, rigid
+models are preferred.  We provide a lot more philosophical argument
+along these lines in \sectionname~EKTA; suffice it to say that here we
+exploit rigid models to deliver consistent photometry for this
+collection of very heterogenous galaxies.
 
 \section{Imaging Data}\label{sec:data}
 The imaging data for this project come from the \project{Sloan Digital
