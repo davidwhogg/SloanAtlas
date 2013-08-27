@@ -126,19 +126,38 @@ There has been much work done fitting big, bright galaxies, sometimes
 with very flexible models and sometimes with very rigid ones. In
 \cite{simard11}, four different decomposition procedures are used to
 make improvements to sky estimations and three different galaxy
-fitting models are compared. The galaxy models include a pure Sersic
-model, $n_b=4$ bulge$+$disk model, and a model where $n_b$ is a free
-range between 0.5 and 8 bulge$+$disk model. The most appropriate
-galaxy model was chosen using the F-test probability estimates reduced
-chi-squared of the fit residuals and the number of resolution elements
-per fit for each model where $n_{res}=n_{pix,unmasked}/ \pi\theta^2$
-and $\theta$ is the r-band seeing at HWHM. To test these methods on a
-sample of SDSS galaxies, both \verb|SExtractor| and model photometry
-were used to deblend and identify object-sky boundaries. The results
-show that galaxies with B/T(bulge-to-total-mass) ratios between 0.2
-and 0.45 definitely require bulge$+$disk decomposition for best
-results, whereas any galaxy with a B/T ratio $>$ 0.75 do not require
-complex decomposition.
+fitting models are compared in the g and r bandpassed of Sloan Legacy
+Data. The galaxy models include a pure Sersic model, $n_b=4$
+bulge$+$disk model, and a model where $n_b$ is a free range between
+0.5 and 8 bulge$+$disk model. The most appropriate galaxy model was
+chosen using the F-test probability estimates reduced chi-squared of
+the fit residuals and the number of resolution elements per fit for
+each model where $n_{res}=n_{pix,unmasked}/ \pi\theta^2$ and $\theta$
+is the r-band seeing at HWHM. To test these methods on a sample of
+1.2 million SDSS galaxies, both \verb|SExtractor| and model photometry were used
+to deblend and identify object-sky boundaries. The results show that
+galaxies with B/T(bulge-to-total-mass) ratios between 0.2 and 0.45
+definitely require bulge$+$disk decomposition for best results,
+whereas any galaxy with a B/T ratio $>$ 0.75 do not require complex
+decomposition.
+
+\cite{lackner} also uses a bulge$+$disk decomposition method for SDSS
+galaxies in the redshift range of 0.003 to 0.5 with magnitudes $<$
+17.7 in all bands. Five galaxy fitting methods are used by Lackner and
+Gunn. They include: deV bulge$+$Exp disk, Exp bulge$+$Exp disk, Sersic
+profile, Exp disk profile (n$=$1), deV profile(n$=$4).Two samples were
+chosen to test the results, the first sample includes 39 bright
+galaxies used to test the degrading of S/N and the second sample
+includes 190 galaxies spanning the redshift range of the sample. The
+preferred fitting method for each galaxy was chosen by using the
+following criteria where bulge$+$disk models are used if the criteria
+are true: if the bulge and disk fluxes in the linearly scaled g and i
+bandpasses are nonzero, if the bulge scale length is smaller than the
+disk scale length, if the bulge flux dominates in the center of the
+galaxy, and if the two component fit is significantly better than the
+single component fit. Overall, about 29\% were fit with the B$+$D
+model, 23\% fit with the single Exp, 13\% fit with the single deV, and
+36\% fit with the sersic profile.
 
 EKTA: Another thing is to look at Emsellem and ``multi-gaussian
 expansions''.  There should be one relevant paper to cite.
