@@ -126,11 +126,11 @@ There has been much work done fitting big, bright galaxies, sometimes
 with very flexible models and sometimes with very rigid ones. In
 \cite{simard11}, four different decomposition procedures are used to
 make improvements to sky estimations and three different galaxy
-fitting models are compared in the g and r bandpassed of Sloan Legacy
+fitting models are compared in the g and r bandpasses of Sloan Legacy
 Data. The galaxy models include a pure Sersic model, $n_b=4$
 bulge$+$disk model, and a model where $n_b$ is a free range between
 0.5 and 8 bulge$+$disk model. The most appropriate galaxy model was
-chosen using the F-test probability estimates reduced chi-squared of
+chosen using the F-test probability, which estimates reduced chi-squared of
 the fit residuals and the number of resolution elements per fit for
 each model where $n_{res}=n_{pix,unmasked}/ \pi\theta^2$ and $\theta$
 is the r-band seeing at HWHM. To test these methods on a sample of
@@ -158,6 +158,21 @@ galaxy, and if the two component fit is significantly better than the
 single component fit. Overall, about 29\% were fit with the B$+$D
 model, 23\% fit with the single Exp, 13\% fit with the single deV, and
 36\% fit with the sersic profile.
+
+In \cite{mcdonald}, bulge$+$disk decompositions are performed on 286
+Virgo cluster galaxies. Specifically, the bulge$+$disk decompositions
+are used to measure how much light each galaxy contributes. The bulge
+model is described by a generalized Sersic function and the disk model
+is represented by an exponential function. For spiral galaxies and
+irregular galaxies, a combination of the disk and bulge profiles are
+used to fit the galaxy. If however, the inclusion of the two profiles
+does not improve the fit, the entire measurement is discarded and a
+single exponential or sersic profile is implemented. For each galaxy
+the u,g,r,i,z, and H surface brightness profiles are extracted and the
+bulge$+$disk decompositions are carried out in all 5 Sloan
+bandpasses. This collection of data provides a good comparison for
+those who want to study structural paramaters and high redshift galaxy
+samples.
 
 EKTA: Another thing is to look at Emsellem and ``multi-gaussian
 expansions''.  There should be one relevant paper to cite.
