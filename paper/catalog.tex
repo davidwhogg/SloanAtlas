@@ -123,7 +123,22 @@ However, as we will show, they produce precise, robust photometry that
 appears to be invariant with galaxy angular size or distance.
 
 There has been much work done fitting big, bright galaxies, sometimes
-with very flexible models and sometimes with very rigid ones...EKTA: TEXT HERE.
+with very flexible models and sometimes with very rigid ones. In
+\cite{simard11}, four different decomposition procedures are used to
+make improvements to sky estimations and three different galaxy
+fitting models are compared. The galaxy models include a pure Sersic
+model, $n_b=4$ bulge$+$disk model, and a model where $n_b$ is a free
+range between 0.5 and 8 bulge$+$disk model. The most appropriate
+galaxy model was chosen using the F-test probability estimates reduced
+chi-squared of the fit residuals and the number of resolution elements
+per fit for each model where $n_{res}=n_{pix,unmasked}/ \pi\theta^2$
+and $\theta$ is the r-band seeing at HWHM. To test these methods on a
+sample of SDSS galaxies, both \verb|SExtractor| and model photometry
+were used to deblend and identify object-sky boundaries. The results
+show that galaxies with B/T(bulge-to-total-mass) ratios between 0.2
+and 0.45 definitely require bulge$+$disk decomposition for best
+results, whereas any galaxy with a B/T ratio $>$ 0.75 do not require
+complex decomposition.
 
 EKTA: Another thing is to look at Emsellem and ``multi-gaussian
 expansions''.  There should be one relevant paper to cite.
@@ -137,7 +152,7 @@ improves, or distance decreases, it becomes easier to fit more and
 more complex models.  However, if the goal is consistent model fitting
 across populations or data that span different resolutions, rigid
 models are preferred.  We provide a lot more philosophical argument
-along these lines in \sectionname~EKTA; suffice it to say that here we
+along these lines in \ref{sec:philosophy}; suffice it to say that here we
 exploit rigid models to deliver consistent photometry for this
 collection of very heterogenous galaxies.
 
@@ -791,11 +806,17 @@ H\o{}g,~E. \etal, 2000, \aap 335, L27
 % The Hubble Tuning Fork Strikes a New Note: The 2MASS Large Galaxy Atlas, 2003, 
 Jarrett,~T.~H. \etal, 2003, \aj~125, 525
 
+\bibitem[Lackner \& Gunn(2012)]{lackner}
+Lackner, ~C., Gunn, ~J., 2012, \mnras~428, 2141
+
 \bibitem[Lauberts \& Valentijn(1989)]{lauberts}
 Lauberts, ~A.,Valentijn, ~E., 1989 Surface Photometry Catalouge of the ESO-Uppsala Galaxies 
 
 \bibitem[Lupton \etal(2001)]{lupton}
 Lupton, ~R. \etal, 2001. ASP Conf. Ser. 10, 269
+
+\bibitem[McDonald \etal(2011)]{mcdonald}
+McDonald, ~M., 2011, \mnras~414, 2055
 
 \bibitem[Padmanabhan \etal(2008)]{padmanabhan}
 Padmanabhan, ~N. \etal,2008, \apj~135, 10-19
@@ -806,6 +827,9 @@ Petrosian, ~V., 1976. \aj~209, L1
 \bibitem[Schlegel \etal(1998)]{schlegel98}
 Schlegel,~D.~J., Finkbeiner,~D.~P., Davis,~M., 1998, \apj~500, 525
 % Maps of Dust IR Emission for Use in Estimation of Reddening and CMBR Foreground
+
+\bibitem[Simard \etal(2011)]{simard11}
+Simard, ~L., 2011, \apjs~196, 11-30
 
 \bibitem[York \etal(2000)]{york}
 York, D.~G. \etal, 2000, \aj~120, 1579
