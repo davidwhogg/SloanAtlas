@@ -98,7 +98,7 @@ measurements.
 
 This project has been made possible by two developments.  The first is
 that for \project{SDSS-III}, a new global, continuous sky function was
-fit to the imaging data, fit to the ``blank'' pixels (EKTA: CITE BLANTON).  This sky
+fit to the imaging data, fit to the ``blank'' pixels \citep{blanton11}.  This sky
 function does not remove light from large galaxies, or not nearly as
 much as previous generations of sky algorithms.  The second is that we
 have developed a package \project{The Tractor} (HOGG CITE) for fitting
@@ -174,8 +174,34 @@ bandpasses. This collection of data provides a good comparison for
 those who want to study structural paramaters and high redshift galaxy
 samples.
 
-EKTA: Another thing is to look at Emsellem and ``multi-gaussian
-expansions''.  There should be one relevant paper to cite.
+Multi-gaussian expansion methods have also been used for building
+models of galaxies.\cite{emsellem} improves on prior methods which
+used centered Gaussians and PSFs containing a single 2D Gaussian by
+creating a more general approach using arbitrary PSFs and non-centered
+Gaussians. Together, these generalizations also account for
+non-centered components of galaxies such as offset bars and disks. The
+multi-gaussian method sums PSFs composed of 2D Gaussians that are each
+described by the following six free parameters: maximum intensity,
+standard deviation, axial ratio, cartesian coordinates of the maximum
+intensity(in x and y), and a position angle of the major axis. The
+deconvolved and convolved surface brightness are also sums of
+Gaussians. For the surface brightness model, a non-linear
+least-squares fit program computes a multi-gaussian approximation for
+the PSF image where the fixed parameters are the number of Gaussians
+and the requested accuracy. This process is flexible in that it
+identifies bad regions of the image, allows for binning of the low
+intensity regions to avoid consequences of low S/N, and it takes both
+linear and non-linear constraints on parameters. By using these
+options, this model can be subtracted from the image, leaving an
+uncontaminated PSF image. This surface brightness model offers a
+robust deconvolution technique, but it depends on some assumptions
+which are: the PSF image must be well approximated by a sum of 2D
+non-centered Gaussians, the PSF may vary in the field which causes and
+accuracy limitation, and the true surface brightness must be well
+represented by the sum of non-centered 2D Gaussians. Although perfect
+deconvolution is not expected, even partial deconvolution shows that
+the deconvolved models improve in resoluton relative to the original
+data.
 
 Galaxies show enormous diversity, and no simple model (exponential or
 de~Vaucouleurs or mixture of those) is---in any technical sense---a
@@ -186,8 +212,8 @@ improves, or distance decreases, it becomes easier to fit more and
 more complex models.  However, if the goal is consistent model fitting
 across populations or data that span different resolutions, rigid
 models are preferred.  We provide a lot more philosophical argument
-along these lines in \ref{sec:philosophy}; suffice it to say that here we
-exploit rigid models to deliver consistent photometry for this
+along these lines in \ref{sec:philosophy}; suffice it to say that here
+we exploit rigid models to deliver consistent photometry for this
 collection of very heterogenous galaxies.
 
 \section{Imaging Data}\label{sec:data}
@@ -828,6 +854,9 @@ de~Vaucouleurs,~G., 1948, Annales d'Astrophysique, 11, 247
 
 \bibitem[Eisenstein \etal(2011)]{sdssiii}
 Eisenstein, ~D. \etal, 2011. \aj~142, 72 
+
+\bibitem[Emsellem \etal(1994)]{emsellem}
+Emsellem, ~E., Monnet, ~G., Bacon,~R., 1994, \aap~285, 723
 
 \bibitem[Gil de Paz \etal(2006)]{gdp06}
 % The $GALEX$ Ultraviolet Atlas of Nearby Galaxies, 
