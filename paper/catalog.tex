@@ -10,6 +10,8 @@
 \newcommand{\sectionnames}{\sectionname s}
 \newcommand{\rfifty}{r_{50}}
 \newcommand{\rninety}{r_{90}}
+\newcommand{\hfifty}{h_{50}}
+\newcommand{\hninety}{h_{90}}
 \newcommand{\conc}{C}
 \newcommand{\foreign}[1]{\emph{#1}}
 \newcommand{\etal}{\foreign{et\,al.}}
@@ -598,24 +600,43 @@ times by itself.
 In order to measure the half-light radius $\rfifty$, the 90 \% light
 radius $\rninety$ and the concentration parameter $\conc\equiv
 \rninety/\rfifty$, we took the model of the galaxy that had been
-optimized and placed it in an empty frame within the tractor.
-Over a series of increasing intervals of radii we summed up the total
-flux within the circles and then interpolated to find $\rfifty$ and $\rninety$.
- We used sixty-four radii equally spaced in pixel logarithms from zero
- to half the height of the image. Exceptional cases were flagged for later
- review if $\rfifty$ was not between the deVaucouleur and exponential radii
- for that galaxy, and concentration was flagged as incorrect if $\frac{1}{\conc}$
- was not between .29 and .46. HOGG: Add citation to paper for these numbers.
+optimized and placed it in an empty frame within the tractor.  Over a
+series of increasing intervals of radii we summed up the total flux
+within the circles and then interpolated to find $\rfifty$ and
+$\rninety$.  We used sixty-four radii equally spaced in pixel
+logarithms from zero to half the height of the image. Exceptional
+cases were flagged for later review if $\rfifty$ was not between the
+deVaucouleur and exponential radii for that galaxy, and concentration
+was flagged as incorrect if $\frac{1}{\conc}$ was not between .29 and
+.46.  HOGG: Add citation to paper for these numbers. Over the same
+series of concentric, increasing radii, we also measured the contained
+flux by summing sixty-four equally spaced rectangles. The rectangles
+are oriented diagonally and perpendicular to the length of each
+galaxy. To find the proper orientation angle for the increasing
+rectangles, we calculated the principal unit eigenvectors using a
+variance tensor of the image retrieved from \emph{The Tractor}. Using
+the eigenvectors and the individul pixel positions relative to the
+center of each galaxy, we calculate *rdotv* to use as a checkpoint to
+see if at each radii there is some flux contained within the
+rectangle. Using the same interpolation scheme that was used for
+$\rfifty$ and $\rninety$, we interpolate to find $\hfifty$ and $\hninety$ in
+all bands. As expected, the rectangular integrals of flux increased
+much faster than the circular integrals, but they both eventually
+converge to the same value after some time. The rectangular method
+proves to be especially useful for galaxies that are not circular.
 
-An example of a completed measurement is given for NGC 4605, which has 6
-fields, each of which has images in all 5 bandpasses that combined to make our image. These six are shown separately in Figure \ref{fig:4605data}. The SDSS data from these fields are shown
-for the i-band only. Figure \ref{fig:4605model} shows our completed model for
-this galaxy. Figure \ref{fig:4605diff} is the difference between the data
-and the model. Finally, Figure \ref{fig:4605chi} shows our chi values for the
-galaxy. Figure \ref{fig:colorsdata} shows the data for each
-band individually, and Figures \ref{fig:colorsmodel}, \ref{fig:colorsdiff},
-\ref{fig:colorschi} shows the results for the model, the difference
-between the model and the data, and the chi values respectively.
+An example of a completed measurement is given for NGC 4605, which has
+6 fields, each of which has images in all 5 bandpasses that combined
+to make our image. These six are shown separately in Figure
+\ref{fig:4605data}. The SDSS data from these fields are shown for the
+i-band only. Figure \ref{fig:4605model} shows our completed model for
+this galaxy. Figure \ref{fig:4605diff} is the difference between the
+data and the model. Finally, Figure \ref{fig:4605chi} shows our chi
+values for the galaxy. Figure \ref{fig:colorsdata} shows the data for
+each band individually, and Figures \ref{fig:colorsmodel},
+\ref{fig:colorsdiff}, \ref{fig:colorschi} shows the results for the
+model, the difference between the model and the data, and the chi
+values respectively.
 
 \section{Catalog}
 \subsection{Post-processing}
