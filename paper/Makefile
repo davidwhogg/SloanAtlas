@@ -1,4 +1,4 @@
-all: method.pdf catalog.pdf
+all: catalog.pdf
 
 %.pdf: %.tex
 	pdflatex $<
