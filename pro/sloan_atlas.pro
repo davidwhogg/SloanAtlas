@@ -119,7 +119,7 @@ for j=0L,ngal-1L do begin
       filename, astrans=bigast, prefix=prefix, $
       pixscale=pixscale, smfwhm=pixscale*2.0*3600.0, $
       rebinfactor=rebinfactor, title=title, $
-      npixround=8, cleanname=cleanname, hardname=hardname, /nogrid, $
+      npixround=24, cleanname=cleanname, hardname=hardname, /nogrid, $
       quality=99, /dontdelete, /ivarout, /dontcrash, $
       minscore=0.5, /ignoreframesstatus, /processed, rerun=rerun, $
       /global, /dropweights
