@@ -34,6 +34,8 @@ pro sloan_atlas, suffix=suffix,columns=columns,maxgal=maxgal,quantile=quantile
 nxpix= 1024
 nypix= 1024
 rebinfactor= 2
+if (~keyword_set(dmin)) then dmin= '3'
+if (~keyword_set(dmax)) then dmax= '30'
 if (~keyword_set(columns)) then columns = 6L
 ; clean up the old
 cmd= 'find -mmin +1440 -empty -exec \rm -fv \{} \;'
@@ -54,6 +56,9 @@ printf, wlun,'</style>'
 printf, wlun,'</head>'
 printf, wlun,'<body>'
 printf, wlun,'<h1>SDSS images of selected Sloan Atlas galaxies</h1>'
+printf, wlun,'<p>These are <i>SDSS</i> <i>gri</i> mosaics of galaxies with Sloan-Atlas-tabulated'
+;;;; HOGG CHANGE THIS
+printf, wlun,'   diameters <i>D</i>(0) between '+dmin+' and '+dmax+'&nbsp;arcmin.</p>
 printf, wlun,'<p>The mosaics are custom-built out of raw <i>SDSS</i> and <i>SDSS-III</i> data at NYU.'
 printf, wlun,'   They are all north-up.  Send questions or comments to'
 printf, wlun,'   <a href="http://cosmo.nyu.edu/hogg/">David&nbsp;W.&nbsp;Hogg</a>.</p>'
@@ -75,7 +80,7 @@ print, tag_names(tab)
 
 if keyword_set(maxgal) then ngal = ngal < maxgal
 ;tab = tab[sort(tab.cg_r50s[3])]
-tab=tab[reverse(sort(tab.cg_r90s[3]))]
+tab=tab[reverse(sort(tab.cg_h90s[3]))]
 q=WHERE(tab.quantile EQ quantile)
 tab = tab(q)
 ;print, n_elements(tab)
@@ -119,7 +124,7 @@ for j=0L,ngal-1L do begin
       filename, astrans=bigast, prefix=prefix, $
       pixscale=pixscale, smfwhm=pixscale*2.0*3600.0, $
       rebinfactor=rebinfactor, title=title, $
-      npixround=24, cleanname=cleanname, hardname=hardname, /nogrid, $
+      npixround=8, cleanname=cleanname, hardname=hardname, /nogrid, $
       quality=99, /dontdelete, /ivarout, /dontcrash, $
       minscore=0.5, /ignoreframesstatus, /processed, rerun=rerun, $
       /global, /dropweights
