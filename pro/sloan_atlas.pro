@@ -31,8 +31,6 @@
 pro sloan_atlas, suffix=suffix,columns=columns,maxgal=maxgal,quantile=quantile
 
 ; set defaults
-nxpix= 1024
-nypix= 1024
 rebinfactor= 2
 if (~keyword_set(columns)) then columns = 6L
 ; clean up the old
@@ -75,23 +73,19 @@ print, tag_names(tab)
 
 if keyword_set(maxgal) then ngal = ngal < maxgal
 ;tab = tab[sort(tab.cg_r50s[3])]
-tab=tab[reverse(sort(tab.cg_h90s[3]))]
 q=WHERE(tab.quantile EQ quantile)
 tab = tab(q)
+tab=tab[reverse(sort(tab.cg_h90s[3]))]
 ;print, n_elements(tab)
 ngal = n_elements(tab)
 ii= 0
 for j=0L,ngal-1L do begin
     thistab= tab[j]
-;    print,j, thistab.name
-;    CONTINUE
 
-
-;;; HOGG FIXME!
 ; set pixscale and image size
     pixscale= (0.396 / 3600.) / rebinfactor
-    ra_size= float(nxpix)*rebinfactor*pixscale
-    dec_size= ra_size*float(nypix)/float(nxpix)
+    ra_size= thistab.cg_h90s[3] * 10. / 3600.
+    dec_size= ra_size
     splog, 'ra_size ',ra_size
     splog, 'dec_size ',dec_size
     splog, 'pixscale', pixscale
@@ -135,7 +129,7 @@ for j=0L,ngal-1L do begin
 
 ; make different versions
         thumbimage = strmid(filename,0,dot)+'_thumb.jpg'
-        scalefactor= string(128.0/float(nxpix))
+        scalefactor= string(128.0/float(bigast.naxis1))
         cmd1 = "anytopnm "+filename+" | pnmscale " $
           +scalefactor+" | ppmtojpeg > "+thumbimage
         splog, cmd1
