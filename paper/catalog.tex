@@ -611,20 +611,21 @@ deVaucouleur and exponential radii for that galaxy, and concentration
 was flagged as incorrect if $\frac{1}{\conc}$ was not between .29 and
 .46.  HOGG: Add citation to paper for these numbers. Over the same
 series of concentric, increasing radii, we also measured the contained
-flux by summing sixty-four equally spaced rectangles. The rectangles
-are oriented diagonally and perpendicular to the length of each
-galaxy. To find the proper orientation angle for the increasing
-rectangles, we calculated the principal unit eigenvectors using a
-variance tensor of the image retrieved from \emph{The Tractor}. Using
-the eigenvectors and the individul pixel positions relative to the
-center of each galaxy, we calculate *rdotv* to use as a checkpoint to
-see if at each radii there is some flux contained within the
-rectangle. Using the same interpolation scheme that was used for
-$\rfifty$ and $\rninety$, we interpolate to find $\hfifty$ and $\hninety$ in
-all bands. As expected, the rectangular integrals of flux increased
-much faster than the circular integrals, but they both eventually
-converge to the same value after some time. The rectangular method
-proves to be especially useful for galaxies that are not circular.
+flux by summing sixty-four equally spaced rectangles. We will call
+this property the intensity scalar. The rectangles are oriented
+diagonally and perpendicular to the length of each galaxy. To find the
+proper orientation angle for the increasing rectangles, we calculated
+the principal unit eigenvectors using a variance tensor of the image
+retrieved from \emph{The Tractor}. Using the eigenvectors and the
+individul pixel positions relative to the center of each galaxy, we
+calculate *rdotv* to use as a checkpoint to see if at each radii there
+is some flux contained within the rectangle. Using the same
+interpolation scheme that was used for $\rfifty$ and $\rninety$, we
+interpolate to find $\hfifty$ and $\hninety$ in all bands. As
+expected, the rectangular integrals of flux increased much faster than
+the circular integrals, but they both eventually converge to the same
+value after some time. The rectangular method proves to be especially
+useful for galaxies that are not circular.
 
 An example of a completed measurement is given for NGC 4605, which has
 6 fields, each of which has images in all 5 bandpasses that combined
@@ -657,16 +658,23 @@ the total magnitudes for the composite galaxy and the extinction
 values for all bands per galaxy are presented in our table. With the
 corrected magnitudes, we computed surface brightness in the i-band
 with \begin{equation}
-  \mu_{50,i}=m_i+2.5log(\pi{r_{50}}^2) \end{equation} where $m_i$ is
+  \mu_{r50,i}=m_i+2.5log_{10}(2)+2.5log_{10}(\pi{r_{50}}^2) \end{equation} where $m_i$ is
 the corrected magnitude in the i-band and $r_{50,i}$ is the half-light
 radius in the i-band.
 
+Similarly, we also calculate the intensity scalar in the same fashion
+for comparison between the respective half-light and 90\%
+values by\begin{equation}
+  \mu_{h50,i}=m_i+2.5log_{10}(2)+2.5log_{10}(\pi{h_{50}}^2) \end{equation}
+where $m_i$ is the corrected magnitude in the i-band and $h_{50,i}$ is
+the half-light intensity scalar in the i-band.
+
+
 \subsection{The Table}
 The table of data contains the composite galaxy RA, Dec, and name
-given by each galaxy's source catalog. The
-data from the composite galaxies also includes the magnitudes,
-half-light radii,90 \% light radii, concentrations, axis ratios, and
-position angles. See Table 1. 
+given by each galaxy's source catalog. The data from the composite
+galaxies also includes the magnitudes, half-light radii,90 \% light
+radii, concentrations, axis ratios, and position angles. See Table 1.
 
 EP:insert exceptions table and snippet of our final atlas
 
