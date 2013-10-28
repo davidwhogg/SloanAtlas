@@ -129,7 +129,7 @@ for j=0L,ngal-1L do begin
 
 ; make different versions
         thumbimage = strmid(filename,0,dot)+'_thumb.jpg'
-        scalefactor= string(128.0/float(bigast.naxis1))
+        scalefactor= string(128.0*pixscale/ra_size)
         cmd1 = "anytopnm "+filename+" | pnmscale " $
           +scalefactor+" | ppmtojpeg > "+thumbimage
         splog, cmd1
