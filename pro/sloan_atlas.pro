@@ -129,7 +129,7 @@ for j=0L,ngal-1L do begin
 
 ; make different versions
         thumbimage = strmid(filename,0,dot)+'_thumb.jpg'
-        scalefactor= string(128.0/float(bigast.naxis1))
+        scalefactor= string(128.0*pixscale/ra_size)
         cmd1 = "anytopnm "+filename+" | pnmscale " $
           +scalefactor+" | ppmtojpeg > "+thumbimage
         splog, cmd1
@@ -148,6 +148,13 @@ for j=0L,ngal-1L do begin
           halfsize
         splog, cmd2
         spawn, cmd2
+        
+        targetdirectory = "../quantile" + string(quantile, FORMAT='(I02)')
+        print, targetdirectory
+        cmd3 = "cp "+filename+" "+thumbimage+" "+halfsize+"  "+targetdirectory
+        splog, cmd3
+        spawn, cmd3
+    
 
         ii= (ii+1) MOD columns
         htmlname= strjoin(strsplit(title,' ',/extract,/regex), $
@@ -184,6 +191,11 @@ printf, wlun, '</body>'
 printf, wlun, '</html>'
 close, wlun
 free_lun, wlun
+
+cmd4 = "cp index..html "+targetdirectory
+print, cmd4
+splog, cmd4
+spawn, cmd4
 
 ; clean up the zero-length crap
 cmd= 'find -empty -exec \rm -fv \{} \;'
