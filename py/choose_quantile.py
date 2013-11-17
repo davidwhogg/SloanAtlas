@@ -31,10 +31,17 @@ def quantiles(x,q):
 
 def choose_quantiles(ncolor, nsb):
     '''
-    colors is the full color list
-    sbs is the full surface brightness list
+    inputs:
     ncolor is the number of color bins
     nsb is the number of sb bins
+    
+    outputs: 
+    given a data table and the number of bins desired in
+    color and sb, a quantile is assigned to each galaxy in the range
+    ncolor x nsb. a colors vs. sb plot indicating the breakdown of
+    quantiles is also generated.
+
+    
     '''
     table = openfile_data('sdss_atlas_sept2013')    
     extinction = table['CG_EXTINCTION']
@@ -141,6 +148,14 @@ def choose_quantiles(ncolor, nsb):
     return 'done'
 
 def make_quantile_table(data, quantile_list):
+    ''' 
+    inputs:
+    existing table and a list of quantiles for each galaxy
+    
+    outputs:
+    a new data table to be used for the creation of quantile webpages
+    '''
+
     n=np.arange(100)
     hdu=pyf.PrimaryHDU(n)    
     col1=pyf.Column(name='NAME', format='30A', array=data['NAME'])
