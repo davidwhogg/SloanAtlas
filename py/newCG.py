@@ -391,7 +391,7 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
     makeflipbook(prefix,len(tractor.getImages()),itune1,itune2,ntune)
 
     # now SWAP exp and dev and DO IT AGAIN
-    newCG = st.CompositeGalaxy(CG.getPosition, CG.brightnessDev.copy(),
+    newCG = st.CompositeGalaxy(CG.getPosition(), CG.brightnessDev.copy(),
                                CG.shapeDev.copy(), CG.brightnessExp.copy(),
                                CG.shapeExp.copy())
     tractor.removeSource(CG)
