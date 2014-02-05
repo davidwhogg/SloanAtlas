@@ -58,6 +58,58 @@ def make_one_plate(filelist, nx=2400):
     plate = im.fromarray(platedata)
     return plate
 
+def make_one_quantile_of_plates(prefix, fns, sizes, captions):
+    """
+    inputs:
+    - `prefix` - string for plate naming
+    - `fns` - list of galaxy image file names
+    - `sizes` - list of galaxy sizes in arcmin
+    - `captions` - list of strings to put in captions for the plates
+
+    outputs:
+    - set of files `prefix`*.jpg
+    - set of files `prefix`*.txt
+
+    bugs:
+    - Only skeleton code; doesn't actually work.
+    """
+    listindex = 0
+    nim = len(fns)
+    assert len(sizes) == nim
+    while listindex < nim:
+        fiducial = 8. # MAGIC number in arcmin
+        nimx = int(np.floor(fiducial / sizes[listindex]))
+        if listindx + nimx * nimx > nim:
+            break
+        thisprefix = "%s_%03d" % (prefix, listindex)
+        outimgfn = "%s.jpg" % (thisprefix, )
+        outtxtfn = "%s.txt" % (thisprefix, )
+        make_one_plate(fns[listindex:listindex + nimx * nimx]).save(outimgfn)
+        fd = open(outtxtfn, "w") # wrong syntax?
+        for ii in range(nimx * nimx):
+            print fd, ii, captions[listindex + ii] # wrong syntax
+        fd.close()
+        listindex += nimx * nimx
+    return None
+
+def make_all_plates(catalogfn):
+    """
+    inputs:
+    - `catalogfn` - fits file name with SloanAtlas data table
+
+    outputs:
+    - plate images
+
+    bugs:
+    - Not even close to working.
+    """
+    tabdata = pyfits.open(catalogfn).getdata()
+    for quantile in range(np.min(tabdata.quantile), np.max(tabdata.quantile)):
+        prefix = "quantile_%02d" % (quantile, )
+        II = (tabdata.quantile == quantile)
+        make_one_quantile(prefix, tabdata[II].filename, tabdata[II].h90i, tabdata[II].name)
+    return None
+
 if __name__ == "__main__":
     fns = ["./test_data/A_0045-10_MCG_-2_3_16_irg.jpg",
            "./test_data/NGC_151_MCG_-2_2_54_IRAS_00315-0958_irg.jpg",
@@ -65,3 +117,4 @@ if __name__ == "__main__":
            "./test_data/NGC_7814_UGC_8_irg.jpg",
            ]
     make_one_plate([fns[ii] for ii in (1,2,3,0,1,2,3,3,3,0,1,2,3,0,1,2)], nx=2400).save("foo.jpg")
+
