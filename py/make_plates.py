@@ -1,6 +1,7 @@
 # This file is part of the Sloan Atlas project.
 # Copyright 2014 David W. Hogg (NYU).
 
+import os
 import numpy as np
 import pyfits as pf # works on broiler
 from PIL import Image as im
@@ -31,7 +32,14 @@ def make_one_plate(filelist, nx=2400):
     for ii, fn in enumerate(filelist):
         iix = ii % nimx
         iiy = ii / nimx
-        thisim = im.open(fn)
+        # need to check for existence of fn or else scp it from bootes
+        rfn = os.popen("ls " + fn).read()
+        if not os.path.exists(rfn):
+            cmd = "scp bootes:/global/data/scr/dwh3/ep109/all_images/" + fn + " ."
+            print cmd
+            os.system(cmd)
+            rfn = os.popen("ls " + fn).read().rstrip()
+        thisim = im.open(rfn)
         # check that the input image is large enough and has even dimensions
         assert thisim.size[0] >= nxim
         assert thisim.size[1] >= nxim
@@ -44,7 +52,7 @@ def make_one_plate(filelist, nx=2400):
         y1 = iiy * nxim
         x2 = (thisim.size[0] - nxim) / 2
         y2 = (thisim.size[1] - nxim) / 2
-        print ii, iix, iiy, nxim, fn, thisim.size[0], x2, y2
+        print ii, iix, iiy, nxim, rfn, thisim.size[0], x2, y2
         # attach white border to input data
         # note x <-> y issues
         thisdata[y2,:,:] = 255 # MAGIC 255
@@ -78,11 +86,12 @@ def make_one_quantile_of_plates(prefix, fns, sizes, captions):
     nim = len(fns)
     assert len(sizes) == nim
     while listindex < nim:
-        fiducial = 8. * 60. # MAGIC number in arcsec
+        fiducial = 6. * 60. # MAGIC number in arcsec
+        print fiducial, listindex, sizes[listindex]
         nimx = int(np.floor(fiducial / sizes[listindex]))
         if nimx < 1: nimx = 1
         if nimx > 4: nimx = 4
-        if listindx + nimx * nimx > nim:
+        if listindex + nimx * nimx > nim:
             break
         thisprefix = "%s_%03d" % (prefix, listindex)
         outimgfn = "%s.jpg" % (thisprefix, )
@@ -110,14 +119,13 @@ def make_all_plates(catalogfn):
     tabdata = pf.open(catalogfn)[1].data
     fb = 3 # fiducial band MAGIC
     tabdata = tabdata[(np.argsort(tabdata.CG_H90S[:,fb]))[::-1]]
-    filenames = np.array(["*".join(q.split(" ")) + "*irg.jpg" for q in tabdata.NAME])
+    filenames = np.array(["_".join(q.split(" ")) + "_*irg.jpg" for q in tabdata.NAME])
     for quantile in range(np.max(tabdata.QUANTILE)):
         prefix = "quantile_%02d" % quantile
         II = (tabdata.QUANTILE == quantile)
         print filenames[II]
         print tabdata[II].CG_H90S[:,fb]
-        assert False
-        make_one_quantile(prefix, filenames[II], tabdata.CG_H90S[II], tabdata[II].NAME)
+        make_one_quantile_of_plates(prefix, filenames[II], tabdata.CG_H90S[II, fb], tabdata[II].NAME)
     return None
 
 if __name__ == "__main__":
