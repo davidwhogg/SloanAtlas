@@ -2,6 +2,7 @@
 # Copyright 2014 David W. Hogg (NYU).
 
 import numpy as np
+import pyfits as pf # works on broiler
 from PIL import Image as im
 
 def make_one_plate(filelist, nx=2400):
@@ -77,8 +78,10 @@ def make_one_quantile_of_plates(prefix, fns, sizes, captions):
     nim = len(fns)
     assert len(sizes) == nim
     while listindex < nim:
-        fiducial = 8. # MAGIC number in arcmin
+        fiducial = 8. * 60. # MAGIC number in arcsec
         nimx = int(np.floor(fiducial / sizes[listindex]))
+        if nimx < 1: nimx = 1
+        if nimx > 4: nimx = 4
         if listindx + nimx * nimx > nim:
             break
         thisprefix = "%s_%03d" % (prefix, listindex)
@@ -102,15 +105,25 @@ def make_all_plates(catalogfn):
 
     bugs:
     - Not even close to working.
+    - Assumes no quantile is < 0.
     """
-    tabdata = pyfits.open(catalogfn).getdata()
-    for quantile in range(np.min(tabdata.quantile), np.max(tabdata.quantile)):
-        prefix = "quantile_%02d" % (quantile, )
-        II = (tabdata.quantile == quantile)
-        make_one_quantile(prefix, tabdata[II].filename, tabdata[II].h90i, tabdata[II].name)
+    tabdata = pf.open(catalogfn)[1].data
+    fb = 3 # fiducial band MAGIC
+    tabdata = tabdata[(np.argsort(tabdata.CG_H90S[:,fb]))[::-1]]
+    filenames = np.array(["*".join(q.split(" ")) + "*irg.jpg" for q in tabdata.NAME])
+    for quantile in range(np.max(tabdata.QUANTILE)):
+        prefix = "quantile_%02d" % quantile
+        II = (tabdata.QUANTILE == quantile)
+        print filenames[II]
+        print tabdata[II].CG_H90S[:,fb]
+        assert False
+        make_one_quantile(prefix, filenames[II], tabdata.CG_H90S[II], tabdata[II].NAME)
     return None
 
 if __name__ == "__main__":
+    make_all_plates("/data1/ep1091/tractor/sdss_atlas_for_images_all.fits")
+    
+if False:
     fns = ["./test_data/A_0045-10_MCG_-2_3_16_irg.jpg",
            "./test_data/NGC_151_MCG_-2_2_54_IRAS_00315-0958_irg.jpg",
            "./test_data/NGC_173_UGC_369_IRAS_00346+0140_irg.jpg",
