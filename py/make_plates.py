@@ -33,7 +33,8 @@ def make_one_plate(filelist, nx=2400):
         iix = ii % nimx
         iiy = ii / nimx
         # need to check for existence of fn or else scp it from bootes
-        rfn = os.popen("ls " + fn).read()
+        rfn = os.popen("ls " + fn).read().rstrip()
+        print "looking for %s" % (rfn, )
         if not os.path.exists(rfn):
             cmd = "scp bootes:/global/data/scr/dwh3/ep109/all_images/" + fn + " ."
             print cmd
@@ -99,7 +100,7 @@ def make_one_quantile_of_plates(prefix, fns, sizes, captions):
         make_one_plate(fns[listindex:listindex + nimx * nimx]).save(outimgfn)
         fd = open(outtxtfn, "w") # wrong syntax?
         for ii in range(nimx * nimx):
-            print fd, ii, captions[listindex + ii] # wrong syntax
+            fd.write("%0d --- %s\n" % (ii, captions[listindex + ii]))
         fd.close()
         listindex += nimx * nimx
     return None
@@ -113,12 +114,20 @@ def make_all_plates(catalogfn):
     - plate images
 
     bugs:
+    - CONTAINS HACKY GALAXY REMOVALS
     - Not even close to working.
     - Assumes no quantile is < 0.
     """
     tabdata = pf.open(catalogfn)[1].data
     fb = 3 # fiducial band MAGIC
     tabdata = tabdata[(np.argsort(tabdata.CG_H90S[:,fb]))[::-1]]
+
+    # start HACKY HACK
+    print tabdata.shape
+    tabdata = tabdata[np.where(tabdata.NAME != "NGC 337")]
+    print tabdata.shape
+    # end HACKY HACK
+
     filenames = np.array(["_".join(q.split(" ")) + "_*irg.jpg" for q in tabdata.NAME])
     for quantile in range(np.max(tabdata.QUANTILE)):
         prefix = "quantile_%02d" % quantile
@@ -129,8 +138,8 @@ def make_all_plates(catalogfn):
     return None
 
 if __name__ == "__main__":
-    make_all_plates("/data1/ep1091/tractor/sdss_atlas_for_images_all.fits")
-    
+    make_all_plates("/data1/ep1091/tractor/sdss_atlas_plates_quants.fits")
+
 if False:
     fns = ["./test_data/A_0045-10_MCG_-2_3_16_irg.jpg",
            "./test_data/NGC_151_MCG_-2_2_54_IRAS_00315-0958_irg.jpg",
