@@ -122,7 +122,7 @@ def make_one_quantile_of_plates(prefix, names, sizes, captions):
     assert len(sizes) == nim
     assert len(captions) == nim
     while listindex < nim:
-        fiducial = 9. * 60. # MAGIC number in arcsec
+        fiducial = 4. * 60. # MAGIC number in arcsec
         print fiducial, listindex, sizes[listindex]
         nimx = int(np.floor(fiducial / sizes[listindex]))
         if nimx < 1: nimx = 1
