@@ -6,7 +6,7 @@ import numpy as np
 import pyfits as pf # works on broiler
 from PIL import Image as im
 
-def make_one_plate(filelist, nx=2400):
+def make_one_plate(filelist, nx=2424):
     '''
     inputs:
     - `filelist` -- list of image files
@@ -146,5 +146,5 @@ if False:
            "./test_data/NGC_173_UGC_369_IRAS_00346+0140_irg.jpg",
            "./test_data/NGC_7814_UGC_8_irg.jpg",
            ]
-    make_one_plate([fns[ii] for ii in (1,2,3,0,1,2,3,3,3,0,1,2,3,0,1,2)], nx=2400).save("foo.jpg")
+    make_one_plate([fns[ii] for ii in (1,2,3,0,1,2,3,3,3,0,1,2,3,0,1,2)], nx=2424).save("foo.jpg")
 
