@@ -114,18 +114,18 @@ def make_all_plates(catalogfn):
     - plate images
 
     bugs:
-    - CONTAINS HACKY GALAXY REMOVALS
     - Not even close to working.
     - Assumes no quantile is < 0.
     """
     tabdata = pf.open(catalogfn)[1].data
     fb = 3 # fiducial band MAGIC
     tabdata = tabdata[(np.argsort(tabdata.CG_H90S[:,fb]))[::-1]]
+    print tabdata.shape
 
-    # start HACKY HACK
-    print tabdata.shape
-    tabdata = tabdata[np.where(tabdata.NAME != "NGC 337")]
-    print tabdata.shape
+    # start HACKY HACK; turned off now
+    if False:
+        tabdata = tabdata[np.where(tabdata.NAME != "NGC 337")]
+        print tabdata.shape
     # end HACKY HACK
 
     filenames = np.array(["_".join(q.split(" ")) + "_*irg.jpg" for q in tabdata.NAME])
