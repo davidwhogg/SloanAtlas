@@ -32,15 +32,8 @@ def make_one_plate(filelist, nx=2424):
     for ii, fn in enumerate(filelist):
         iix = ii % nimx
         iiy = ii / nimx
-        # need to check for existence of fn or else scp it from bootes
-        rfn = os.popen("ls " + fn).read().rstrip()
-        print "looking for %s" % (rfn, )
-        if not os.path.exists(rfn):
-            cmd = "scp bootes:/global/data/scr/dwh3/ep109/all_images/" + fn + " ."
-            print cmd
-            os.system(cmd)
-            rfn = os.popen("ls " + fn).read().rstrip()
-        thisim = im.open(rfn)
+        print "opening %s" % (fn, )
+        thisim = im.open(fn)
         # check that the input image is large enough and has even dimensions
         assert thisim.size[0] >= nxim
         assert thisim.size[1] >= nxim
@@ -53,7 +46,7 @@ def make_one_plate(filelist, nx=2424):
         y1 = iiy * nxim
         x2 = (thisim.size[0] - nxim) / 2
         y2 = (thisim.size[1] - nxim) / 2
-        print ii, iix, iiy, nxim, rfn, thisim.size[0], x2, y2
+        print ii, iix, iiy, nxim, fn, thisim.size[0], x2, y2
         # attach white border to input data
         # note x <-> y issues
         thisdata[y2,:,:] = 255 # MAGIC 255
@@ -68,7 +61,35 @@ def make_one_plate(filelist, nx=2424):
     plate = im.fromarray(platedata)
     return plate
 
-def make_one_quantile_of_plates(prefix, fns, sizes, captions):
+def move_files_from_remote_server(names):
+    """
+    inputs:
+    - `names` - galaxy names (possibly including wild cards)
+
+    returns:
+    - `fns` - file names of local files, or null string when failures occur.
+
+    bugs:
+    - Way too much hard-coded.
+    """
+    rfns = np.array(["_".join(nn.split(" ")) + "_*irg_clean.jpg" for nn in names])
+    fns = np.array([])
+    for rfn in rfns:
+    # need to check for existence of fn or else scp it from bootes
+        print "looking for %s" % (rfn, )
+        fn = os.popen("ls " + rfn).read().rstrip()
+        if not os.path.exists(fn):
+            cmd = "scp bootes:/global/data/scr/dwh3/ep109/all_images/" + rfn + " ."
+            print cmd
+            os.system(cmd)
+            fn = os.popen("ls " + rfn).read().rstrip()
+        if not os.path.exists(fn):
+            print "didn't ever get %s; setting False" % (rfn, )
+            fn = ""
+        fns = np.append(fns, fn)
+    return fns
+
+def make_one_quantile_of_plates(prefix, names, sizes, captions):
     """
     inputs:
     - `prefix` - string for plate naming
@@ -81,13 +102,27 @@ def make_one_quantile_of_plates(prefix, fns, sizes, captions):
     - set of files `prefix`*.txt
 
     bugs:
+    - MAGIC number(s).
     - Only skeleton code; doesn't actually work.
     """
     listindex = 0
-    nim = len(fns)
+    nim = len(names)
     assert len(sizes) == nim
+    assert len(captions) == nim
+    # bring in files and trim to the "successful" list
+    fns = move_files_from_remote_server(names)
+    II = (fns != "")
+    names = names[II]
+    sizes = sizes[II]
+    captions = captions[II]
+    fns = fns[II]
+    captions = [cc + " " + ff for (cc, ff) in zip(captions, fns)]
+    print captions
+    nim = len(names)
+    assert len(sizes) == nim
+    assert len(captions) == nim
     while listindex < nim:
-        fiducial = 6. * 60. # MAGIC number in arcsec
+        fiducial = 9. * 60. # MAGIC number in arcsec
         print fiducial, listindex, sizes[listindex]
         nimx = int(np.floor(fiducial / sizes[listindex]))
         if nimx < 1: nimx = 1
@@ -121,20 +156,12 @@ def make_all_plates(catalogfn):
     fb = 3 # fiducial band MAGIC
     tabdata = tabdata[(np.argsort(tabdata.CG_H90S[:,fb]))[::-1]]
     print tabdata.shape
-
-    # start HACKY HACK; turned off now
-    if False:
-        tabdata = tabdata[np.where(tabdata.NAME != "NGC 337")]
-        print tabdata.shape
-    # end HACKY HACK
-
-    filenames = np.array(["_".join(q.split(" ")) + "_*irg.jpg" for q in tabdata.NAME])
     for quantile in range(np.max(tabdata.QUANTILE)):
         prefix = "quantile_%02d" % quantile
         II = (tabdata.QUANTILE == quantile)
-        print filenames[II]
-        print tabdata[II].CG_H90S[:,fb]
-        make_one_quantile_of_plates(prefix, filenames[II], tabdata.CG_H90S[II, fb], tabdata[II].NAME)
+        print tabdata.NAME[II]
+        print tabdata.CG_H90S[II,fb]
+        make_one_quantile_of_plates(prefix, tabdata.NAME[II], tabdata.CG_H90S[II, fb], tabdata.NAME[II])
     return None
 
 if __name__ == "__main__":
