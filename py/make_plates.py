@@ -121,23 +121,25 @@ def make_one_quantile_of_plates(prefix, names, sizes, captions):
     nim = len(names)
     assert len(sizes) == nim
     assert len(captions) == nim
+    platenum = 0
     while listindex < nim:
-        fiducial = 4. * 60. # MAGIC number in arcsec
-        print fiducial, listindex, sizes[listindex]
+        fiducial = 5. * 60. # MAGIC number in arcsec
+        print fiducial, platenum, listindex, sizes[listindex]
         nimx = int(np.floor(fiducial / sizes[listindex]))
         if nimx < 1: nimx = 1
         if nimx > 4: nimx = 4
         if listindex + nimx * nimx > nim:
             break
-        thisprefix = "%s_%03d" % (prefix, listindex)
+        thisprefix = "%s_%02d" % (prefix, platenum)
         outimgfn = "%s.jpg" % (thisprefix, )
         outtxtfn = "%s.txt" % (thisprefix, )
         make_one_plate(fns[listindex:listindex + nimx * nimx]).save(outimgfn)
         fd = open(outtxtfn, "w") # wrong syntax?
         for ii in range(nimx * nimx):
-            fd.write("%0d --- %s\n" % (ii, captions[listindex + ii]))
+            fd.write("%0d --- %0d --- %s\n" % (platenum, ii, captions[listindex + ii]))
         fd.close()
         listindex += nimx * nimx
+        platenum += 1
     return None
 
 def make_all_plates(catalogfn):
@@ -156,9 +158,10 @@ def make_all_plates(catalogfn):
     fb = 3 # fiducial band MAGIC
     tabdata = tabdata[(np.argsort(tabdata.CG_H90S[:,fb]))[::-1]]
     print tabdata.shape
+    tiny = 1.e-3
     for quantile in range(np.max(tabdata.QUANTILE)):
         prefix = "quantile_%02d" % quantile
-        II = (tabdata.QUANTILE == quantile)
+        II = (np.abs(tabdata.QUANTILE - quantile) < tiny)
         print tabdata.NAME[II]
         print tabdata.CG_H90S[II,fb]
         make_one_quantile_of_plates(prefix, tabdata.NAME[II], tabdata.CG_H90S[II, fb], tabdata.NAME[II])
