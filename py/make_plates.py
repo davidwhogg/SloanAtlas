@@ -6,6 +6,8 @@ import numpy as np
 import pyfits as pf # works on broiler
 from PIL import Image as im
 
+FIDUCIAL = 5. * 60. # MAGIC number in arcsec
+
 def make_one_plate(filelist, nx=2424):
     '''
     inputs:
@@ -123,21 +125,23 @@ def make_one_quantile_of_plates(prefix, names, sizes, captions):
     assert len(captions) == nim
     platenum = 0
     while listindex < nim:
-        fiducial = 5. * 60. # MAGIC number in arcsec
-        print fiducial, platenum, listindex, sizes[listindex]
-        nimx = int(np.floor(fiducial / sizes[listindex]))
+        thisprefix = "%s_%02d" % (prefix, platenum)
+        outimgfn = "%s.jpg" % (thisprefix, )
+        outtxtfn = "%s.txt" % (thisprefix, )
+        nimx = int(np.floor(FIDUCIAL / sizes[listindex]))
         if nimx < 1: nimx = 1
         if nimx > 4: nimx = 4
         if listindex + nimx * nimx > nim:
             break
-        thisprefix = "%s_%02d" % (prefix, platenum)
-        outimgfn = "%s.jpg" % (thisprefix, )
-        outtxtfn = "%s.txt" % (thisprefix, )
-        make_one_plate(fns[listindex:listindex + nimx * nimx]).save(outimgfn)
-        fd = open(outtxtfn, "w") # wrong syntax?
-        for ii in range(nimx * nimx):
-            fd.write("%0d --- %0d --- %s\n" % (platenum, ii, captions[listindex + ii]))
-        fd.close()
+        if os.path.exists(outimgfn):
+            print "already made %s" % (outimgfn, )
+        else:
+            print "making %s" % (outimgfn, )
+            make_one_plate(fns[listindex:listindex + nimx * nimx]).save(outimgfn)
+            fd = open(outtxtfn, "w") # wrong syntax?
+            for ii in range(nimx * nimx):
+                fd.write("%0d --- %0d --- %s\n" % (platenum, ii, captions[listindex + ii]))
+            fd.close()
         listindex += nimx * nimx
         platenum += 1
     return None
@@ -153,13 +157,14 @@ def make_all_plates(catalogfn):
     bugs:
     - Not even close to working.
     - Assumes no quantile is < 0.
+    - Assumes quantile values are reals!
     """
     tabdata = pf.open(catalogfn)[1].data
     fb = 3 # fiducial band MAGIC
     tabdata = tabdata[(np.argsort(tabdata.CG_H90S[:,fb]))[::-1]]
     print tabdata.shape
     tiny = 1.e-3
-    for quantile in range(np.max(tabdata.QUANTILE)):
+    for quantile in range(np.round(np.max(tabdata.QUANTILE)).astype(int) + 1):
         prefix = "quantile_%02d" % quantile
         II = (np.abs(tabdata.QUANTILE - quantile) < tiny)
         print tabdata.NAME[II]
