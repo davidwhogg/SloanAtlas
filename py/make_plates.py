@@ -36,9 +36,7 @@ def make_one_plate(filelist, nx=2424):
         iiy = ii / nimx
         print "opening %s" % (fn, )
         thisim = im.open(fn)
-        # check that the input image is large enough and has even dimensions
-        assert thisim.size[0] >= nxim
-        assert thisim.size[1] >= nxim
+        # check that the input image has even dimensions
         assert 2 * (thisim.size[0] / 2) == thisim.size[0]
         assert 2 * (thisim.size[1] / 2) == thisim.size[1]
         thisdata = np.asarray(thisim).copy()
@@ -48,16 +46,25 @@ def make_one_plate(filelist, nx=2424):
         y1 = iiy * nxim
         x2 = (thisim.size[0] - nxim) / 2
         y2 = (thisim.size[1] - nxim) / 2
-        print ii, iix, iiy, nxim, fn, thisim.size[0], x2, y2
+        # now deal with possibility that input image is too small!
+        thisnxim = nxim
+        if x2 < 0 or y2 < 0:
+            delta = np.max([-x2, -y2])
+            x1 += delta
+            y1 += delta
+            x2 += delta
+            y2 += delta
+            thisnxim -= delta + delta
+        print ii, iix, iiy, nxim, fn, thisim.size[0], x2, y2, thisnxim
         # attach white border to input data
         # note x <-> y issues
         thisdata[y2,:,:] = 255 # MAGIC 255
-        thisdata[y2 + nxim - 1,:,:] = 255 # MAGIC 255
+        thisdata[y2 + thisnxim - 1,:,:] = 255 # MAGIC 255
         thisdata[:,x2,:] = 255 # MAGIC 255
-        thisdata[:,x2 + nxim - 1,:] = 255 # MAGIC 255
+        thisdata[:,x2 + thisnxim - 1,:] = 255 # MAGIC 255
         # merge new data into plate canvas
         # note x <-> y issues
-        platedata[y1:y1 + nxim,x1:x1 + nxim,:] = thisdata[y2:y2 + nxim,x2:x2 + nxim,:]
+        platedata[y1:y1 + thisnxim,x1:x1 + thisnxim,:] = thisdata[y2:y2 + thisnxim,x2:x2 + thisnxim,:]
     # make output image object
     print platedata.shape, np.min(platedata), np.max(platedata)
     plate = im.fromarray(platedata)
@@ -161,15 +168,19 @@ def make_all_plates(catalogfn):
     """
     tabdata = pf.open(catalogfn)[1].data
     fb = 3 # fiducial band MAGIC
-    tabdata = tabdata[(np.argsort(tabdata.CG_H90S[:,fb]))[::-1]]
+    print 
+    # the following is some made-up MAGIC 0.333 and MAGIC 24.0 and magic 2.
+    plotsizes = tabdata.CG_H50S[:,fb] * 10.**(0.333 * 0.4 * (24.0 - tabdata[:]["cg i-sb"]))
+    print np.median(plotsizes / (3. * tabdata.CG_H50S[:,fb]))
+    plotsizes = np.clip(plotsizes, 2.5 * tabdata.CG_H50S[:,fb], np.Inf)
     print tabdata.shape
     tiny = 1.e-3
     for quantile in range(np.round(np.max(tabdata.QUANTILE)).astype(int) + 1):
         prefix = "quantile_%02d" % quantile
-        II = (np.abs(tabdata.QUANTILE - quantile) < tiny)
-        print tabdata.NAME[II]
-        print tabdata.CG_H90S[II,fb]
-        make_one_quantile_of_plates(prefix, tabdata.NAME[II], tabdata.CG_H90S[II, fb], tabdata.NAME[II])
+        II = np.where(np.abs(tabdata.QUANTILE - quantile) < tiny)[0]
+        II = II[(np.argsort(plotsizes[II]))[::-1]]
+        print tabdata.NAME[II], tabdata.CG_H90S[II,fb], plotsizes[II]
+        make_one_quantile_of_plates(prefix, tabdata.NAME[II], plotsizes[II], tabdata.NAME[II])
     return None
 
 if __name__ == "__main__":
