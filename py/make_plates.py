@@ -108,7 +108,7 @@ def make_one_quantile_of_plates(prefix, names, sizes, captions):
 
     outputs:
     - set of files `prefix`*.jpg
-    - set of files `prefix`*.txt
+    - set of files `prefix`*.tex
 
     bugs:
     - MAGIC number(s).
@@ -125,7 +125,7 @@ def make_one_quantile_of_plates(prefix, names, sizes, captions):
     sizes = sizes[II]
     captions = captions[II]
     fns = fns[II]
-    captions = [cc + " " + ff for (cc, ff) in zip(captions, fns)]
+    # captions = [cc + " " + ff for (cc, ff) in zip(captions, fns)]
     print captions
     nim = len(names)
     assert len(sizes) == nim
@@ -134,7 +134,7 @@ def make_one_quantile_of_plates(prefix, names, sizes, captions):
     while listindex < nim:
         thisprefix = "%s_%02d" % (prefix, platenum)
         outimgfn = "%s.jpg" % (thisprefix, )
-        outtxtfn = "%s.txt" % (thisprefix, )
+        outtxtfn = "%s.tex" % (thisprefix, )
         nimx = int(np.floor(FIDUCIAL / sizes[listindex]))
         if nimx < 1: nimx = 1
         if nimx > 4: nimx = 4
@@ -147,11 +147,31 @@ def make_one_quantile_of_plates(prefix, names, sizes, captions):
             make_one_plate(fns[listindex:listindex + nimx * nimx]).save(outimgfn)
             fd = open(outtxtfn, "w") # wrong syntax?
             for ii in range(nimx * nimx):
-                fd.write("%0d --- %0d --- %s\n" % (platenum, ii, captions[listindex + ii]))
+                fd.write("%0d. --- %s\n" % (ii, captions[listindex + ii]))
+                if ii < (nimx * nimx - 1):
+                    fd.write("\\\\\n")
             fd.close()
         listindex += nimx * nimx
         platenum += 1
     return None
+
+def remove_all_exceptions(data):
+    """
+    inputs:
+    - `data` - structure with `NAME` tag
+
+    outputs:
+    - `data` with elements removed
+
+    bugs:
+    - Nothing but MAGIC.
+    - Doesn't copy; changes in place; stupid.
+    - All these exceptions need to be hand-inspected using flipbook files.
+    """
+    bad = np.zeros(len(data))
+    bad[np.where(data.NAME == "")] = 1
+    data = data[bad == 0]
+    return data
 
 def make_all_plates(catalogfn):
     """
@@ -167,20 +187,22 @@ def make_all_plates(catalogfn):
     - Assumes quantile values are reals!
     """
     tabdata = pf.open(catalogfn)[1].data
+    tabdata = remove_all_exceptions(tabdata)
     fb = 3 # fiducial band MAGIC
     print 
-    # the following is some made-up MAGIC 0.333 and MAGIC 24.0 and magic 2.
+    # the following is some made-up MAGIC 0.333 and MAGIC 24.0 and magic 2.5
     plotsizes = tabdata.CG_H50S[:,fb] * 10.**(0.333 * 0.4 * (24.0 - tabdata[:]["cg i-sb"]))
-    print np.median(plotsizes / (3. * tabdata.CG_H50S[:,fb]))
     plotsizes = np.clip(plotsizes, 2.5 * tabdata.CG_H50S[:,fb], np.Inf)
-    print tabdata.shape
+    assert len(plotsizes) == len(tabdata)
+    captions = np.array(["~".join(nn.split(" ")) for nn in tabdata.NAME])
+    assert len(captions) == len(tabdata)
     tiny = 1.e-3
     for quantile in range(np.round(np.max(tabdata.QUANTILE)).astype(int) + 1):
         prefix = "quantile_%02d" % quantile
         II = np.where(np.abs(tabdata.QUANTILE - quantile) < tiny)[0]
         II = II[(np.argsort(plotsizes[II]))[::-1]]
         print tabdata.NAME[II], tabdata.CG_H90S[II,fb], plotsizes[II]
-        make_one_quantile_of_plates(prefix, tabdata.NAME[II], plotsizes[II], tabdata.NAME[II])
+        make_one_quantile_of_plates(prefix, tabdata.NAME[II], plotsizes[II], captions[II])
     return None
 
 if __name__ == "__main__":
@@ -193,4 +215,3 @@ if False:
            "./test_data/NGC_7814_UGC_8_irg.jpg",
            ]
     make_one_plate([fns[ii] for ii in (1,2,3,0,1,2,3,3,3,0,1,2,3,0,1,2)], nx=2424).save("foo.jpg")
-
