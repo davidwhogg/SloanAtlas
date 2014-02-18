@@ -168,8 +168,61 @@ def remove_all_exceptions(data):
     - Doesn't copy; changes in place; stupid.
     - All these exceptions need to be hand-inspected using flipbook files.
     """
+    # remove bad data
     bad = np.zeros(len(data))
-    bad[np.where(data.NAME == "")] = 1
+    bad[np.where(data.NAME == "UGC 11891")] = 1 # looks red / wrong?
+    bad[np.where(data.NAME == "A 1246-09")] = 1 # missing imaging data
+    bad[np.where(data.NAME == "UGC 6773")] = 1 # bright star messing it up?
+    bad[np.where(data.NAME == "NGC 3769A")] = 1 # bad deblend with B
+
+    bad[np.where(data.NAME == "NGC 988")] = 1 # bright star messing it up?
+    bad[np.where(data.NAME == "A 1646+62")] = 1 # bright star messing it up?
+    bad[np.where(data.NAME == "UGC 6446")] = 1 # bright star messing it up?
+    bad[np.where(data.NAME == "UGC 5245")] = 1 # missing data
+    bad[np.where(data.NAME == "A 1420+45")] = 1 # missing data
+
+    bad[np.where(data.NAME == "NGC 2283")] = 1 # bad calibration or highly reddened?
+    bad[np.where(data.NAME == "UGC 11861")] = 1 # bad calibration or highly reddened?
+    bad[np.where(data.NAME == "NGC 7741")] = 1 # missing imaging data
+    bad[np.where(data.NAME == "UGC 11818")] = 1 # bad calibration or highly reddened?
+    bad[np.where(data.NAME == "NSA ID 131288")] = 1 # totally wrong and red and small
+    bad[np.where(data.NAME == "UGC 3433")] = 1 # bad calibration or highly reddened?
+
+    bad[np.where(data.NAME == "A 2233-03")] = 1 # missing imaging data
+    bad[np.where(data.NAME == "UGC 2728")] = 1 # bad calibration or highly reddened?
+    bad[np.where(data.NAME == "UGC 1230")] = 1 # missing imaging data
+    bad[np.where(data.NAME == "UGC 6660")] = 1 # what the fuck?
+    bad[np.where(data.NAME == "NGC 205")] = 1 # missing imaging data
+
+    bad[np.where(data.NAME == "NGC 6070")] = 1 # missing imaging data
+    bad[np.where(data.NAME == "NGC 7678")] = 1 # missing imaging data
+    bad[np.where(data.NAME == "UGC 2358")] = 1 # bad calibration or highly reddened?
+    bad[np.where(data.NAME == "NGC 855")] = 1 # missing imaging data
+    bad[np.where(data.NAME == "NGC 7497")] = 1 # missing imaging data
+    bad[np.where(data.NAME == "NSA ID 133245")] = 1 # bright star messing it up?
+
+    bad[np.where(data.NAME == "UGC 2411")] = 1 # bad calibration or highly reddened?
+    bad[np.where(data.NAME == "A 0102-06")] = 1 # missing imaging data
+    bad[np.where(data.NAME == "UGC 2468")] = 1 # wrong size or galaxy cluster?
+    bad[np.where(data.NAME == "NSA ID 44968")] = 1 # needs to be rerun in deblend mode
+
+    bad[np.where(data.NAME == "UGC 2458")] = 1 # wrong size
+    bad[np.where(data.NAME == "NGC 3640")] = 1 # missing imaging data
+    bad[np.where(data.NAME == "NGC 7817")] = 1 # missing imaging data
+    bad[np.where(data.NAME == "NGC 7771")] = 1 # missing imaging data
+    bad[np.where(data.NAME == "NGC 4302")] = 1 # totally wrong JPEG; might just need rerunning
+
+    bad[np.where(data.NAME == "NSA ID 33475")] = 1 # bright star messing it up?
+    bad[np.where(data.NAME == "A 0106+01")] = 1 # bright star messing it up?
+    bad[np.where(data.NAME == "UGC 10245")] = 1 # bad center / nothing there?
+    bad[np.where(data.NAME == "NGC 7556")] = 1 # missing imaging data
+    bad[np.where(data.NAME == "UGC 12206")] = 1 # missing imaging data
+
+    # make (ill advised) adjustments
+    data[np.where(data.NAME == "SEXTANS B")].CG_H50S[:,3] *= 2. # HACK wrong size?
+    data[np.where(data.NAME == "SEXTANS B")].CG_H90S[:,3] *= 2. # HACK wrong size?
+    print "removing %d galaxies:" % (np.sum(bad == 1),)
+    print data.NAME[np.where(bad == 1)]
     data = data[bad == 0]
     return data
 
