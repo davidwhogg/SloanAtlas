@@ -1,15 +1,27 @@
 to run the Tractor on a galaxy:
--in the tractor directory, <svn link? or https://github.com/dstndstn/tractor>
--run generalRC3() from general.py on some source RC3 data
--alternatively generalNSAtlas() can be use on NSA source data
+-in the tractor directory, clone it here: <svn link? or https://github.com/dstndstn/tractor>
+    - you will also need to access tools in astrometry, acquire by: <svn co svn+ssh://astrometry.net/svn/trunk/src/astrometry/> <make> <make py>
+-run generalRC3() from general.py on some source RC3 data (can be downloaded from http://vizier.u-strasbg.fr/viz-bin/VizieR?-source=VII/155)
+-alternatively generalNSAtlas() can be use on NSA source data (found here http://nsatlas.org/data)
+-the respective functions in general.py will automatically generate flipbooks for each galaxy
 -to measure the halflight values, run halflight.py by specifying the location of the pickle output files from the Tractor
 
-to create a fits table from -updated.pickle files output by halflight.py:
+to create a fits table from '*-updated.pickle' files (output by halflight.py):
 -run create_fits.py once for the RC3 galaxies and once for the NSA galaxies
 -combine_fits.py will combine the two tables into one, also allowing for a lower radius cut and ordering parameter to be set
 -combine_fits.py will not contain quantile integers, see choose_quantiles.py to generate desired integers
 
 to make quantiles:
--run sloan_atlas.pro on bootes in /global/data/scr/dhw3/ep109
 -this will require an input table that has some integer value assigned to each galaxy; see choose_quantile.py
+-in the same directory as sloan_atlas.pro, run make_quantiles.py with the specified number of quantiles input in choose_quantile.py
+-ran all quantile making processes bootes in /global/data/scr/dhw3/ep109
+
+notes:
+-the allnotes.tex files was compiled at various points along the timeline of this project
+     -EKTA: finish this with 'rounds' of notetaking from beginning to end(quantile checks)
+
+to run The Tractor while switching Exp and deV profiles:
+-run newCG.py on the desired galaxies
+-if the loglikelihood is greater after the second round of optimization that it was in the first round, a flipbook will be generated
+
 
