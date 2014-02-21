@@ -12,8 +12,8 @@ to create a fits table from '*-updated.pickle' files (output by halflight.py):
 -combine_fits.py will not contain quantile integers, see choose_quantiles.py to generate desired integers
 
 to make quantiles:
--this will require an input table that has some integer value assigned to each galaxy; see choose_quantile.py
--in the same directory as sloan_atlas.pro, run make_quantiles.py with the specified number of quantiles input in choose_quantile.py
+-this will require an input table that has some integer value assigned to each galaxy; see choose_quantile.py to generate one
+-in the same directory as sloan_atlas.pro and the input table, run make_quantiles.py with the specified number of quantiles input in choose_quantile.py
 -ran all quantile making processes bootes in /global/data/scr/dhw3/ep109
 
 notes:
