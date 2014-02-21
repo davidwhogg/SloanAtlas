@@ -125,8 +125,8 @@ def generalRC3(name,threads=None,itune1=5,itune2=5,ntune=0,nocache=False,scale=1
         dec = entry['DEC'][0]
     log_ae = float(entry['LOG_AE'][0])
     log_d25 = float(entry['LOG_D25'][0])
-    print 'LOG_AE is %s' % log_ae
-    print 'LOG_D25 is %s' % log_d25
+    #print 'LOG_AE is %s' % log_ae
+    #print 'LOG_D25 is %s' % log_d25
     
     
     if radius is not None:
@@ -259,7 +259,7 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
         sg.disable_galaxy_cache()
 
     zr = timgs[0].zr
-    print "zr is: ",zr
+    # print "zr is: ",zr
 
     print bands
 
@@ -311,7 +311,7 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
 
     saveAll('added-'+prefix,tractor,**sa)
 
-    #print 'Tractor has', tractor.getParamNames()
+    print 'Tractor has', tractor.getParamNames()
 
     for im in tractor.images:
         im.freezeAllParams()
@@ -322,7 +322,7 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
     #print 'values', tractor.getParams()
 
     for i in range(itune1):
-        tractor.optimize()
+        tractor.optimize(shared_params=False)
         tractor.changeInvvar(IRLS_scale)
         saveAll('itune1-%d-' % (i+1)+prefix,tractor,**sa)
         tractor.clearCache()
@@ -376,45 +376,66 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
     saveAll('allBands-' + prefix,tractor,**sa)
 
     print "end of first round of optimization:", tractor.getLogLikelihood()
-    print CG
-    print CG.getPosition()
-    print CGBright1
-    print CGBright2
-    print CGShape1
-    print CGShape2
-    print CGBright1+CGBright2
-    print CG.getBrightness()
+    likelihood = tractor.getLogLikelihood()
+    # print CG
+    # print CG.getPosition()
+    # print CGBright1
+    # print CGBright2
+    # print CGShape1
+    # print CGShape2
+    # print CGBright1+CGBright2
+    # print CG.getBrightness()
 
     pfn = '%s.pickle' % prefix
     pickle_to_file(CG,pfn)
 
-    makeflipbook(prefix,len(tractor.getImages()),itune1,itune2,ntune)
+    #makeflipbook(prefix,prefix,len(tractor.getImages()),itune1,itune2,ntune)
 
     # now SWAP exp and dev and DO IT AGAIN
+    swapprefix = prefix + '-swap'
     newCG = st.CompositeGalaxy(CG.getPosition(), CG.brightnessDev.copy(),
                                CG.shapeDev.copy(), CG.brightnessExp.copy(),
                                CG.shapeExp.copy())
     tractor.removeSource(CG)
     tractor.addSource(newCG)
 
+    tractor.catalog.freezeAllBut(newCG)
+    # print resource.getpagesize()
+    # print resource.getrusage(resource.RUSAGE_SELF)[2]
+
+
+    for i in range(itune2):
+        tractor.optimize()
+        tractor.changeInvvar(IRLS_scale)
+        saveAll('itune2-%d-' % (i+1)+swapprefix,tractor,**sa)
+        tractor.clearCache()
+        sg.get_galaxy_cache().clear()
+        # print resource.getpagesize()
+        # print resource.getrusage(resource.RUSAGE_SELF)[2]
+
     tractor.catalog.thawAllParams()
     for i in range(ntune):
         tractor.optimize()
         tractor.changeInvvar(IRLS_scale)
-        saveAll('ntune-swap-%d-' % (i+1)+prefix,tractor,**sa)
-    #plotInvvar('final-'+prefix,tractor)
+        saveAll('ntune-%d-' % (i+1)+swapprefix,tractor,**sa)
+    #plotInvvar('final-'+swapprefix,tractor)
     sa.update(plotBands=True)
-    saveAll('allBands-swap-' + prefix,tractor,**sa)
+    saveAll('allBands-' + swapprefix,tractor,**sa)
 
     print "end of second (swapped) round of optimization:", tractor.getLogLikelihood()
-    print newCG
-    print newCG.getPosition()
-    print newCG.getBrightness()
+    if tractor.getLogLikelihood() > likelihood:
+        print 'log likelihood is greater than original, making new flipbook'
+        f = open('delta_loglikelihood.txt', 'r+')
+        f.write('{} {} {} {}\n'.format(prefix, likelihood, tractor.getLogLikelihood() , (tractor.getLogLikelihood() - likelihood)))
+        f.close()
+        print newCG
+        print newCG.getPosition()
+        print newCG.getBrightness()
 
-    pfn = '%s-swap.pickle' % prefix
-    pickle_to_file(newCG,pfn)
+        pfn = '%s-swap.pickle' % swapprefix
+        pickle_to_file(newCG,pfn)
 
-    makeflipbook(prefix+"-swap",len(tractor.getImages()),itune1,itune2,ntune)
+        makeflipbook(prefix,swapprefix,len(tractor.getImages()),itune1,itune2,ntune)
 
 def main():
     import optparse
@@ -455,7 +476,7 @@ def main():
 
 
 
-def makeflipbook(prefix,numImg,itune1=0,itune2=0,ntune=0):
+def makeflipbook(prefix,swapprefix,numImg,itune1=0,itune2=0,ntune=0):
     # Create a tex flip-book of the plots
 
     def allImages(title,imgpre,allBands=False):
@@ -485,18 +506,19 @@ def makeflipbook(prefix,numImg,itune1=0,itune2=0,ntune=0):
     for i in range(itune1):
         tex+=allImages('Galaxy tuning, step %d' % (i+1),'itune1-%d-' %(i+1)+prefix)
     for i in range(itune2):
-        tex+=allImages('Galaxy tuning (w/ Composite), step %d' % (i+1),'itune2-%d-' %(i+1)+prefix)
+        tex+=allImages('Galaxy tuning (w/ Composite), step %d' % (i+1),'itune2-%d-' %(i+1)+swapprefix)
     for i in range(ntune):
-        tex+=allImages('All tuning, step %d' % (i+1),'ntune-%d-' % (i+1)+prefix)
+        tex+=allImages('All tuning, step %d' % (i+1),'ntune-%d-' % (i+1)+swapprefix)
 
-    tex+=allImages('All Bands','allBands-'+prefix,True)
+    tex+=allImages('All Bands','allBands-'+swapprefix,True)
     
     tex += r'\end{document}' + '\n'
-    fn = 'flip-' + prefix + '.tex'
+    #fn = 'flip-' + prefix + '.tex'
+    fn = 'flip-' + swapprefix + '.tex'
     print 'Writing', fn
     open(fn, 'wb').write(tex)
     os.system("pdflatex '%s'" % fn)
-
+    os.system('cp flip-%s.pdf swapped/' %(swapprefix))
 
 
 if __name__ == '__main__':
