@@ -40,4 +40,4 @@ a note on extinction:
     sloani=2.086
     sloanz=1.479
 and also the astropysics package to calculate galactic coordinates, which are input into the get_SFD_dust() function
--our values are not extinction corrected directly from the Tractor and that they must be manually calculated from the 'EXTINCTION' column
+-our values are not extinction corrected directly from the Tractor and that they must be manually calculated by subtracting the values in the  'EXTINCTION' column
