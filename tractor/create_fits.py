@@ -11,7 +11,7 @@ from astropysics.obstools import *
 
 
 def mu_50(i,r):
-    return i+2.5*(log10(pi*r**2))
+    return i + 2.5*log10(2) + 2.5*log10(pi*r**2)
 
 def extinction(pos):
     #where pos is the position
