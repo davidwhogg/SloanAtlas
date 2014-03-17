@@ -1,10 +1,15 @@
-import inspect
-import sys
-import os
+"""
+This file is part of the Sloan Atlas project.
+Copyright 2013, 2014 Ekta Patel and David W. Hogg.
+
+bugs:
+-----
+* Repeated code on plotting commands (style keywords).
+"""
+
 import matplotlib
 matplotlib.use('Agg')
 matplotlib.rc('text', usetex=True)
-
 import matplotlib.pyplot as plt
 import pyfits as pyf
 
@@ -40,7 +45,6 @@ def color_prop(fits,fn1, objects=[],labels=[]):
         plt.plot(x, mu50[j], 'o', color='black',ms=5, markeredgecolor='black')
         plt.annotate(labels[j], xy=(x,mu50[j]), xytext=(x,mu50[j]+0.15),xycoords='data',textcoords='data',color='black',size='large')
     
-
     plt.subplot(212)
     x=g-i
     plt.plot(x, c, 'o',color="0.6", alpha=0.5, mew=0, markeredgecolor='none')
@@ -53,6 +57,6 @@ def color_prop(fits,fn1, objects=[],labels=[]):
         plt.plot(x, c[j], 'o', color='black',ms=5, markeredgecolor='black')
         plt.annotate(labels[j], xy=(x,c[j]), xytext=(x,c[j]+0.15),xycoords='data',textcoords='data',color='black',size='large')
     plt.savefig('%s.pdf' %(fn1))
- 
-color_prop('sdss_atlas_2013','tester', objects=[1,2,3,4,5], labels=['A','B','C','D','E'])
 
+if __name__ == "__main__":
+    color_prop('sdss_atlas_2013','tester', objects=[1,2,3,4,5], labels=['A','B','C','D','E'])
