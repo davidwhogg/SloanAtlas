@@ -33,7 +33,7 @@ def plotarea(ra, dec, radius, name, prefix, tims=None, rds=[]):
     W,H = 512,512
     scale = (radius * 60. * 4) / float(W)
     print 'SDSS jpeg scale', scale
-    imgfn = 'sdss-mosaic-%s.png' % prefix
+    imgfn = 'sdss-mosaic-%s.pdf' % prefix
     if not os.path.exists(imgfn):
         url = (('http://skyservice.pha.jhu.edu/DR9/ImgCutout/getjpeg.aspx?' +
                 'ra=%f&dec=%f&scale=%f&width=%i&height=%i') %
@@ -44,7 +44,7 @@ def plotarea(ra, dec, radius, name, prefix, tims=None, rds=[]):
         of = open(tmpfn, 'wb')
         of.write(f.read())
         of.close()
-        cmd = 'jpegtopnm %s | pnmtopng > %s' % (tmpfn, imgfn)
+        cmd = 'jpegtopnm %s | pnmtopdf > %s' % (tmpfn, imgfn)
         os.system(cmd)
     # Create WCS header for it
     cd = scale / 3600.
@@ -97,7 +97,7 @@ def plotarea(ra, dec, radius, name, prefix, tims=None, rds=[]):
         plt.plot(px, py, 'go')
 
     plt.axis(ax)
-    fn = '%s.png' % prefix
+    fn = '%s.pdf' % prefix
     plt.savefig(fn)
     print 'saved', fn
 
@@ -167,6 +167,7 @@ def generalNSAtlas (nsid,threads=None,itune1=5,itune2=5,ntune=0,nocache=False,sc
     general("NSA_ID_%s" % nsid,float(ra),float(dec),fieldradius/60.,fieldradius/60.,threads=threads,itune1=itune1,itune2=itune2,ntune=ntune,nocache=nocache,scale=scale,ab=float(ab),angle=float(angle))
 
 
+
 def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntune=0,nocache=False,scale=1,ab=1.,angle=0.):
     #Radius should be in arcminutes
     if threads:
@@ -180,7 +181,7 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
     noarcsinh = False
     print name
 
-    prefix = 'swapCG_%s' % (name.replace(' ', '_'))
+    prefix = '%s' % (name.replace(' ', '_'))
     print 'Removal Radius', remradius
     print 'Field Radius', fieldradius
     print 'RA,Dec', ra, dec
@@ -267,7 +268,7 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
     #for timg,band in zip(timgs,bands):
     #    data = timg.getImage()/np.sqrt(timg.getInvvar())
     #    plt.hist(data,bins=100)
-    #    plt.savefig('hist-%s.png' % (band))
+    #    plt.savefig('hist-%s.pdf' % (band))
 
     saveAll('initial-'+prefix, tractor,**sa)
     #plotInvvar('initial-'+prefix,tractor)
@@ -348,7 +349,6 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
     print CGBright1
 
     CG = st.CompositeGalaxy(CGPos,CGBright1,CGShape1,CGBright2,CGShape2)
-    
     tractor.removeSource(EG)
     tractor.addSource(CG)
 
@@ -366,6 +366,8 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
         print resource.getpagesize()
         print resource.getrusage(resource.RUSAGE_SELF)[2]
 
+
+
     tractor.catalog.thawAllParams()
     for i in range(ntune):
         tractor.optimize()
@@ -375,7 +377,6 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
     sa.update(plotBands=True)
     saveAll('allBands-' + prefix,tractor,**sa)
 
-    print "end of first round of optimization:", tractor.getLogLikelihood()
     print CG
     print CG.getPosition()
     print CGBright1
@@ -385,36 +386,11 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
     print CGBright1+CGBright2
     print CG.getBrightness()
 
-    pfn = '%s.pickle' % prefix
-    pickle_to_file(CG,pfn)
+#    pfn = '%s.pickle' % prefix
+#    pickle_to_file(CG,pfn)
 
     makeflipbook(prefix,len(tractor.getImages()),itune1,itune2,ntune)
 
-    # now SWAP exp and dev and DO IT AGAIN
-    newCG = st.CompositeGalaxy(CG.getPosition(), CG.brightnessDev.copy(),
-                               CG.shapeDev.copy(), CG.brightnessExp.copy(),
-                               CG.shapeExp.copy())
-    tractor.removeSource(CG)
-    tractor.addSource(newCG)
-
-    tractor.catalog.thawAllParams()
-    for i in range(ntune):
-        tractor.optimize()
-        tractor.changeInvvar(IRLS_scale)
-        saveAll('ntune-swap-%d-' % (i+1)+prefix,tractor,**sa)
-    #plotInvvar('final-'+prefix,tractor)
-    sa.update(plotBands=True)
-    saveAll('allBands-swap-' + prefix,tractor,**sa)
-
-    print "end of second (swapped) round of optimization:", tractor.getLogLikelihood()
-    print newCG
-    print newCG.getPosition()
-    print newCG.getBrightness()
-
-    pfn = '%s-swap.pickle' % prefix
-    pickle_to_file(newCG,pfn)
-
-    makeflipbook(prefix+"-swap",len(tractor.getImages()),itune1,itune2,ntune)
 
 def main():
     import optparse
@@ -507,4 +483,3 @@ if __name__ == '__main__':
     #cProfile.run('main()','prof-%s.dat' % (datetime.now().isoformat()))
     #sys.exit(0)
     main()
-

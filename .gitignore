@@ -8,3 +8,5 @@ paper/paper.pdf
 paper/method.pdf
 nsa*.fits*
 foo*
+py/quantile*
+py/*.jpg

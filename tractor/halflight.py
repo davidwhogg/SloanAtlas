@@ -30,10 +30,6 @@ def halflight(name,makePlots=False,images=False,direc='RC3_Output'):
     print "Working on %s" % name
     #print CG
 
-    # if maxradius > 500.:
-    #     f=open('cannot_be_pickled.txt','a')
-    #     f.write(name)
-    #     continue
     assert(maxradius<500.)
     
     #First step is to make an image, which needs:
@@ -50,6 +46,7 @@ def halflight(name,makePlots=False,images=False,direc='RC3_Output'):
     imageh = int(32*maxradius)
     crpix2 = .5*imageh
     tan = Tan(crval1,crval2,crpix1,crpix2,cd11,cd12,cd21,cd22,imagew,imageh)
+    print maxradius, imagew, imageh
 
     wcs = ba.FitsWcs(tan)
 

@@ -67,7 +67,7 @@ printf, wlun,'<table>'
 
 ; read in and loop over input data
 table_rows = ['foo']
-tabfilename = './sdss_atlas_for_images_all.fits' 
+tabfilename = './sdss_atlas_plates_quants.fits' 
 tab = mrdfits(tabfilename, 1)
 print, tag_names(tab)
 
@@ -75,7 +75,7 @@ if keyword_set(maxgal) then ngal = ngal < maxgal
 ;tab = tab[sort(tab.cg_r50s[3])]
 q=WHERE(tab.quantile EQ quantile)
 tab = tab(q)
-tab=tab[reverse(sort(tab.cg_h90s[3]))]
+tab=tab[(sort(tab.cg_h90s[3]))]
 ;print, n_elements(tab)
 ngal = n_elements(tab)
 ii= 0
@@ -129,7 +129,7 @@ for j=0L,ngal-1L do begin
 
 ; make different versions
         thumbimage = strmid(filename,0,dot)+'_thumb.jpg'
-        scalefactor= string(128.0*pixscale/ra_size)
+        scalefactor= string(rebinfactor*128.0*pixscale/ra_size)
         cmd1 = "anytopnm "+filename+" | pnmscale " $
           +scalefactor+" | ppmtojpeg > "+thumbimage
         splog, cmd1
@@ -149,7 +149,7 @@ for j=0L,ngal-1L do begin
         splog, cmd2
         spawn, cmd2
         
-        targetdirectory = "../quantile" + string(quantile, FORMAT='(I02)')
+        targetdirectory = "../general_quantiles/quantile" + string(quantile, FORMAT='(I02)')
         print, targetdirectory
         cmd3 = "cp "+filename+" "+thumbimage+" "+halfsize+"  "+targetdirectory
         splog, cmd3
