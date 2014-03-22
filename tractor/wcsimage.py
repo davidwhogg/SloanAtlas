@@ -12,7 +12,6 @@ import Image
 import pyfits
 
 from astrometry.util.file import *
-
 from tractor import *
 from tractor import sdss as st
 from tractor.saveImg import *
@@ -27,13 +26,18 @@ matplotlib.rcParams.update({'font.size': 10})
 
 def wcsimage(name, iauname, mean=False, direc='RC3_Output'):
     CG = unpickle_from_file("%s/%s.pickle" %(direc,name))
-    # ra,dec = CG.getPosition()
-    # maxradius=max(CG.shapeExp.re,CG.shapeDev.re)
-    # print "Working on %s" % name
-    # print CG
-    # assert(maxradius<500.)
+    table = pyfits.open('sdss_atlas_plates_quants.fits')[1].data
+    h50i = table['CG_H50S'][:,3]
+    h90i = table['CG_H90S'][:,3]
+    names = table['NAME']
+    fn = '%s_SA_%s-i.fits.gz' %(name, iauname)
+
+    if not os.path.exists(fn):
+        cmd = "scp ep109@bootes.cosmo.fas.nyu.edu:/global/data/scr/dwh3/ep109/all_images/" + fn + " ."
+        print cmd
+        os.system(cmd)
     
-    f = pyfits.open('%s_SA_%s-i.fits' %(name, iauname))
+    f = pyfits.open(fn)
 
     crval1 = f[0].header['CRVAL1']
     crval2 = f[0].header['CRVAL2']
@@ -109,7 +113,6 @@ def wcsimage(name, iauname, mean=False, direc='RC3_Output'):
     plt.tight_layout()
     plt.savefig('%s_data_wcs.pdf' %(name))
     
-
     if mean:
         
         r50s = []
@@ -124,13 +127,18 @@ def wcsimage(name, iauname, mean=False, direc='RC3_Output'):
         rlist_pix = np.exp(np.linspace(0.,np.log(0.5*imageh),64))
         rlist_arcsec = rlist_pix * pixscale * 3600.
 
-        betas = np.arange(0.01,0.99,0.1)
+        betamin = 0
+        betabin = 0.1
+        betamax = 1 + betabin
+        betas = np.arange(betamin,betamax,betabin)
         print betas
         model = np.array(model)
         for beta in betas:
+            
             dm = (data ** beta) * (model ** (1-beta))
             image = dm
-
+            bad = np.where(np.logical_not(np.isfinite(image)))
+            image[bad] = 0.
             # make variance tensor out of image; get principal eigenvector
             foo = np.sum(image * xg * yg)
             V = np.array([[np.sum(image * xg * xg), foo],
@@ -150,19 +158,39 @@ def wcsimage(name, iauname, mean=False, direc='RC3_Output'):
             print h50, h90, 'h50 h90'
 
             # do circular integrals
-            plist = [np.sum(image[r2g < (r * r)]) for r in rlist_pix]
-            plist /= plist[-1]
-            r50, r90 = np.interp([0.5, 0.9], plist, rlist_arcsec)
-            print r50,r90
-            conc = r90/r50
-            r50s.append(r50)
-            r90s.append(r90)
-            concs.append(conc)
-            print r50, r90, 'r50','r90'
+            # plist = [np.sum(image[r2g < (r * r)]) for r in rlist_pix]
+            # plist /= plist[-1]
+            # r50, r90 = np.interp([0.5, 0.9], plist, rlist_arcsec)
+            # conc = r90/r50
+            # r50s.append(r50)
+            # r90s.append(r90)
+            # concs.append(conc)
+            # print r50, r90, 'r50','r90'
 
+        plt.figure()
+        plt.subplot(121)
+        plt.plot(betas, h50s)
+        for i in range(len(names)):
+            if names[i] == name.replace('_',' '): 
+                plt.axhline(h50i[i], c='r', ls='--')
+        plt.title('h50')
+        plt.subplot(122)
+        plt.plot(betas,h90s)
+        for i in range(len(names)):
+            if names[i] == name.replace('_',' '): 
+                plt.axhline(h90i[i], c='r', ls='--')
+        plt.title('h90')
+        plt.suptitle('%s' %(name))
+        plt.savefig('geometric_mean_%s.pdf' %(name))
     return 'done'
 
     
 if __name__ == "__main__":
-    wcsimage('NGC_4736','J125053.00+410712.4', mean=True)
-    wcsimage('NGC_3377','J104742.33+135909.3', mean=True)
+    #wcsimage('NGC_4736','J125053.00+410712.4', mean=True)
+    #wcsimage('NGC_3377','J104742.33+135909.3', mean=True)
+    #edgeons
+    wcsimage('NGC_4710','J124938.83+150956.6', mean=True)
+    wcsimage('NGC_4771','J125321.24+011608.3', mean=True)
+    wcsimage('NGC_2862','J092455.09+264629.9', mean=True)
+    wcsimage('NGC_3126','J100820.70+315146.9', mean=True)
+    wcsimage('UGC_7170','J121036.85+184926.6', mean=True)
