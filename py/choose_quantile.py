@@ -22,7 +22,7 @@ def openfile_data(fn):
 
 def quantiles(x,q):
     '''returns data value for the element in the list that its being cut on'''
-    sortedx=sorted(x)
+    sortedx=sorted(x)    
     if q == 1.0:
         qval=sortedx[len(sortedx)-1]
     else:
@@ -40,10 +40,8 @@ def choose_quantiles(ncolor, nsb):
     color and sb, a quantile is assigned to each galaxy in the range
     ncolor x nsb. a colors vs. sb plot indicating the breakdown of
     quantiles is also generated.
-
-    
     '''
-    table = openfile_data('sdss_atlas_sept2013')    
+    table = openfile_data('sdss_atlas_plates') #sdss_atlas_sept2013')    
     extinction = table['CG_EXTINCTION']
     surface_bright = table['CG_I-SB']
     mags = table['CG_TOTMAGS']
@@ -53,98 +51,67 @@ def choose_quantiles(ncolor, nsb):
     gi = g-i
     colors = gi
     sbs = surface_bright
-    
+    quantile_list = np.zeros(len(sbs)).astype(int) - 1
+
     #scatter plot whole table
     plt.figure()
     plt.plot(colors,sbs, 'k.', alpha=0.5)
 
     ncolor = ncolor
     nsb = nsb
-    colorbin = 1./ncolor
-    hquants = np.arange(colorbin, 1, colorbin)
-    hqs = list(hquants)
-    
+    nsubsample = ncolor * nsb
+    hquants = np.arange(1./ncolor, 0.999, 1./ncolor)
+    vquants = np.arange(1./nsb, 0.999, 1./nsb)
+
     hqvalue = []     
-    for i in hqs:
+    for i in hquants:
         #print i
         hqvalue.append(quantiles(colors, i))    
-    # put upper and low bounds on colors to avoid extreme outliers
-    hqvalue.insert(0,quantiles(colors,0.5)+1.5*(quantiles(colors,0.025)-quantiles(colors,0.5)))
-    hqvalue.append(quantiles(colors,0.5)+1.5*(quantiles(colors,0.975)-quantiles(colors,0.5)))
+    # put upper and low bounds on colors/sb to avoid extreme outliers
+    color50 = quantiles(colors,0.5)
+    hqvalue.insert(0,color50+1.5*(quantiles(colors,0.025)-color50))
+    hqvalue.append(color50+1.5*(quantiles(colors,0.975)-color50))
+    sb50 = quantiles(sbs,0.5)
+    vqlo = sb50 + 1.5*(quantiles(sbs,0.025) - sb50)
+    vqhi = sb50 + 1.5*(quantiles(sbs,0.975) - sb50)
     
-    sbbin = 1./nsb
-    vquants = np.arange(sbbin, 0.99, sbbin)
-    vqs = list(vquants)
-    vqvalue = []
-    for j in vqs:
-        print j
-        for i in range(ncolor):
-            I = (colors > hqvalue[i]) * (colors < hqvalue[i+1])
-            sample = table[I]
-            sample_sb = sample['CG_I-SB']
-            vqvalue.append(quantiles(sample_sb, j))
-
-    #group the values for each of the sb cuts together, i.e. all 25th percentile lines, then all 50th percentile lines, etc.
-    chunks=[vqvalue[x:x+(len(hqvalue)-1)] for x in xrange(0, len(vqvalue), len(hqvalue)-1)]
-    
-    #create plot limits, restrictions are color50 + 1.5(color2.5 - color50) and color50+1.5(color97.5-color50), same for sb
-    sb50 = quantiles(surface_bright,0.5)
-    minsb = sb50 + 1.5*(quantiles(surface_bright,0.025) - sb50)
-    maxsb = sb50 + 1.5*(quantiles(surface_bright,0.975) - sb50)
-    print vquants,vqvalue
+    #create bounds
+    colorlo = np.zeros(nsubsample)
+    colorhi = np.zeros(nsubsample)
+    sblo = np.zeros(nsubsample)
+    sbhi = np.zeros(nsubsample)
+    k = 0
+    for i in range(ncolor):
+        I = (colors > hqvalue[i]) * (colors < hqvalue[i+1])
+        sample = table[I]
+        sample_sb = sample['CG_I-SB']
+        foo = np.zeros(nsb + 1)
+        foo[0] = vqlo
+        foo[nsb] = vqhi
+        for j in range(nsb):
+            if (j + 1) < nsb:
+                foo[j + 1]= quantiles(sample_sb, vquants[j])
+            k = j + i * nsb
+            print k 
+            assert colorlo[k] == 0.
+            colorlo[k] = hqvalue[i]
+            colorhi[k] = hqvalue[i+1]
+            sblo[k] = foo[j]
+            sbhi[k] = foo[j+1]
+            plt.vlines(hqvalue[i], ymin=sblo[k], ymax=sbhi[k])
+            plt.hlines(foo[j], xmin=colorlo[k], xmax=colorhi[k])
     plt.xlim(hqvalue[0], hqvalue[len(hqvalue)-1])
-    plt.ylim(minsb, maxsb)
+    plt.ylim(vqlo,vqhi)
 
-    #plot vertical colors lines
-    for vline in hqvalue:
-        plt.vlines(vline, ymin=minsb, ymax=maxsb)
-        
-    #plot horizontal sb lines
-    for i in chunks:
-        for j,k in zip(i, range(len(hqvalue))):
-            #print j, hqvalue[k], hqvalue[k+1]
-            plt.hlines(j, xmin=hqvalue[k], xmax=hqvalue[k+1])
-
-    #assign quantile numbers to each galaxy
-    datasets = []
-    quantile_list =[]
-
-    #break the dataset into ncolor data masks
-    for j in range(ncolor):
-        datasets.append(table[(colors > hqvalue[j]) * (colors < hqvalue[j+1])])
-    print len(datasets)
-    print datasets[0]
-    assert False
-
-    #break each data mask into nsb bins each, total = ncolor x nsb bins
-    all_sets =[]
-    vquants = list(vquants)
-    vquants.insert(0,0)
-    vquants.append(1.)    
-    for dataset in datasets:
-        for q in range(len(vquants)-1):
-            lower = quantiles(surface_bright,vquants[q])
-            upper = quantiles(surface_bright,vquants[q+1])
-            all_sets.append(dataset[(surface_bright > lower) * (surface_bright < upper)])
-    print len(all_sets)
-    
-    for mask in all_sets:
-        print len(mask)
-    for mask in datasets:
-        print len(table[ (colors > hqvalue[0]) * (colors < hqvalue[len(hqvalue)-1])* (surface_bright > minsb) * (surface_bright < maxsb)]), 'good'
-     
-    # for i,mask in enumerate(all_sets):
-    #     print i
-    #     for gi,sb in zip(colors,surface_bright):
-    #         if gi in table[mask]:
-    #             if sb in table[mask]:
-    #                 print i
-    #         else:
-    #             print -1
-    
-    plt.savefig('choose_quantiles.pdf')
-    #os.system('cp choose_quantiles.pdf ~/public_html')
-    #make_quantile_table(table, quantile_list)
+    #assign quantile number
+    for k in range(nsubsample):
+        I = (colors > colorlo[k]) * (colors < colorhi[k]) * (sbs > sblo[k]) * (sbs < sbhi[k])
+        quantile_list[I] = k
+    assert np.all(quantiles >= 0)
+    #print len(quantile_list), quantile_list
+    #plt.savefig('choose_quantiles5_3.pdf')
+    #os.system('cp choose_quantiles5_3.pdf ~/public_html')
+    make_quantile_table(table, quantile_list)
     return 'done'
 
 def make_quantile_table(data, quantile_list):
@@ -165,16 +132,16 @@ def make_quantile_table(data, quantile_list):
     col5=pyf.Column(name='CG_R90S',format='5E',array=data['CG_R90S'])
     col6=pyf.Column(name='CG_TOTMAGS',format='5E',array=data['CG_TOTMAGS'])
     col7=pyf.Column(name='CG_EXTINCTION',format='5E',array=data['CG_EXTINCTION'])
-    col8=pyf.Column(name='CG I-SB', format='1E',array=data['CG_I-SB'])
+    col8=pyf.Column(name='CG_ISB', format='1E',array=data['CG_ISB'])
     col9=pyf.Column(name='QUANTILE',format='1E',array=quantile_list)
     col10=pyf.Column(name='CG_H50S',format='5E', array=data['CG_H50S'])
     col11=pyf.Column(name='CG_H90S', format='5E', array=data['CG_H90S'])
     cols=col1,col2,col3,col4,col5,col6,col7,col8,col9,col10, col11
     tbhdu=pyf.new_table(cols)
     tbhdulist=pyf.HDUList([hdu,tbhdu])
-    tbhdulist.writeto('sdss_atlas_for_images_all.fits',clobber=True)
+    tbhdulist.writeto('sdss_atlas_plates_quants.fits', clobber=True) #'sdss_atlas_for_images_all.fits',clobber=True)
 
 if __name__ == '__main__':    
-    choose_quantiles(8, 4)
+    choose_quantiles(5, 3)
    
     
