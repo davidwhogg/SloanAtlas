@@ -115,58 +115,64 @@ def make_one_caption_figure(names, fn, data):
     * Needs more information in this comment header.
     * Wrong calling sequence given call (below)
     """
+    print "make_one_caption_figure():", names, fn
+
     # massage data
     mags=data.field("CG_TOTMAGS")
     extinction=data.field("CG_EXTINCTION")
-    c=data.field("CG_CONC")
-    c=c[:,3]
-    mu50=data.field("CG_I-SB")
-    u=mags[:,0]-extinction[:,0]
-    g=mags[:,1]-extinction[:,1]
-    r=mags[:,2]-extinction[:,2]
-    i=mags[:,3]-extinction[:,3]
-    z=mags[:,4]-extinction[:,4]
+    
+    mu50 = data.field("CG I-SB")
+    fiducial = 3
+    c = data.field("CG_H90S")[:,fiducial] / data.field("CG_H50S")[:,fiducial]
+    u = mags[:,0]-extinction[:,0]
+    g = mags[:,1]-extinction[:,1]
+    r = mags[:,2]-extinction[:,2]
+    i = mags[:,3]-extinction[:,3]
+    z = mags[:,4]-extinction[:,4]
 
     plt.figure(figsize=(6,6))
     plt.subplots_adjust(hspace=0.08)
 
-    ax=plt.subplot(211)
+    ax = plt.subplot(211)
     ax.xaxis.set_visible(True)
     plt.setp(ax.get_xticklabels(),visible=False)
     gmi = g-i
-    plt.plot(gmi, mu50, "o",
+    plt.plot(gmi, mu50, ".",
              color="0.6", alpha=0.5, mew=0, markeredgecolor="none")
-    plt.xlim(0.1,1.4)
-    plt.ylim(16,26)
-    plt.ylabel(r"$\mu_{50,i}$")
-    for ii, name in enumerage(names):
-        label = ("%d" % ii).trim()
+    xlim = (0.2, 1.3)
+    plt.xlim(xlim)
+    plt.ylim(17.5, 24.1)
+    plt.ylabel(r"$\mu_{50,i}~\mathrm{(mag)}$")
+    def labelify(integer):
+        return r"$\boldmath %s$" % ("%d" % integer).strip()
+    for ii, name in enumerate(names):
+        label = labelify(ii)
         jj = np.where(data["NAME"] == name)[0]
         print "make_one_caption_figure(): found objects with indices and quantiles:", jj, data[jj]["QUANTILE"]
         assert len(jj) == 1
         jj = jj[0]
-        plt.plot(gmi[jj], mu50[jj], "o",
-                 color="black", ms=5, markeredgecolor="black")
-        plt.annotate(labels[jj], xy=(gmi[jj], mu50[jj]), xytext=(gmi[jj], mu50[jj]+0.15), # magic
-                     xycoords="data",textcoords="data",color="black",size="large")
+        plt.plot(gmi[jj], mu50[jj], "+",
+                 color="black", ms=5, markeredgecolor="black", clip_on=False)
+        plt.text(gmi[jj], mu50[jj], label,
+                 color="black", size="small", alpha=0.75, clip_on=False)
     
     plt.subplot(212)
-    plt.plot(gmi, c, "o",
+    plt.plot(gmi, 1./c, ".",
              color="0.6", alpha=0.5, mew=0, markeredgecolor="none") # synchronized with above
-    plt.xlim(0.1,1.4)
-    plt.ylim(2,5)
-    plt.xlabel(r"$g-i$ (mag)")
-    plt.ylabel(r"$C_i$ (mag)")
-    for ii, name in enumerage(names):
-        label = ("%d" % ii).trim()
+    plt.xlim(xlim)
+    plt.ylim(0.14, 0.36)
+    plt.xlabel(r"$[g-i]~\mathrm{color~(mag)}$")
+    plt.ylabel(r"$h_{50,i} / h_{90, i}$")
+    for ii, name in enumerate(names):
+        label = labelify(ii)
         jj = np.where(data["NAME"] == name)[0]
         print "make_one_caption_figure(): found objects with indices and quantiles:", jj, data[jj]["QUANTILE"]
         assert len(jj) == 1
         jj = jj[0]
-        plt.plot(gmi[jj], c[jj], "o",
-                 color="black", ms=5, markeredgecolor="black") # synchronized with above
-        plt.annotate(labels[jj], xy=(gmi[jj], c[jj]), xytext=(gmi[jj], c[jj]+0.15), # magic
-                     xycoords="data",textcoords="data",color="black",size="large") # synchronized with above
+        plt.plot(gmi[jj], 1./c[jj], "x",
+                 color="black", ms=5, markeredgecolor="black", clip_on=False) # synchronized with above
+        plt.text(gmi[jj], 1./c[jj], label,
+                 color="black", size="small", alpha=0.75, clip_on=False) # synchronized with above
     plt.savefig(fn)
     return None
 
