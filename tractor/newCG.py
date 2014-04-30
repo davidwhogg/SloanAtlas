@@ -423,7 +423,7 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
     saveAll('allBands-' + swapprefix,tractor,**sa)
 
     print "end of second (swapped) round of optimization:", tractor.getLogLikelihood()
-    if tractor.getLogLikelihood() > likelihood:
+    if tractor.getLogLikelihood() > (likelihood + 0.001): # MAGIC
         print 'log likelihood is greater than original, making new flipbook'
         f = open('delta_loglikelihood.txt', 'a')
         f.write('{} {} {} {}\n'.format(prefix, likelihood, tractor.getLogLikelihood() , (tractor.getLogLikelihood() - likelihood)))
@@ -433,9 +433,10 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
         print newCG.getBrightness()
 
         pfn = '%s-swap.pickle' % swapprefix
+        print 'about to write %s' % pfn
         pickle_to_file(newCG,pfn)
-        print 'wrote to pickle file'
-        os.system('cp %s-swap.pickle swapped/' % (swapprefix))
+        print 'wrote %s' % pfn
+        os.system('cp %s swapped/' % (pfn))
         #makeflipbook(prefix,swapprefix,len(tractor.getImages()),itune1,itune2,ntune)
 
 def main():
