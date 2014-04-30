@@ -153,16 +153,16 @@ def generalNSAtlas (nsid,threads=None,itune1=5,itune2=5,ntune=0,nocache=False,sc
     mask = e == nsid
     record = data[mask]
 
-    print record
+    #print record
 
     if fieldradius==0:
-        fieldradius=record['SERSIC_TH50'][0]
+        fieldradius=record['SERSIC_TH50']#[0]
 
     print "Radius is %e" % fieldradius
     if ra is None:
-        ra = record['RA'][0]
+        ra = record['RA']#[0]
     if dec is None:
-        dec = record['DEC'][0]
+        dec = record['DEC']#[0]
 
     general("NSA_ID_%s" % nsid,float(ra),float(dec),fieldradius/60.,fieldradius/60.,threads=threads,itune1=itune1,itune2=itune2,ntune=ntune,nocache=nocache,scale=scale,ab=float(ab),angle=float(angle))
 
@@ -358,7 +358,7 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
 
 
     for i in range(itune2):
-        tractor.optimize()
+        tractor.optimize(shared_params=False)
         tractor.changeInvvar(IRLS_scale)
         saveAll('itune2-%d-' % (i+1)+prefix,tractor,**sa)
         tractor.clearCache()
@@ -368,7 +368,7 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
 
     tractor.catalog.thawAllParams()
     for i in range(ntune):
-        tractor.optimize()
+        tractor.optimize(shared_params=False)
         tractor.changeInvvar(IRLS_scale)
         saveAll('ntune-%d-' % (i+1)+prefix,tractor,**sa)
     #plotInvvar('final-'+prefix,tractor)
@@ -405,7 +405,7 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
 
 
     for i in range(itune2):
-        tractor.optimize()
+        tractor.optimize(shared_params=False)
         tractor.changeInvvar(IRLS_scale)
         saveAll('itune2-%d-' % (i+1)+swapprefix,tractor,**sa)
         tractor.clearCache()
@@ -415,7 +415,7 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
 
     tractor.catalog.thawAllParams()
     for i in range(ntune):
-        tractor.optimize()
+        tractor.optimize(shared_params=False)
         tractor.changeInvvar(IRLS_scale)
         saveAll('ntune-%d-' % (i+1)+swapprefix,tractor,**sa)
     #plotInvvar('final-'+swapprefix,tractor)
@@ -425,7 +425,7 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
     print "end of second (swapped) round of optimization:", tractor.getLogLikelihood()
     if tractor.getLogLikelihood() > likelihood:
         print 'log likelihood is greater than original, making new flipbook'
-        f = open('delta_loglikelihood.txt', 'r+')
+        f = open('delta_loglikelihood.txt', 'a')
         f.write('{} {} {} {}\n'.format(prefix, likelihood, tractor.getLogLikelihood() , (tractor.getLogLikelihood() - likelihood)))
         f.close()
         print newCG
@@ -434,8 +434,9 @@ def general(name,ra,dec,remradius,fieldradius,threads=None,itune1=5,itune2=5,ntu
 
         pfn = '%s-swap.pickle' % swapprefix
         pickle_to_file(newCG,pfn)
-
-        makeflipbook(prefix,swapprefix,len(tractor.getImages()),itune1,itune2,ntune)
+        print 'wrote to pickle file'
+        os.system('cp %s-swap.pickle swapped/' % (swapprefix))
+        #makeflipbook(prefix,swapprefix,len(tractor.getImages()),itune1,itune2,ntune)
 
 def main():
     import optparse
@@ -518,8 +519,8 @@ def makeflipbook(prefix,swapprefix,numImg,itune1=0,itune2=0,ntune=0):
     print 'Writing', fn
     open(fn, 'wb').write(tex)
     os.system("pdflatex '%s'" % fn)
-    os.system('cp flip-%s.pdf swapped/' %(swapprefix))
-
+    #os.system('cp flip-%s.pdf swapped/' %(swapprefix))
+    
 
 if __name__ == '__main__':
     # To profile the code, you can do:
