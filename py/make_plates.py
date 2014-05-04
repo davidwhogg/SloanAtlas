@@ -6,6 +6,7 @@ bugs:
 -----
 * Many things hard coded, brittle!
 * Assumptions about directory structure.
+* Plotting code contains repeated code blocks; could be refactored.
 """
 
 import os
@@ -151,11 +152,21 @@ def make_one_caption_figure(names, fn, data):
         print "make_one_caption_figure(): found objects with indices and quantiles:", jj, data[jj]["QUANTILE"]
         assert len(jj) == 1
         jj = jj[0]
+        if ii == 0:
+            jjmin = jj
+            jjmax = jj
+        if mu50[jj] < mu50[jjmin]:
+            jjmin = jj
+        if mu50[jj] > mu50[jjmax]:
+            jjmax = jj
         plt.plot(gmi[jj], mu50[jj], "+",
                  color="black", ms=5, markeredgecolor="black", clip_on=False)
-        plt.text(gmi[jj], mu50[jj], label,
+    plt.text(gmi[jjmax], mu50[jjmax], labelify(jjmax),
+             color="black", size="small", alpha=0.75, clip_on=False)
+    if len(names) > 1:
+        plt.text(gmi[jjmin], mu50[jjmin], labelify(jjmin),
                  color="black", size="small", alpha=0.75, clip_on=False)
-    
+
     plt.subplot(212)
     plt.plot(gmi, 1./c, ".",
              color="0.6", alpha=0.5, mew=0, markeredgecolor="none") # synchronized with above
@@ -169,10 +180,21 @@ def make_one_caption_figure(names, fn, data):
         print "make_one_caption_figure(): found objects with indices and quantiles:", jj, data[jj]["QUANTILE"]
         assert len(jj) == 1
         jj = jj[0]
+        if ii == 0:
+            jjmin = jj
+            jjmax = jj
+        if c[jj] < c[jjmin]:
+            jjmin = jj
+        if c[jj] > c[jjmax]:
+            jjmax = jj
         plt.plot(gmi[jj], 1./c[jj], "x",
                  color="black", ms=5, markeredgecolor="black", clip_on=False) # synchronized with above
-        plt.text(gmi[jj], 1./c[jj], label,
-                 color="black", size="small", alpha=0.75, clip_on=False) # synchronized with above
+    plt.text(gmi[jjmax], 1./c[jjmax], labelify(jjmax),
+             color="black", size="small", alpha=0.75, clip_on=False)
+    if len(names) > 1:
+        plt.text(gmi[jjmin], 1./c[jjmin], labelify(jjmin),
+                 color="black", size="small", alpha=0.75, clip_on=False)
+
     plt.savefig(fn)
     return None
 
