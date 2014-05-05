@@ -5,6 +5,8 @@ to run the Tractor on a galaxy:
 -alternatively generalNSAtlas() can be use on NSA source data (found here http://nsatlas.org/data)
 -the respective functions in general.py will automatically generate flipbooks for each galaxy
 -to measure the halflight values, run halflight.py by specifying the location of the pickle output files from the Tractor
+-to measure the halflight values using a mixture of the data and the model, run wcsimage.py with the i-band fits file obtained by sloan_atlas.pro. 
+    -note that about 100 objects were not measured with this method due to large image size. see notes/no_geomean_output.txt for specific galaxies
 
 to create a fits table from '*-updated.pickle' files (output by halflight.py):
 -run create_fits.py once for the RC3 galaxies and once for the NSA galaxies
