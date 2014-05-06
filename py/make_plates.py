@@ -131,8 +131,8 @@ def make_one_caption_figure(names, fn, data):
     i = mags[:,3]-extinction[:,3]
     z = mags[:,4]-extinction[:,4]
 
-    plt.figure(figsize=(6,6))
-    plt.subplots_adjust(hspace=0.08)
+    plt.figure(figsize=(3,3))
+    plt.subplots_adjust(hspace=0.08, left=0.20, bottom=0.15)
 
     ax = plt.subplot(211)
     ax.xaxis.set_visible(True)
@@ -140,7 +140,7 @@ def make_one_caption_figure(names, fn, data):
     gmi = g-i
     plt.plot(gmi, mu50, ".",
              color="0.6", alpha=0.5, mew=0, markeredgecolor="none")
-    xlim = (0.2, 1.3)
+    xlim = (0.2, 1.35)
     plt.xlim(xlim)
     plt.ylim(17.5, 24.1)
     plt.ylabel(r"$\mu_{50,i}~\mathrm{(mag)}$")
@@ -154,24 +154,28 @@ def make_one_caption_figure(names, fn, data):
         jj = jj[0]
         if ii == 0:
             jjmin = jj
+            labelmin = label
             jjmax = jj
+            labelmax = label
         if mu50[jj] < mu50[jjmin]:
             jjmin = jj
+            labelmin = label
         if mu50[jj] > mu50[jjmax]:
             jjmax = jj
+            labelmax = label
         plt.plot(gmi[jj], mu50[jj], "+",
                  color="black", ms=5, markeredgecolor="black", clip_on=False)
-    plt.text(gmi[jjmax], mu50[jjmax], labelify(jjmax),
-             color="black", size="small", alpha=0.75, clip_on=False)
+    plt.text(gmi[jjmax], mu50[jjmax], labelmax,
+             color="black", size="small", clip_on=False)
     if len(names) > 1:
-        plt.text(gmi[jjmin], mu50[jjmin], labelify(jjmin),
-                 color="black", size="small", alpha=0.75, clip_on=False)
+        plt.text(gmi[jjmin], mu50[jjmin], labelmin,
+                 color="black", size="small", clip_on=False)
 
     plt.subplot(212)
     plt.plot(gmi, 1./c, ".",
              color="0.6", alpha=0.5, mew=0, markeredgecolor="none") # synchronized with above
     plt.xlim(xlim)
-    plt.ylim(0.14, 0.36)
+    plt.ylim(0.12, 0.36)
     plt.xlabel(r"$[g-i]~\mathrm{color~(mag)}$")
     plt.ylabel(r"$h_{50,i} / h_{90, i}$")
     for ii, name in enumerate(names):
@@ -182,20 +186,24 @@ def make_one_caption_figure(names, fn, data):
         jj = jj[0]
         if ii == 0:
             jjmin = jj
+            labelmin = label
             jjmax = jj
+            labelmax = label
         if c[jj] < c[jjmin]:
             jjmin = jj
+            labelmin = label
         if c[jj] > c[jjmax]:
             jjmax = jj
-        plt.plot(gmi[jj], 1./c[jj], "x",
+            labelmax = label
+        plt.plot(gmi[jj], 1./c[jj], "+",
                  color="black", ms=5, markeredgecolor="black", clip_on=False) # synchronized with above
-    plt.text(gmi[jjmax], 1./c[jjmax], labelify(jjmax),
-             color="black", size="small", alpha=0.75, clip_on=False)
+    plt.text(gmi[jjmax], 1./c[jjmax], labelmax,
+             color="black", size="small", clip_on=False)
     if len(names) > 1:
-        plt.text(gmi[jjmin], 1./c[jjmin], labelify(jjmin),
-                 color="black", size="small", alpha=0.75, clip_on=False)
+        plt.text(gmi[jjmin], 1./c[jjmin], labelmin,
+                 color="black", size="small", clip_on=False)
 
-    plt.savefig(fn)
+    plt.savefig(fn, dpi=300) # MAGIC
     return None
 
 def make_one_quantile_of_plates(prefix, names, sizes, captions, tabdata):
