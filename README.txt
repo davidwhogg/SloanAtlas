@@ -43,3 +43,9 @@ a note on extinction:
     sloanz=1.479
 and also the astropysics package to calculate galactic coordinates, which are input into the get_SFD_dust() function
 -our values are not extinction corrected directly from the Tractor and that they must be manually calculated by subtracting the values in the  'EXTINCTION' column
+
+a note on pickle files:
+- <galaxy name>.pickle is output by Tractor fits
+- <galaxy name>-updated.pickle contains above and r50 and r90 values
+- <galaxy name>-updated2.pickle contains above and h50 and h90 values
+- <galaxy name>_geomean.pickle contains above h50 and h90 values measured on mixture of data + model
