@@ -8,6 +8,7 @@ from pylab import *
 import pyfits as pyf
 from astropysics.obstools import *
 import os
+from fitsio import FITS,FITSHDR
 import astropy.io.fits as fits
 from astropy.table import Column
 
@@ -29,7 +30,7 @@ def quantiles(x,q):
         qval=sortedx[int(q*len(sortedx))]   
     return qval
 
-def choose_quantiles(ncolor, nsb):
+def choose_quantiles(fn, ncolor, nsb):
     '''
     inputs:
     ncolor is the number of color bins
@@ -41,22 +42,22 @@ def choose_quantiles(ncolor, nsb):
     ncolor x nsb. a colors vs. sb plot indicating the breakdown of
     quantiles is also generated.
     '''
-    table = openfile_data('sdss_atlas_plates') #sdss_atlas_sept2013')    
+    table = openfile_data(fn)    
     extinction = table['CG_EXTINCTION']
-    surface_bright = table['CG_I-SB']
+    sbs = table['CG_SB']
+    sbs[sbs == inf] = 0
+    sbs[sbs == -inf] = 0
     mags = table['CG_TOTMAGS']
     radii = table['CG_R50S'][:,3]
     g = mags[:,1]-extinction[:,1]
     i = mags[:,3]-extinction[:,3]
-    gi = g-i
-    colors = gi
-    sbs = surface_bright
+    colors = g-i
+    print colors
     quantile_list = np.zeros(len(sbs)).astype(int) - 1
 
     #scatter plot whole table
     plt.figure()
     plt.plot(colors,sbs, 'k.', alpha=0.5)
-
     ncolor = ncolor
     nsb = nsb
     nsubsample = ncolor * nsb
@@ -84,7 +85,7 @@ def choose_quantiles(ncolor, nsb):
     for i in range(ncolor):
         I = (colors > hqvalue[i]) * (colors < hqvalue[i+1])
         sample = table[I]
-        sample_sb = sample['CG_I-SB']
+        sample_sb = sample['CG_SB']
         foo = np.zeros(nsb + 1)
         foo[0] = vqlo
         foo[nsb] = vqhi
@@ -92,7 +93,7 @@ def choose_quantiles(ncolor, nsb):
             if (j + 1) < nsb:
                 foo[j + 1]= quantiles(sample_sb, vquants[j])
             k = j + i * nsb
-            print k 
+            #print k 
             assert colorlo[k] == 0.
             colorlo[k] = hqvalue[i]
             colorhi[k] = hqvalue[i+1]
@@ -100,6 +101,7 @@ def choose_quantiles(ncolor, nsb):
             sbhi[k] = foo[j+1]
             plt.vlines(hqvalue[i], ymin=sblo[k], ymax=sbhi[k])
             plt.hlines(foo[j], xmin=colorlo[k], xmax=colorhi[k])
+    print hqvalue, vqlo, vqhi
     plt.xlim(hqvalue[0], hqvalue[len(hqvalue)-1])
     plt.ylim(vqlo,vqhi)
 
@@ -107,14 +109,14 @@ def choose_quantiles(ncolor, nsb):
     for k in range(nsubsample):
         I = (colors > colorlo[k]) * (colors < colorhi[k]) * (sbs > sblo[k]) * (sbs < sbhi[k])
         quantile_list[I] = k
+    
     assert np.all(quantiles >= 0)
-    #print len(quantile_list), quantile_list
-    #plt.savefig('choose_quantiles5_3.pdf')
-    #os.system('cp choose_quantiles5_3.pdf ~/public_html')
-    make_quantile_table(table, quantile_list)
-    return 'done'
+    plt.xlabel(r'$g-i$')
+    plt.ylabel(r'$\mu_{50,i}$')
+    plt.savefig('quantiles_%s.pdf' %fn)
+    return quantile_list
 
-def make_quantile_table(data, quantile_list):
+def make_quantile_table(fn, quantile_list):
     ''' 
     inputs:
     existing table and a list of quantiles for each galaxy
@@ -122,26 +124,12 @@ def make_quantile_table(data, quantile_list):
     outputs:
     a new data table to be used for the creation of quantile webpages
     '''
-
-    n=np.arange(100)
-    hdu=pyf.PrimaryHDU(n)    
-    col1=pyf.Column(name='NAME', format='30A', array=data['NAME'])
-    col2=pyf.Column(name='CG_RA',format='1E',array=data['CG_RA'])
-    col3=pyf.Column(name='CG_DEC',format='1E',array=data['CG_DEC'])
-    col4=pyf.Column(name='CG_R50S',format='5E',array=data['CG_R50S'])
-    col5=pyf.Column(name='CG_R90S',format='5E',array=data['CG_R90S'])
-    col6=pyf.Column(name='CG_TOTMAGS',format='5E',array=data['CG_TOTMAGS'])
-    col7=pyf.Column(name='CG_EXTINCTION',format='5E',array=data['CG_EXTINCTION'])
-    col8=pyf.Column(name='CG_ISB', format='1E',array=data['CG_ISB'])
-    col9=pyf.Column(name='QUANTILE',format='1E',array=quantile_list)
-    col10=pyf.Column(name='CG_H50S',format='5E', array=data['CG_H50S'])
-    col11=pyf.Column(name='CG_H90S', format='5E', array=data['CG_H90S'])
-    cols=col1,col2,col3,col4,col5,col6,col7,col8,col9,col10, col11
-    tbhdu=pyf.new_table(cols)
-    tbhdulist=pyf.HDUList([hdu,tbhdu])
-    tbhdulist.writeto('sdss_atlas_plates_quants.fits', clobber=True) #'sdss_atlas_for_images_all.fits',clobber=True)
+    table = FITS(fn,'rw')
+    table[-1].insert_column(name = 'QUANTILE', data = quantile_list)
+    table.close()
 
 if __name__ == '__main__':    
-    choose_quantiles(5, 3)
-   
+    qs = choose_quantiles('SA_master_2014_sorted', 5, 3)
+    print qs
+    make_quantile_table('SA_master_2014_sorted.fits', qs)
     
