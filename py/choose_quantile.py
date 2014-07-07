@@ -116,20 +116,27 @@ def choose_quantiles(fn, ncolor, nsb):
     plt.savefig('quantiles_%s.pdf' %fn)
     return quantile_list
 
-def make_quantile_table(fn, quantile_list):
+def make_quantile_table(fn, quantile_list, newfn):
     ''' 
     inputs:
-    existing table and a list of quantiles for each galaxy
-    
+    existing table 
+    list of quantiles for each galaxy
+    new table name
+
     outputs:
     a new data table to be used for the creation of quantile webpages
     '''
-    table = FITS(fn,'rw')
-    table[-1].insert_column(name = 'QUANTILE', data = quantile_list)
-    table.close()
+    h=pyf.PrimaryHDU(np.arange(100))
+    cols = pyf.open(fn)[1].data.columns
+    qcol = pyf.Column(name='QUANTILE', format='E', array=np.array(quantile_list))
+    newcols = pyf.ColDefs([qcol])
+    hdu = pyf.new_table(cols + newcols)
+    hdulist = pyf.HDUList([h,hdu])
+    hdulist.writeto(newfn,clobber=True)
+    return hdu
 
 if __name__ == '__main__':    
     qs = choose_quantiles('SA_master_2014_sorted', 5, 3)
     print qs
-    make_quantile_table('SA_master_2014_sorted.fits', qs)
+    make_quantile_table('SA_master_2014_sorted.fits', qs, 'SA_master_2014_sorted_q.fits')
     
